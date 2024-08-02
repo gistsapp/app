@@ -22,6 +22,7 @@
       "@components/shadcn": ["./src/components/shadcn"],
       "@components/feature": ["./src/components/feature"],
       "@components/ui": ["./src/components/ui"],
+      "@components/theme": ["./src/components/theme"],
       "@pages/feature": ["./src/pages/feature"],
       "@pages/ui": ["./src/pages/ui"]
     }
