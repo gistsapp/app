@@ -1,0 +1,14 @@
+{
+  "branches": ["main"],
+  "repositoryUrl": "git@github.com:gistsapp/app.git",
+  "plugins": [
+    [
+      "@codedependant/semantic-release-docker",
+      {
+        "dockerImage": "gists-app",
+        "dockerProject": "milou666",
+        "dockerCacheFrom": "milou666/gists-app"
+      }
+    ]
+  ]
+}
