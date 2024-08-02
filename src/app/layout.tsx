@@ -2,6 +2,10 @@ import type { Metadata } from 'next'
 import { Inter as FontSans } from 'next/font/google'
 import './globals.css'
 import { cn } from '@/lib/utils'
+import { Providers } from '../components/theme/theme-provider'
+import BlurBackground from '@/components/ui/blur-background'
+import ThemeWrapper from '@/components/theme/theme-wrapper'
+import { Toaster } from '@/components/shadcn/toaster'
 
 const fontSans = FontSans({ subsets: ['latin'] })
 
@@ -17,11 +21,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn('bg-dark-primary text-white overflow-hidden', fontSans.className)}>
-        <div className="z-10 flex justify-center">{children}</div>
-        <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
-          <div className="h-[600px] w-[600px] bg-primary opacity-30 rounded-full blur-[300px]"></div>
-        </div>
+      <body className={cn('text-back overflow-hidden', fontSans.className)}>
+        <Providers>
+          <ThemeWrapper>
+            <div className="z-10 flex justify-center">{children}</div>
+            <BlurBackground />
+            <Toaster />
+          </ThemeWrapper>
+        </Providers>
       </body>
     </html>
   )
