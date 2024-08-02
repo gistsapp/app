@@ -1,0 +1,73 @@
+name: Release
+on:
+  push:
+    branches:
+      - main # or main
+
+permissions:
+  contents: read # for checkout
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.get-tag.outputs.tag }}
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
+    env:
+      DOCKER_REGISTRY_USER: ${{ secrets.DOCKER_REGISTRY_USER }}
+      DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
+        run: npm audit signatures
+      - name: Compute release version
+        id: get-tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION_SPACES=$(npx semantic-release --dryRun | grep -oP 'Published release \K.*? ')
+          VERSION="${VERSION_SPACES// /}"
+          echo "The version is $VERSION"
+          echo "tag=$VERSION" >> $GITHUB_OUTPUT
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
+  deploy:
+    name: deploy_project
+    runs-on: ubuntu-latest
+    needs: release
+    env:
+      TAG: ${{ needs.release.outputs.tag }}
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+        with:
+          repository: Courtcircuits/cluster
+          token: "${{ secrets.DEPLOYMENT_TOKEN }}"
+      - name: Update values.yaml
+        run: |
+          sudo add-apt-repository ppa:rmescandon/yq
+          sudo apt update
+          sudo apt install yq -y
+          cd projects/gists/gists-front
+          yq eval -i '.tag = env(TAG)' tag.yaml
+          git config --global user.name "GIST Bot"
+          git config --global user.email "ci.deployment.gists@users.noreply.github.com"
+          git add tag.yaml
+          git commit -m "app gist | ${{ env.TAG }} | ${{ github.event.head_commit.message }}"
+          git push
