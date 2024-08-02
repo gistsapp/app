@@ -20,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={cn('text-back overflow-hidden', fontSans.className)}>
+    <html lang="en" suppressHydrationWarning={true}>
+      <body className={cn(fontSans.className)}>
         <Providers>
           <ThemeWrapper>
             <div className="z-10 flex justify-center">{children}</div>
