@@ -31,9 +31,11 @@ jobs:
         with:
           node-version: "lts/*"
       - name: Install dependencies
-        run: npm clean-install
+        run: |
+          npm install -g pnpm
+          pnpm install
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: npm audit signatures
+        run: pnpm audit signatures
       - name: Compute release version
         id: get-tag
         env:
