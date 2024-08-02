@@ -18,6 +18,7 @@ const config = {
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
+        'light-background': 'hsl(var(--light-background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
@@ -26,10 +27,6 @@ const config = {
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
-        },
-        dark: {
-          primary: '#0D0E0F',
-          secondary: '#0F1011',
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
