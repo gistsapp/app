@@ -19,6 +19,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@/types": ["./src/types"],
       "@components/shadcn": ["./src/components/shadcn"],
       "@components/feature": ["./src/components/feature"],
       "@components/ui": ["./src/components/ui"],

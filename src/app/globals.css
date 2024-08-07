@@ -36,22 +36,23 @@
     --background: 210 7% 5%; /* slate-900 */
     --light-background: 210 6% 6%; /* slate-800 */
     --foreground: 210 40% 96%; /* white */
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%; /* white */
+    --card-foreground: 222.2 84% 4.9%; /* slate-900 */
+    --popover: 0 0% 100%; /* white */
+    --popover-foreground: 222.2 84% 4.9%; /* slate-900 */
     --primary: 244 100% 56%; /* blue */
     --primary-foreground: 210 40% 96%; /* white */
     --secondary: 210 40% 96%; /* white */
     --secondary-foreground: 244 100% 56%; /* blue */
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
+    --muted: 210 40% 96.1%; /* white */
+    --muted-foreground: 215.4 16.3% 46.9%; /* slate-400 */
+    --accent: 210 40% 96.1%; /* white */
+    --accent-foreground: 222.2 47.4% 11.2%; /* orange */
+    --destructive: 0 84.2% 60.2%; /* red */
+    --destructive-foreground: 210 40% 98%; /* white */
+    --border: 217 33% 17%; /* slate-600 */
+    --input: 217 33% 17%; /* slate-600 */
+    --icon: 217 33% 17%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
     --chart-1: 12 76% 61%;
@@ -81,6 +82,7 @@
     --destructive-foreground: 210 40% 98%;
     --border: 214 32% 91%; /* slate-300 */
     --input: 214 32% 91%; /* slate-300 */
+    --icon: 214 32% 91%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
     --chart-1: 12 76% 61%;
