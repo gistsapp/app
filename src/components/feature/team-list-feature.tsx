@@ -6,6 +6,7 @@ interface TeamListFeatureProps {}
 
 const teamsMock: Team[] = [
   {
+    id: '1',
     name: 'Team A',
     gists: [
       {
@@ -21,6 +22,7 @@ const teamsMock: Team[] = [
     ],
   },
   {
+    id: '2',
     name: 'Team B',
     gists: [
       {
@@ -37,6 +39,10 @@ const teamsMock: Team[] = [
   },
 ]
 
+const onTeamGistClick = () => {
+  console.log('Team Gist Clicked')
+}
+
 export function TeamListFeature() {
-  return <TeamList teams={teamsMock} />
+  return <TeamList teams={teamsMock} onTeamGistClick={onTeamGistClick} />
 }

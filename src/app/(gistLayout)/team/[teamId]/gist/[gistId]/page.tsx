@@ -1,17 +1,24 @@
+import GistDetails from '@/components/ui/gist-details'
 import React from 'react'
 
-interface GroupGistPageProps {
+interface MyTeamGistIdFeaturePageProps {
   params: {
-    groupId: string
+    teamId: string
     gistId: string
   }
 }
 
-export default function GroupGistPage({ params }: GroupGistPageProps) {
-  const { groupId, gistId } = params
-  return (
-    <h1>
-      Group Gist Page: Group {groupId}, Gist {gistId}
-    </h1>
-  )
+// TODO: Get the teams and gist from the params id and pass it to the GistDetails component
+
+const gistMock = {
+  id: '1',
+  name: 'My first Gist',
+  code: 'console.log("Hello, World!")',
+}
+
+const folderMock = 'Team A'
+
+export default function MyTeamGistIdFeaturePage({ params }: MyTeamGistIdFeaturePageProps) {
+  const { teamId, gistId } = params
+  return <GistDetails folder={folderMock} gist={gistMock} />
 }

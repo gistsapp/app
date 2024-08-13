@@ -2,6 +2,7 @@ import { MyGistListFeature } from '@/components/feature/mygist-list-feature'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/tooltip'
 import HeaderButton from '@/components/ui/header-button'
 import MenuButton from '@/components/ui/menu-button'
+import { PaginationComponent } from '@/components/ui/pagination'
 import Shortcut from '@/components/ui/shortcut'
 import { TornadoIcon } from 'lucide-react'
 
@@ -29,7 +30,9 @@ export default function MyGistsPage({}: MyGistPageProps) {
       <div className="h-[1px] bg-border"></div>
       <MyGistListFeature />
       <div className="h-[1px] bg-border"></div>
-      <div className="p-4"></div>
+      <div className="p-4">
+        <PaginationComponent />
+      </div>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 interface Team {
+  id: string
   name: string
   gists: Gist[]
 }

@@ -23,7 +23,7 @@ interface TeamSectionProps {
 export function TeamSection({ title }: TeamSectionProps) {
   return (
     <ContextMenu>
-      <ContextMenuTrigger className="flex items-center justify-start rounded-md text-sm px-3 font-semibold text-slate-400 w-full">{title}</ContextMenuTrigger>
+      <ContextMenuTrigger className="flex items-center justify-start rounded-md text-sm font-semibold text-slate-400 w-full">{title}</ContextMenuTrigger>
       <ContextMenuContent className="w-64">
         <ContextMenuLabel className="font-semibold">{title}</ContextMenuLabel>
         <ContextMenuSeparator />

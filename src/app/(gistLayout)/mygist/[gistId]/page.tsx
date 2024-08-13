@@ -1,9 +1,13 @@
 import React from 'react'
-import GistPage from './page-ui'
+import MyGistIdPage from './page-ui'
 
-interface GistFeaturePageProps {}
+interface MyGistIdFeaturePageProps {
+  params: {
+    gistId: string
+  }
+}
 
-// TODO: Get the gist from the params id and pass it to the GistPage component
+// TODO: Get the gist from the params id and pass it to the GistDetails component
 
 const gistMock = {
   id: '1',
@@ -11,6 +15,7 @@ const gistMock = {
   code: 'console.log("Hello, World!")',
 }
 
-export default function GistFeaturePage({}: GistFeaturePageProps) {
-  return <GistPage gist={gistMock} />
+export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps) {
+  const { gistId } = params
+  return <MyGistIdPage gist={gistMock} />
 }
