@@ -7,7 +7,10 @@
       {
         "dockerImage": "gists-app",
         "dockerProject": "milou666",
-        "dockerCacheFrom": "milou666/gists-app"
+        "dockerCacheFrom": "milou666/gists-app",
+        "dockerArgs": {
+          "NEXT_PUBLIC_API_URL": "https://api-gists.courtcircuits.xyz"
+        }
       }
     ]
   ]
