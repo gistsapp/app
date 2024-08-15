@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useForm, UseFormRegisterReturn } from "react-hook-form";
-import Login from "../ui/login";
 import { useToast } from "@/components/shadcn/use-toast";
 import { getBackendURL } from "@/lib/utils";
+import { useLocalAuth } from "@/lib/queries/auth.queries";
+import Login from "./login-ui";
 
 interface FormData {
   email: string;
@@ -16,6 +17,9 @@ export default function LoginFeature() {
   );
   const [otpValue, setOtpValue] = useState("");
   const { toast } = useToast();
+
+  const { mutate: sendEmail } = useLocalAuth();
+  // const { mutate: verifyEmail, data: verified } = useLocalAuthVerify();
 
   const {
     register,
@@ -58,6 +62,13 @@ export default function LoginFeature() {
 
   const handleContinueClick = useCallback(() => {
     console.log("OTP:", otpValue);
+    const email = localStorage.getItem("email");
+    if (!email) {
+      console.error("Email not found in local storage.");
+      return;
+    }
+    localStorage.removeItem("email");
+    // verifyEmail({ email: email, token: otpValue });
   }, [otpValue]);
 
   const handleTryAgainClick = useCallback(() => {
@@ -75,8 +86,21 @@ export default function LoginFeature() {
 
   const onSubmit = (data: FormData) => {
     console.log(data);
+    sendEmail(data.email);
+    localStorage.setItem("email", data.email);
     setStep("otpInput");
   };
+
+  // useEffect(() => {
+  //   if (verified) {
+  //     console.log("Verified:", verified);
+  //     toast({
+  //       title: "You have been verified.",
+  //     });
+  //
+  //     redirect("/dashboard");
+  //   }
+  // }, [verified, toast]);
 
   return (
     <Login

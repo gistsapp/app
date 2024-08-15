@@ -6,6 +6,7 @@ import BlurBackground from "@/components/ui/blur-background";
 import ThemeWrapper from "@/components/theme/theme-wrapper";
 import { Toaster } from "@/components/shadcn/toaster";
 import { Providers } from "@/components/theme/theme-provider";
+import QueryProvider from "@/components/api/api-provider";
 
 const fontSans = FontSans({ subsets: ["latin"] });
 
@@ -22,13 +23,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={cn(fontSans.className)}>
-        <Providers>
-          <ThemeWrapper>
-            <div className="z-10 flex justify-center">{children}</div>
-            <BlurBackground />
-            <Toaster />
-          </ThemeWrapper>
-        </Providers>
+        <QueryProvider>
+          <Providers>
+            <ThemeWrapper>
+              <div className="z-10 flex justify-center">{children}</div>
+              <BlurBackground />
+              <Toaster />
+            </ThemeWrapper>
+          </Providers>
+        </QueryProvider>
       </body>
     </html>
   );
