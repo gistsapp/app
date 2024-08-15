@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
+import { cn, getBackendURL } from "@/lib/utils";
 import BlurBackground from "@/components/ui/blur-background";
 import ThemeWrapper from "@/components/theme/theme-wrapper";
 import { Toaster } from "@/components/shadcn/toaster";
@@ -20,6 +20,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log(getBackendURL());
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={cn(fontSans.className)}>
