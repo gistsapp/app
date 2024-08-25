@@ -1,3 +1,4 @@
+"use client";
 import ky from "ky";
 import { getBackendURL } from "../utils";
 import { Gist } from "@/types";
@@ -5,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 
 //types
 
-interface ApiGist {
+export interface ApiGist {
   id: string;
   name: string;
   content: string;
@@ -29,6 +30,19 @@ const fetchGists = async () => {
   });
 };
 
+const fetchGist = async (gistId: string): Promise<Gist> => {
+  const json = await ky
+    .get(`${getBackendURL()}/gists/${gistId}`, {
+      credentials: "include",
+    })
+    .json<ApiGist>();
+  return {
+    id: json.id,
+    name: json.name,
+    code: json.content,
+  };
+};
+
 //hooks
 
 export const useGists = () => {
@@ -36,4 +50,14 @@ export const useGists = () => {
     queryKey: ["gists"],
     queryFn: fetchGists,
   });
+
+  return { data, error, isPending };
+};
+
+export const useGist = (gistId: string) => {
+  const { data, error, isPending } = useQuery({
+    queryKey: ["gists", gistId],
+    queryFn: () => fetchGist(gistId),
+  });
+  return { data, error, isPending };
 };

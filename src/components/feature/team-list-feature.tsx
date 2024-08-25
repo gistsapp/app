@@ -1,5 +1,6 @@
 import { Team } from "@/types";
 import { TeamList } from "../ui/team-list";
+import { useOrgs } from "@/lib/queries/orgs.queries";
 
 interface TeamListFeatureProps {}
 
@@ -45,5 +46,7 @@ const onTeamGistClick = () => {
 };
 
 export function TeamListFeature() {
-  return <TeamList teams={teamsMock} onTeamGistClick={onTeamGistClick} />;
+  const { data, error, isPending } = useOrgs();
+  console.log(data);
+  return <TeamList teams={data || []} onTeamGistClick={onTeamGistClick} />;
 }

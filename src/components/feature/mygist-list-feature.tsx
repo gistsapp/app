@@ -1,5 +1,7 @@
+"use client";
 import { Gist } from "@/types";
 import MyGistList from "../ui/mygist-list";
+import { useGists } from "@/lib/queries/gists.queries";
 
 // TODO: Get the gists list
 
@@ -27,5 +29,7 @@ const gistMock: Gist[] = [
 ];
 
 export function MyGistListFeature() {
-  return <MyGistList gists={gistMock} />;
+  const { data } = useGists();
+
+  return <MyGistList gists={data || []} />;
 }
