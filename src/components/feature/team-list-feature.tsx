@@ -55,6 +55,5 @@ const onDeleteGist = (id: string) => {
 
 export function TeamListFeature() {
   const { data, error, isPending } = useOrgs()
-  console.log(data)
   return <TeamList teams={data || []} onTeamGistClick={onTeamGistClick} onDeleteTeam={onDeleteTeam} onDeleteGist={onDeleteGist} />
 }
