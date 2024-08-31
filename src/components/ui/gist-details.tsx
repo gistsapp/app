@@ -1,19 +1,29 @@
-import { Badge } from '@/components/shadcn/badge'
-import { Input } from '@/components/shadcn/input'
-import { Textarea } from '@/components/shadcn/textarea'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/tooltip'
-import MenuButton from '@/components/ui/menu-button'
-import Shortcut from '@/components/ui/shortcut'
-import { ChevronRightIcon, DownloadIcon, Trash2Icon } from 'lucide-react'
-import Link from 'next/link'
+import { Badge } from "@/components/shadcn/badge";
+import { Input } from "@/components/shadcn/input";
+import { Textarea } from "@/components/shadcn/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/shadcn/tooltip";
+import MenuButton from "@/components/ui/menu-button";
+import Shortcut from "@/components/ui/shortcut";
+import { Gist } from "@/types";
+import { ChevronRightIcon, DownloadIcon, Trash2Icon } from "lucide-react";
+import Link from "next/link";
 
 interface GistDetailsProps {
-  gist: Gist
-  folder: string
-  redirect?: boolean
+  gist: Gist;
+  folder: string;
+  redirect?: boolean;
 }
 
-export default function GistDetails({ gist, folder, redirect }: GistDetailsProps) {
+export default function GistDetails({
+  gist,
+  folder,
+  redirect,
+}: GistDetailsProps) {
   return (
     <div className="flex flex-col flex-grow border-border rounded-lg border">
       <div className="py-4 px-6 flex flex-row justify-between items-center">
@@ -28,7 +38,10 @@ export default function GistDetails({ gist, folder, redirect }: GistDetailsProps
           <ChevronRightIcon className="w-4 h-4" />
           <span>{gist.name}</span>
         </div>
-        <MenuButton icon={<DownloadIcon className="w-4 h-4" />} variant={'header'}>
+        <MenuButton
+          icon={<DownloadIcon className="w-4 h-4" />}
+          variant={"header"}
+        >
           <span>Download</span>
         </MenuButton>
       </div>
@@ -38,15 +51,25 @@ export default function GistDetails({ gist, folder, redirect }: GistDetailsProps
           <Badge variant="section" className="w-min">
             Name
           </Badge>
-          <Input placeholder="Enter your gist name here" value={gist.name} className="rounded-none" />
+          <Input
+            placeholder="Enter your gist name here"
+            value={gist.name}
+            className="rounded-none"
+          />
         </div>
         <div className="h-full flex flex-col gap-6 group">
           <Badge variant="section" className="w-min">
             Code
           </Badge>
           <div className="flex flex-row h-full">
-            <div className="h-full bg-background w-16 border border-input border-r-0 px-3 py-2 text-sm flex justify-center items-start">1</div>
-            <Textarea placeholder="Enter your code here" value={gist.code} className="rounded-none h-full border-l-0" />
+            <div className="h-full bg-background w-16 border border-input border-r-0 px-3 py-2 text-sm flex justify-center items-start">
+              1
+            </div>
+            <Textarea
+              placeholder="Enter your code here"
+              value={gist.code}
+              className="rounded-none h-full border-l-0"
+            />
           </div>
         </div>
       </div>
@@ -55,7 +78,10 @@ export default function GistDetails({ gist, folder, redirect }: GistDetailsProps
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <MenuButton icon={<Trash2Icon className="w-4 h-4" />} variant={'menu'}>
+              <MenuButton
+                icon={<Trash2Icon className="w-4 h-4" />}
+                variant={"menu"}
+              >
                 <span>Delete</span>
               </MenuButton>
             </TooltipTrigger>
@@ -69,7 +95,10 @@ export default function GistDetails({ gist, folder, redirect }: GistDetailsProps
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <MenuButton icon={<DownloadIcon className="w-4 h-4" />} variant={'menu'}>
+                <MenuButton
+                  icon={<DownloadIcon className="w-4 h-4" />}
+                  variant={"menu"}
+                >
                   <span>Share</span>
                 </MenuButton>
               </TooltipTrigger>
@@ -86,7 +115,7 @@ export default function GistDetails({ gist, folder, redirect }: GistDetailsProps
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <MenuButton variant={'menu'}>
+                <MenuButton variant={"menu"}>
                   <span>Save</span>
                 </MenuButton>
               </TooltipTrigger>
@@ -101,5 +130,5 @@ export default function GistDetails({ gist, folder, redirect }: GistDetailsProps
         </div>
       </div>
     </div>
-  )
+  );
 }
