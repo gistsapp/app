@@ -30,7 +30,7 @@ export default function MenuButton({ href, icon, children, letter, className, va
 
   if (href) {
     return (
-      <Link href={href} passHref>
+      <Link href={href} passHref className="w-full">
         {ButtonContent}
       </Link>
     )

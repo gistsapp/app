@@ -1,25 +1,23 @@
-import Link from 'next/link'
-import { Badge } from '../shadcn/badge'
-import { ContextMenuContent, ContextMenuItem, ContextMenuShortcut, ContextMenuSeparator, ContextMenuLabel, ContextMenu, ContextMenuTrigger } from '../shadcn/context-menu'
 import { Trash2 } from 'lucide-react'
+import { ContextMenuContent, ContextMenuItem, ContextMenuShortcut, ContextMenuSeparator, ContextMenuLabel, ContextMenu, ContextMenuTrigger } from '../shadcn/context-menu'
 import Shortcut from './shortcut'
-import { Gist } from '@/types'
+import { Gist, Team } from '@/types'
+import MenuButton from './menu-button'
 
-interface CardProps {
+interface TeamGistSectionProps {
   gist: Gist
-  href: string
+  team: Team
+  onGistClick: () => void
   onDeleteGist: () => void
 }
 
-export default function Card({ gist, href, onDeleteGist }: CardProps) {
+export function TeamGistSection({ gist, team, onGistClick, onDeleteGist }: TeamGistSectionProps) {
   return (
     <ContextMenu>
       <ContextMenuTrigger className="flex items-center justify-start rounded-md text-sm font-semibold text-slate-400 w-full">
-        <Link href={href} passHref className="relative hover:border-primary border-border border group w-full h-full">
-          <Badge className="absolute bottom-8 left-8" variant={'title'}>
-            {gist.name}
-          </Badge>
-        </Link>
+        <MenuButton key={gist.id} variant="menu" size="menu" onClick={onGistClick} href={'/team/' + team.id + '/gist/' + gist.id} className="w-full">
+          {gist.name}
+        </MenuButton>
       </ContextMenuTrigger>
       <ContextMenuContent className="w-64">
         <ContextMenuLabel className="font-semibold">{gist.name}</ContextMenuLabel>
