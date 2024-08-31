@@ -16,13 +16,14 @@ interface GistLayoutProps {
   avatar: string
   children: React.ReactNode
   onMyGistsClick: () => void
-  onCreateTeamClick: () => void
+  onCreateTeamClick: (name: string) => void
   onCreateGistClick: (name: string, content: string) => void
 }
 
 export default function GistLayout({ avatar, children, username, onMyGistsClick, onCreateTeamClick, onCreateGistClick }: GistLayoutProps) {
   const [gistName, setGistName] = useState('')
   const [gistContent, setGistContent] = useState('')
+  const [teamName, setTeamName] = useState('')
 
   const handleCreateGistClick = () => {
     onCreateGistClick(gistName, gistContent)
@@ -76,9 +77,24 @@ export default function GistLayout({ avatar, children, username, onMyGistsClick,
           <MenuButton icon={<FileCodeIcon />} variant="menu" size="menu" letter="M" onClick={onMyGistsClick} href="/mygist" className="w-full">
             My Gists
           </MenuButton>
-          <MenuButton icon={<PlusIcon />} variant="menu" size="menu" letter="T" onClick={onCreateTeamClick} className="w-full">
-            Create team
-          </MenuButton>
+          <Modal
+            trigger={
+              <MenuButton icon={<PlusIcon />} variant="menu" size="menu" letter="T" className="w-full">
+                Create team
+              </MenuButton>
+            }
+            title="Create Team"
+            content={
+              <div className="flex flex-col gap-3">
+                <Input className="border-0 bg-background p-0 h-min font-bold" placeholder="Team name" value={teamName} onChange={(e) => setTeamName(e.target.value)} />
+              </div>
+            }
+            footer={
+              <MenuButton variant="default" size="sm" onClick={() => onCreateTeamClick(teamName)} className="">
+                Create
+              </MenuButton>
+            }
+          ></Modal>
         </div>
         <TeamListFeature />
       </div>

@@ -1,29 +1,36 @@
-"use client";
-import React from "react";
-import MyGistIdPage from "./page-ui";
-import { useGist } from "@/lib/queries/gists.queries";
+'use client'
+import React from 'react'
+import MyGistIdPage from './page-ui'
+import { useGist } from '@/lib/queries/gists.queries'
+import { useToast } from '@/components/shadcn/use-toast'
 
 interface MyGistIdFeaturePageProps {
   params: {
-    gistId: string;
-  };
+    gistId: string
+  }
 }
 
-// TODO: Get the gist from the params id and pass it to the GistDetails component
+export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps) {
+  const { gistId } = params
+  const { data } = useGist(gistId)
+  const { toast } = useToast()
 
-const gistMock = {
-  id: "1",
-  name: "My first Gist",
-  code: 'console.log("Hello, World!")',
-};
-
-export default function MyGistIdFeaturePage({
-  params,
-}: MyGistIdFeaturePageProps) {
-  const { gistId } = params;
-  const { data } = useGist(gistId);
-  if (!data) {
-    return null;
+  const onDownloadClick = () => {
+    console.log('Downloading gist')
+    toast({
+      title: 'Gist Downloaded',
+      description: 'Your gist has been downloaded successfully',
+    })
   }
-  return <MyGistIdPage gist={data} />;
+  const onSaveClick = () => {
+    console.log('Saving gist')
+    toast({
+      title: 'Gist Saved',
+      description: 'Your gist has been saved successfully',
+    })
+  }
+  if (!data) {
+    return null
+  }
+  return <MyGistIdPage gist={data} onDownloadClick={onDownloadClick} onSaveClick={onSaveClick} />
 }

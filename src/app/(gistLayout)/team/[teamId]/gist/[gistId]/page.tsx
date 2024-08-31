@@ -1,34 +1,42 @@
-"use client";
-import GistDetails from "@/components/ui/gist-details";
-import { useGist } from "@/lib/queries/gists.queries";
-import React from "react";
+'use client'
+import { useToast } from '@/components/shadcn/use-toast'
+import GistDetails from '@/components/ui/gist-details'
+import { useGist } from '@/lib/queries/gists.queries'
+import React from 'react'
 
 interface MyTeamGistIdFeaturePageProps {
   params: {
-    teamId: string;
-    gistId: string;
-  };
+    teamId: string
+    gistId: string
+  }
 }
 
-// TODO: Get the teams and gist from the params id and pass it to the GistDetails component
+const folderMock = 'Team A'
 
-const gistMock = {
-  id: "1",
-  name: "My first Gist",
-  code: 'console.log("Hello, World!")',
-};
+export default function MyTeamGistIdFeaturePage({ params }: MyTeamGistIdFeaturePageProps) {
+  const { teamId, gistId } = params
+  const { data } = useGist(gistId)
+  const { toast } = useToast()
 
-const folderMock = "Team A";
-
-export default function MyTeamGistIdFeaturePage({
-  params,
-}: MyTeamGistIdFeaturePageProps) {
-  const { teamId, gistId } = params;
-  const { data } = useGist(gistId);
-
-  if (!data) {
-    return null;
+  const onDownloadClick = () => {
+    console.log('Downloading gist')
+    toast({
+      title: 'Gist Downloaded',
+      description: 'Your gist has been downloaded successfully',
+    })
   }
 
-  return <GistDetails folder={folderMock} gist={data} />;
+  const onSaveClick = () => {
+    console.log('Saving gist')
+    toast({
+      title: 'Gist Saved',
+      description: 'Your gist has been saved successfully',
+    })
+  }
+
+  if (!data) {
+    return null
+  }
+
+  return <GistDetails folder={folderMock} gist={data} onDownloadClick={onDownloadClick} onSaveClick={onSaveClick} />
 }

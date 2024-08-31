@@ -14,8 +14,7 @@ export function Modal({ trigger, title, content, footer }: ModalProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-
-      <DialogContent className="sm:max-w-[425px] gap-0">
+      <DialogContent className="sm:max-w-[425px] gap-0" aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle className="text-sm p-3">{title}</DialogTitle>
         </DialogHeader>
