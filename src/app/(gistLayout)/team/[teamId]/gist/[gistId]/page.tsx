@@ -26,8 +26,8 @@ export default function MyTeamGistIdFeaturePage({ params }: MyTeamGistIdFeatureP
     })
   }
 
-  const onSaveClick = () => {
-    console.log('Saving gist')
+  const onSaveClick = (name: string, code: string) => {
+    console.log('Saving gist with name:', name, 'and code:', code)
     toast({
       title: 'Gist Saved',
       description: 'Your gist has been saved successfully',

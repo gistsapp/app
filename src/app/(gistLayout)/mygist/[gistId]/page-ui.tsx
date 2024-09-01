@@ -4,7 +4,7 @@ import { Gist } from '@/types'
 interface MyGistIdPageProps {
   gist: Gist
   onDownloadClick: () => void
-  onSaveClick: () => void
+  onSaveClick: (name: string, code: string) => void
 }
 
 export default function MyGistIdPage({ gist, onDownloadClick, onSaveClick }: MyGistIdPageProps) {

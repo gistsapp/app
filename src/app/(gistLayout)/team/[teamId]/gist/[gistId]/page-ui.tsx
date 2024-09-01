@@ -8,6 +8,6 @@ interface MyTeamGistIdPageProps {
   onSaveClick: () => void
 }
 
-export default function MyTeamGistIdPage({ folder, gist, onDownloadClick }: MyTeamGistIdPageProps) {
-  return <GistDetails folder={folder} gist={gist} onDownloadClick={onDownloadClick} />
+export default function MyTeamGistIdPage({ folder, gist, onDownloadClick, onSaveClick }: MyTeamGistIdPageProps) {
+  return <GistDetails folder={folder} gist={gist} onDownloadClick={onDownloadClick} onSaveClick={onSaveClick} />
 }

@@ -7,16 +7,20 @@ import Shortcut from '@/components/ui/shortcut'
 import { Gist } from '@/types'
 import { ChevronRightIcon, DownloadIcon, Trash2Icon } from 'lucide-react'
 import Link from 'next/link'
+import { useState } from 'react'
 
 interface GistDetailsProps {
   gist: Gist
   folder: string
   redirect?: boolean
   onDownloadClick?: () => void
-  onSaveClick?: () => void
+  onSaveClick: (name: string, code: string) => void
 }
 
 export default function GistDetails({ gist, folder, redirect, onDownloadClick, onSaveClick }: GistDetailsProps) {
+  const [gistName, setGistName] = useState(gist.name)
+  const [gistCode, setGistCode] = useState(gist.code)
+
   return (
     <div className="flex flex-col flex-grow border-border rounded-lg border">
       <div className="py-4 px-6 flex flex-row justify-between items-center">
@@ -29,7 +33,7 @@ export default function GistDetails({ gist, folder, redirect, onDownloadClick, o
             <span>{folder}</span>
           )}
           <ChevronRightIcon className="w-4 h-4" />
-          <span>{gist.name}</span>
+          <span>{gistName}</span>
         </div>
         <MenuButton onClick={onDownloadClick} icon={<DownloadIcon className="w-4 h-4" />} variant={'header'}>
           <span>Download</span>
@@ -41,7 +45,7 @@ export default function GistDetails({ gist, folder, redirect, onDownloadClick, o
           <Badge variant="section" className="w-min">
             Name
           </Badge>
-          <Input placeholder="Enter your gist name here" value={gist.name} className="rounded-none" />
+          <Input placeholder="Enter your gist name here" value={gistName} onChange={(e) => setGistName(e.target.value)} className="rounded-none" />
         </div>
         <div className="h-full flex flex-col gap-6 group">
           <Badge variant="section" className="w-min">
@@ -49,7 +53,7 @@ export default function GistDetails({ gist, folder, redirect, onDownloadClick, o
           </Badge>
           <div className="flex flex-row h-full">
             <div className="h-full bg-background w-16 border border-input border-r-0 px-3 py-2 text-sm flex justify-center items-start">1</div>
-            <Textarea placeholder="Enter your code here" value={gist.code} className="rounded-none h-full border-l-0" />
+            <Textarea placeholder="Enter your code here" value={gistCode} onChange={(e) => setGistCode(e.target.value)} className="rounded-none h-full border-l-0" />
           </div>
         </div>
       </div>
@@ -89,7 +93,7 @@ export default function GistDetails({ gist, folder, redirect, onDownloadClick, o
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <MenuButton variant={'menu'} onClick={onSaveClick}>
+                <MenuButton variant={'menu'} onClick={() => onSaveClick(gistName, gistCode)}>
                   <span>Save</span>
                 </MenuButton>
               </TooltipTrigger>

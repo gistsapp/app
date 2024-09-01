@@ -31,7 +31,7 @@ export function TeamSection({ title, onDeleteTeam, onUpdateTeamClick }: TeamSect
         <ContextMenuItem>
           <Pen className="mr-2 h-4 w-4" />
           <Modal
-            trigger={<span>Change name</span>}
+            trigger={<span>Update name</span>}
             title="Create Team"
             content={
               <div className="flex flex-col gap-3">

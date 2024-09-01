@@ -10,15 +10,16 @@ interface TeamListProps {
   onTeamGistClick: () => void
   onDeleteTeam: (id: string) => void
   onDeleteGist: (id: string) => void
+  onUpdateTeamClick: (id: string, name: string) => void
 }
 
-export function TeamList({ teams, onTeamGistClick, onDeleteTeam, onDeleteGist }: TeamListProps) {
+export function TeamList({ teams, onTeamGistClick, onDeleteTeam, onDeleteGist, onUpdateTeamClick }: TeamListProps) {
   return (
     <Accordion type="single" collapsible className="w-full">
       {teams.map((team) => (
         <AccordionItem key={team.name} value={team.name} className="border-none">
           <AccordionTrigger>
-            <TeamSection title={team.name} onDeleteTeam={() => onDeleteTeam(team.id)} />
+            <TeamSection title={team.name} onDeleteTeam={() => onDeleteTeam(team.id)} onUpdateTeamClick={() => onUpdateTeamClick(team.id, team.name)} />
           </AccordionTrigger>
           <AccordionContent className="flex flex-col gap-2">
             {team.gists.map((gist) => (
