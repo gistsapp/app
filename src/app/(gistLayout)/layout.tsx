@@ -5,6 +5,7 @@ import GistLayout from "./layout-ui";
 import { useMe } from "@/lib/queries/user.queries";
 import { toast, useToast } from "@/components/shadcn/use-toast";
 import { useCreateGist } from "@/lib/queries/gists.queries";
+import { useCreateOrg } from "@/lib/queries/orgs.queries";
 
 export default function GistLayoutFeature({
   children,
@@ -22,19 +23,25 @@ export default function GistLayoutFeature({
     },
   });
 
+  const { mutate: createTeam } = useCreateOrg({
+    onSuccess: () => {
+      toast({
+        title: "Team Created",
+        description: "Your team has been created successfully",
+      });
+    },
+  });
+
   const onMyGistsClick = () => {
     console.log("My Gists clicked");
   };
 
   const onCreateTeamClick = useCallback(
     (name: string) => {
+      createTeam(name);
       console.log("Creating tea with name:", name);
-      toast({
-        title: "Team Created",
-        description: "Your team has been created successfully",
-      });
     },
-    [toast],
+    [toast, createTeam],
   );
 
   const onCreateGistClick = (name: string, content: string) => {

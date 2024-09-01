@@ -2,7 +2,7 @@ import ky from "ky";
 import { getBackendURL } from "../utils";
 import { Team } from "@/types";
 import { ApiGist } from "./gists.queries";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 interface AllApiOrg {
   id: string;
@@ -57,10 +57,45 @@ const fetchOrgs = async () => {
   return orgs;
 };
 
+const fetchCreateOrg = async (name: string): Promise<Team> => {
+  const json = await ky
+    .post(`${getBackendURL()}/orgs`, {
+      credentials: "include",
+      json: { name },
+    })
+    .json<ApiOrg>();
+  return {
+    id: json.id,
+    name: json.name,
+    gists: [],
+  };
+};
+
+//hooks
+
 export const useOrgs = () => {
   const { data, error, isPending } = useQuery({
     queryKey: ["orgs"],
     queryFn: fetchOrgs,
   });
   return { data, error, isPending };
+};
+
+export const useCreateOrg = ({ onSuccess }: { onSuccess: () => void }) => {
+  const queryClient = useQueryClient();
+
+  const { mutate, error, data, isPending } = useMutation({
+    mutationFn: (name: string) => fetchCreateOrg(name),
+    onSuccess: (newTeam) => {
+      queryClient.setQueryData(["orgs"], (orgs: Team[] | undefined) => {
+        return orgs ? [...orgs, newTeam] : [newTeam];
+      });
+
+      if (onSuccess) {
+        onSuccess();
+      }
+    },
+  });
+
+  return { mutate, error, data, isPending };
 };
