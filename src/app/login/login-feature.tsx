@@ -95,13 +95,6 @@ export default function LoginFeature() {
     setOtpValue("");
   }, []);
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-    sendEmail(data.email);
-    localStorage.setItem("email", data.email);
-    setStep("otpInput");
-  };
-
   useEffect(() => {
     if (verified) {
       console.log("Verified:", verified);
