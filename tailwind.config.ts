@@ -17,6 +17,7 @@ const config = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
+        icon: 'hsl(var(--icon))',
         background: 'hsl(var(--background))',
         'light-background': 'hsl(var(--light-background))',
         foreground: 'hsl(var(--foreground))',

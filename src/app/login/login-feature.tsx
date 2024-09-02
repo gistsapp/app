@@ -4,8 +4,9 @@ import { useEffect, useState, useCallback } from "react";
 import { useForm, UseFormRegisterReturn } from "react-hook-form";
 import { useToast } from "@/components/shadcn/use-toast";
 import { getBackendURL } from "@/lib/utils";
-import { useLocalAuth } from "@/lib/queries/auth.queries";
+import { useLocalAuth, useLocalAuthVerify } from "@/lib/queries/auth.queries";
 import Login from "./login-ui";
+import { redirect } from "next/navigation";
 
 interface FormData {
   email: string;
@@ -19,7 +20,7 @@ export default function LoginFeature() {
   const { toast } = useToast();
 
   const { mutate: sendEmail } = useLocalAuth();
-  // const { mutate: verifyEmail, data: verified } = useLocalAuthVerify();
+  const { mutate: verifyEmail, data: verified } = useLocalAuthVerify();
 
   const {
     register,
@@ -37,13 +38,23 @@ export default function LoginFeature() {
     },
   });
 
+  const onSubmit = useCallback(
+    (data: FormData) => {
+      console.log(data);
+      sendEmail(data.email);
+      localStorage.setItem("email", data.email);
+      setStep("otpInput");
+    },
+    [sendEmail],
+  );
+
   const handleEmailClick = useCallback(() => {
     if (step === "initial") {
       setStep("emailInput");
     } else if (step === "emailInput" && isValid) {
       handleSubmit(onSubmit)();
     }
-  }, [step, isValid, handleSubmit]);
+  }, [step, isValid, handleSubmit, onSubmit]);
 
   const handleGitHubClick = useCallback(() => {
     console.log("GitHub");
@@ -68,8 +79,8 @@ export default function LoginFeature() {
       return;
     }
     localStorage.removeItem("email");
-    // verifyEmail({ email: email, token: otpValue });
-  }, [otpValue]);
+    verifyEmail({ email: email, token: otpValue });
+  }, [otpValue, verifyEmail]);
 
   const handleTryAgainClick = useCallback(() => {
     console.log("A new OTP has been sent.");
@@ -84,23 +95,16 @@ export default function LoginFeature() {
     setOtpValue("");
   }, []);
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-    sendEmail(data.email);
-    localStorage.setItem("email", data.email);
-    setStep("otpInput");
-  };
+  useEffect(() => {
+    if (verified) {
+      console.log("Verified:", verified);
+      toast({
+        title: "You have been verified.",
+      });
 
-  // useEffect(() => {
-  //   if (verified) {
-  //     console.log("Verified:", verified);
-  //     toast({
-  //       title: "You have been verified.",
-  //     });
-  //
-  //     redirect("/dashboard");
-  //   }
-  // }, [verified, toast]);
+      redirect("/mygist");
+    }
+  }, [verified, toast]);
 
   return (
     <Login
