@@ -6,7 +6,5 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getBackendURL() {
-  return (
-    process.env.NEXT_PUBLIC_BACKEND_URL || "https://api-gists.courtcircuits.xyz"
-  );
+  return process.env.NEXT_PUBLIC_BACKEND_URL || "https://api.gists.app";
 }
