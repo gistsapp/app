@@ -1,6 +1,6 @@
-import { Team } from '@/types'
-import { TeamList } from '../ui/team-list'
-import { useOrgs } from '@/lib/queries/orgs.queries'
+import { Team } from "@/types";
+import { TeamList } from "../ui/team-list";
+import { useDeleteOrgs, useOrgs } from "@/lib/queries/orgs.queries";
 
 interface TeamListFeatureProps {}
 
@@ -8,56 +8,66 @@ interface TeamListFeatureProps {}
 
 const teamsMock: Team[] = [
   {
-    id: '1',
-    name: 'Team A',
+    id: "1",
+    name: "Team A",
     gists: [
       {
-        id: '1',
-        name: 'Gist 1',
+        id: "1",
+        name: "Gist 1",
         code: 'console.log("Hello, World!")',
       },
       {
-        id: '2',
-        name: 'Gist 2',
+        id: "2",
+        name: "Gist 2",
         code: 'console.log("Hello, World!")',
       },
     ],
   },
   {
-    id: '2',
-    name: 'Team B',
+    id: "2",
+    name: "Team B",
     gists: [
       {
-        id: '3',
-        name: 'Gist 3',
+        id: "3",
+        name: "Gist 3",
         code: 'console.log("Hello, World!")',
       },
       {
-        id: '4',
-        name: 'Gist 4',
+        id: "4",
+        name: "Gist 4",
         code: 'console.log("Hello, World!")',
       },
     ],
   },
-]
+];
 
 const onTeamGistClick = () => {
-  console.log('Team Gist Clicked')
-}
-
-const onDeleteTeam = (id: string) => {
-  console.log(`Deleting team with ID: ${id}`)
-}
+  console.log("Team Gist Clicked");
+};
 
 const onDeleteGist = (id: string) => {
-  console.log(`Deleting gist with ID: ${id}`)
-}
+  console.log(`Deleting gist with ID: ${id}`);
+};
 
 const onUpdateTeamClick = (id: string, name: string) => {
-  console.log(`Updating team with ID: ${id} and name: ${name}`)
-}
+  console.log(`Updating team with ID: ${id} and name: ${name}`);
+};
 
 export function TeamListFeature() {
-  const { data, error, isPending } = useOrgs()
-  return <TeamList teams={data || []} onTeamGistClick={onTeamGistClick} onDeleteTeam={onDeleteTeam} onDeleteGist={onDeleteGist} onUpdateTeamClick={onUpdateTeamClick} />
+  const { data, error, isPending } = useOrgs();
+  const { mutate } = useDeleteOrgs({ onSuccess: () => console.log("Deleted") });
+
+  const onDeleteTeam = (id: string) => {
+    mutate(id);
+  };
+
+  return (
+    <TeamList
+      teams={data || []}
+      onTeamGistClick={onTeamGistClick}
+      onDeleteTeam={onDeleteTeam}
+      onDeleteGist={onDeleteGist}
+      onUpdateTeamClick={onUpdateTeamClick}
+    />
+  );
 }

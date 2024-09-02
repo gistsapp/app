@@ -2,7 +2,7 @@
 import ky from "ky";
 import { getBackendURL } from "../utils";
 import { Gist } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 //types
 
@@ -43,6 +43,26 @@ const fetchGist = async (gistId: string): Promise<Gist> => {
   };
 };
 
+export interface CreateGistPayload {
+  name: string;
+  content: string;
+  org_id?: string;
+}
+
+const fetchCreateGist = async (gist: CreateGistPayload): Promise<Gist> => {
+  const json = await ky
+    .post(`${getBackendURL()}/gists`, {
+      credentials: "include",
+      json: gist,
+    })
+    .json<ApiGist>();
+  return {
+    id: json.id,
+    name: json.name,
+    code: json.content,
+  };
+};
+
 //hooks
 
 export const useGists = () => {
@@ -60,4 +80,26 @@ export const useGist = (gistId: string) => {
     queryFn: () => fetchGist(gistId),
   });
   return { data, error, isPending };
+};
+
+export const useCreateGist = ({ onSuccess }: { onSuccess: () => void }) => {
+  const queryClient = useQueryClient(); // Access the Query Client
+
+  const { mutate, error, data, isPending } = useMutation({
+    mutationFn: (gist: CreateGistPayload) => {
+      return fetchCreateGist(gist);
+    },
+    onSuccess: (newGist) => {
+      queryClient.setQueryData(["gists"], (oldData: any) => {
+        // Assuming oldData is an array, you might need to adjust this based on your actual data structure
+        return [...(oldData || []), newGist];
+      });
+
+      // Call the onSuccess callback if provided
+      if (onSuccess) {
+        onSuccess();
+      }
+    },
+  });
+  return { mutate, error, data, isPending };
 };

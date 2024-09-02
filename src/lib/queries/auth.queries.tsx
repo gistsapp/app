@@ -44,14 +44,6 @@ export const useLocalAuth = () => {
   return { mutate, error, isPending };
 };
 
-export const prefetchLocalAuth = async (email: string) => {
-  const queryClient = getQueryClient();
-  return await queryClient.prefetchQuery({
-    queryKey: ["localAuth", email],
-    queryFn: () => fetchLocalAuth({ email }),
-  });
-};
-
 export const useLocalAuthVerify = () => {
   const { mutate, error, isPending, data } = useMutation({
     mutationFn: ({ email, token }: { email: string; token: string }) => {
@@ -59,18 +51,4 @@ export const useLocalAuthVerify = () => {
     },
   });
   return { mutate, error, isPending, data };
-};
-
-export const prefetchLocalAuthVerify = async ({
-  email,
-  token,
-}: {
-  email: string;
-  token: string;
-}) => {
-  const queryClient = getQueryClient();
-  return await queryClient.prefetchQuery({
-    queryKey: ["localAuthVerify", email, token],
-    queryFn: () => fetchLocalAuthVerify({ email, token }),
-  });
 };
