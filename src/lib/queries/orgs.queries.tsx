@@ -3,6 +3,7 @@ import { getBackendURL } from "../utils";
 import { Team } from "@/types";
 import { ApiGist } from "./gists.queries";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 interface AllApiOrg {
   id: string;
@@ -71,6 +72,14 @@ const fetchCreateOrg = async (name: string): Promise<Team> => {
   };
 };
 
+const fetchDeleteOrg = async (id: string) => {
+  await ky
+    .delete(`${getBackendURL()}/orgs/${id}`, {
+      credentials: "include",
+    })
+    .json();
+};
+
 //hooks
 
 export const useOrgs = () => {
@@ -91,6 +100,28 @@ export const useCreateOrg = ({ onSuccess }: { onSuccess: () => void }) => {
         return orgs ? [...orgs, newTeam] : [newTeam];
       });
 
+      if (onSuccess) {
+        onSuccess();
+      }
+    },
+  });
+
+  return { mutate, error, data, isPending };
+};
+
+export const useDeleteOrgs = ({ onSuccess }: { onSuccess: () => void }) => {
+  const queryClient = useQueryClient();
+  const [teamID, setTeamID] = useState<string>("");
+
+  const { mutate, error, data, isPending } = useMutation({
+    mutationFn: (id: string) => {
+      setTeamID(id);
+      return fetchDeleteOrg(id);
+    },
+    onSuccess: () => {
+      queryClient.setQueryData(["orgs"], (orgs: Team[] | undefined) => {
+        return orgs?.filter((org) => org.id !== teamID);
+      });
       if (onSuccess) {
         onSuccess();
       }
