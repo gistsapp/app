@@ -63,6 +63,49 @@ const fetchCreateGist = async (gist: CreateGistPayload): Promise<Gist> => {
   };
 };
 
+export interface PatchGistNamePayload {
+  id: string;
+  name: string;
+}
+
+const fetchPatchGistName = async (
+  payload: PatchGistNamePayload,
+): Promise<Gist> => {
+  const json = await ky
+    .patch(`${getBackendURL()}/gists/${payload.id}/name`, {
+      credentials: "include",
+      json: { name: payload.name },
+    })
+    .json<ApiGist>();
+  return {
+    id: json.id,
+    name: json.name,
+    code: json.content,
+  };
+};
+
+export interface PatchGistContentPayload {
+  id: string;
+  content: string;
+}
+
+const fetchPatchGistContent = async (
+  payload: PatchGistContentPayload,
+): Promise<Gist> => {
+  const json = await ky
+    .patch(`${getBackendURL()}/gists/${payload.id}/content`, {
+      credentials: "include",
+      json: { content: payload.content },
+    })
+    .json<ApiGist>();
+
+  return {
+    id: json.id,
+    name: json.name,
+    code: json.content,
+  };
+};
+
 //hooks
 
 export const useGists = () => {
@@ -96,6 +139,56 @@ export const useCreateGist = ({ onSuccess }: { onSuccess: () => void }) => {
       });
 
       // Call the onSuccess callback if provided
+      if (onSuccess) {
+        onSuccess();
+      }
+    },
+  });
+  return { mutate, error, data, isPending };
+};
+
+function updateNewGistInCache(queryClient: any, newGist: Gist) {
+  queryClient.setQueryData(["gists"], (oldData: any) => {
+    // Assuming oldData is an array, you might need to adjust this based on your actual data structure
+    return oldData.map((gist: Gist) => {
+      if (gist.id === newGist.id) {
+        return newGist;
+      }
+      return gist;
+    });
+  });
+}
+
+export const usePatchGistName = ({ onSuccess }: { onSuccess: () => void }) => {
+  const queryClient = useQueryClient(); // Access the Query Client
+
+  const { mutate, error, data, isPending } = useMutation({
+    mutationFn: (payload: PatchGistNamePayload) => {
+      return fetchPatchGistName(payload);
+    },
+    onSuccess: (newGist) => {
+      updateNewGistInCache(queryClient, newGist); // Call the onSuccess callback if provided
+      if (onSuccess) {
+        onSuccess();
+      }
+    },
+  });
+  return { mutate, error, data, isPending };
+};
+
+export const usePatchGistContent = ({
+  onSuccess,
+}: {
+  onSuccess: () => void;
+}) => {
+  const queryClient = useQueryClient(); // Access the Query Client
+
+  const { mutate, error, data, isPending } = useMutation({
+    mutationFn: (payload: PatchGistContentPayload) => {
+      return fetchPatchGistContent(payload);
+    },
+    onSuccess: (newGist) => {
+      updateNewGistInCache(queryClient, newGist); // Call the onSuccess callback if provided
       if (onSuccess) {
         onSuccess();
       }
