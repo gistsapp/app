@@ -18,9 +18,10 @@ interface GistLayoutProps {
   onMyGistsClick: () => void
   onCreateTeamClick: (name: string) => void
   onCreateGistClick: (name: string, content: string) => void
+  onLogoutClick: () => void
 }
 
-export default function GistLayout({ avatar, children, username, onMyGistsClick, onCreateTeamClick, onCreateGistClick }: GistLayoutProps) {
+export default function GistLayout({ avatar, children, username, onMyGistsClick, onCreateTeamClick, onCreateGistClick, onLogoutClick }: GistLayoutProps) {
   const [gistName, setGistName] = useState('')
   const [gistContent, setGistContent] = useState('')
   const [teamName, setTeamName] = useState('')
@@ -40,7 +41,7 @@ export default function GistLayout({ avatar, children, username, onMyGistsClick,
               <AvatarImage src={avatar} />
               <AvatarFallback className="bg-muted-foreground">{username.charAt(0).toUpperCase()}</AvatarFallback>
             </Avatar>
-            <ProfileDropdown username={username} />
+            <ProfileDropdown username={username} onLogoutClick={onLogoutClick} />
           </div>
 
           <TooltipProvider>
