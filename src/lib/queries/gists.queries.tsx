@@ -106,6 +106,15 @@ const fetchPatchGistContent = async (
   };
 };
 
+const fetchDeleteGist = async (id: string) => {
+  await ky
+    .delete(`${getBackendURL()}/gists/${id}`, {
+      credentials: "include",
+    })
+    .then();
+  return id;
+};
+
 //hooks
 
 export const useGists = () => {
@@ -194,5 +203,27 @@ export const usePatchGistContent = ({
       }
     },
   });
+  return { mutate, error, data, isPending };
+};
+
+export const useDeleteGist = ({
+  onSuccess,
+}: {
+  onSuccess: (id: string) => void;
+}) => {
+  const queryClient = useQueryClient();
+
+  const { mutate, error, data, isPending } = useMutation({
+    mutationFn: (id: string) => {
+      return fetchDeleteGist(id);
+    },
+    onSuccess: (gistID) => {
+      queryClient.setQueryData(["gists"], (oldData: any) => {
+        return oldData.filter((gist: Gist) => gist.id !== gistID.toString());
+      });
+      onSuccess(gistID.toString());
+    },
+  });
+
   return { mutate, error, data, isPending };
 };
