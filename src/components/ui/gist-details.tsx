@@ -1,6 +1,5 @@
 import { Badge } from '@/components/shadcn/badge'
 import { Input } from '@/components/shadcn/input'
-import { Textarea } from '@/components/shadcn/textarea'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/tooltip'
 import MenuButton from '@/components/ui/menu-button'
 import Shortcut from '@/components/ui/shortcut'

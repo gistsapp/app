@@ -4,43 +4,46 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import MenuButton from '@/components/ui/menu-button'
 import Shortcut from '@/components/ui/shortcut'
 import { Gist } from '@/types'
-import { ChevronRightIcon, DownloadIcon, LogIn, Trash2Icon } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { ChevronRightIcon, DownloadIcon, FolderOpen, LogIn, ShareIcon } from 'lucide-react'
+import { useRef } from 'react'
 import { Codearea } from '../shadcn/codearea'
 import { getLanguage } from '@/lib/language'
-import { toast } from '../shadcn/use-toast'
-import { redirect } from 'next/navigation'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../shadcn/dialog'
+import { Button } from '../shadcn/button'
 
 interface GistLandingProps {
   gist: Gist
-  onDownloadClick?: () => void
-  onSaveClick: (name: string, code: string) => void
+  onDownload: (name: string, code: string) => void
+  onLogin: () => void
+  onShare: () => void
+  onShareDialog: () => void
+  onGistNameChange: (name: string) => void
+  onGistCodeChange: (code: string) => void
+  onOpenFile: () => void
+  isShareDialogOpen: boolean
+  setIsShareDialogOpen: (isOpen: boolean) => void
 }
 
-export default function GistLanding({ gist, onDownloadClick, onSaveClick }: GistLandingProps) {
-  const [gistName, setGistName] = useState(gist.name)
-  const [gistCode, setGistCode] = useState(gist.code)
+export default function GistLanding({ gist, onDownload, onLogin, onShare, onShareDialog, onGistNameChange, onGistCodeChange, onOpenFile, isShareDialogOpen, setIsShareDialogOpen }: GistLandingProps) {
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
 
-  const language = getLanguage(gistName)
+  const language = getLanguage(gist.name)
 
-  const handleDownload = () => {
-    const element = document.createElement('a')
-    const file = new Blob([gistCode], { type: 'text/plain' })
-    element.href = URL.createObjectURL(file)
-    element.download = gistName
-    document.body.appendChild(element)
-    element.click()
-    document.body.removeChild(element)
-    toast({
-      title: 'Gist Downloaded',
-      description: 'Your gist has been downloaded successfully',
-    })
+  const handleGistNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onGistNameChange(e.target.value)
   }
 
-  const handleLogin = () => {
-    console.log('login')
-    redirect('/login')
+  const handleGistCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    onGistCodeChange(e.target.value)
   }
+
+  const handleOpenFileClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
+    }
+  }
+
+  const showLandingInformations = gist.code === ''
 
   return (
     <div className="flex flex-col flex-grow border-border rounded-lg border">
@@ -48,13 +51,13 @@ export default function GistLanding({ gist, onDownloadClick, onSaveClick }: Gist
         <div className="flex flex-row gap-2 justify-center items-center">
           <span>Welcome in Gists.app</span>
           <ChevronRightIcon className="w-4 h-4" />
-          <span>{gistName}</span>
+          <span>{gist.name}</span>
         </div>
-        <div className="flex flex-row gap-2 justify-center items-center">
+        <div className="flex flex-row gap-4 justify-center items-center">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <MenuButton onClick={handleLogin} icon={<LogIn className="w-4 h-4" />} variant={'header'}>
+                <MenuButton onClick={onLogin} icon={<LogIn className="w-4 h-4" />} variant={'header'}>
                   <span>Login</span>
                 </MenuButton>
               </TooltipTrigger>
@@ -69,7 +72,7 @@ export default function GistLanding({ gist, onDownloadClick, onSaveClick }: Gist
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <MenuButton onClick={handleDownload} icon={<DownloadIcon className="w-4 h-4" />} variant={'header'}>
+                <MenuButton onClick={(event) => onDownload(gist.name, gist.code)} icon={<DownloadIcon className="w-4 h-4" />} variant={'header'}>
                   <span>Download</span>
                 </MenuButton>
               </TooltipTrigger>
@@ -89,37 +92,85 @@ export default function GistLanding({ gist, onDownloadClick, onSaveClick }: Gist
           <Badge variant="section" className="w-fit">
             File name
           </Badge>
-          <Input placeholder="Enter your gist name here" value={gistName} onChange={(e) => setGistName(e.target.value)} className="rounded-none" />
+          <Input placeholder="Enter your gist name here" value={gist.name} onChange={handleGistNameChange} className="rounded-none" />
         </div>
         <div className="h-full flex flex-col gap-6 group">
           <Badge variant="section" className="w-min">
             Code
           </Badge>
-          <div className="flex flex-row h-full">
+          <div className="flex flex-row h-full relative">
             <div className="h-full bg-background w-16 border border-input border-r-0 px-3 py-2 text-sm flex justify-center items-start">1</div>
-            <Codearea placeholder="Enter your code here" value={gistCode} onChange={(e) => setGistCode(e.target.value)} className="rounded-none h-full border-l-0" language={language} />
+            <Codearea placeholder="Try it, and write your code here" value={gist.code} onChange={handleGistCodeChange} className="rounded-none h-full border-l-0" language={language} />
+
+            {showLandingInformations && (
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center items-center">
+                <div className="flex flex-row gap-2 items-center justify-center w-full">
+                  <h3>GISTS</h3>
+                  <div className="w-[6px] h-[28px] bg-primary animate-blink"></div>
+                </div>
+                <p className="font-mono text-slate-400 my-4">All your data is saved locally in your browser, so just start typing.</p>
+                <div className="flex flex-col gap-4 w-3/4">
+                  <div className="flex flex-row justify-between font-mono text-slate-400">
+                    <div className="flex flex-row gap-2 cursor-pointer" onClick={handleOpenFileClick}>
+                      <FolderOpen className="w-6 h-6" />
+                      <p>Open</p>
+                    </div>
+                    <p>Ctrl + O</p>
+                  </div>
+                  <div className="flex flex-row justify-between font-mono text-slate-400">
+                    <div className="flex flex-row gap-2 cursor-pointer" onClick={onLogin}>
+                      <LogIn className="w-6 h-6" />
+                      <p>Log In</p>
+                    </div>
+                    <p>Ctrl + L</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
+      <input type="file" ref={fileInputRef} onChange={onOpenFile} className="hidden" />
       <div className="h-[1px] bg-border"></div>
-      <div className="py-4 px-6 flex flex-row justify-end items-center">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <MenuButton icon={<DownloadIcon className="w-4 h-4" />} variant={'menu'}>
-                <span>Share</span>
-              </MenuButton>
-            </TooltipTrigger>
-            <TooltipContent className="flex flex-row gap-2 justify-center items-center">
-              <span>Share your gist</span>
-              <Shortcut letter="Ctrl" />
-              <span>+</span>
-              <Shortcut letter="Maj" />
-              <span>+</span>
-              <Shortcut letter="S" />
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+      <div className="py-4 px-6 flex flex-row justify-end items-center gap-4">
+        <Dialog open={isShareDialogOpen} onOpenChange={setIsShareDialogOpen}>
+          <DialogTrigger>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <MenuButton onClick={onShareDialog} icon={<ShareIcon className="w-4 h-4" />} variant={'menu'}>
+                    <span>Share</span>
+                  </MenuButton>
+                </TooltipTrigger>
+                <TooltipContent className="flex flex-row gap-2 justify-center items-center">
+                  <span>Share your gist</span>
+                  <Shortcut letter="Ctrl" />
+                  <span>+</span>
+                  <Shortcut letter="Maj" />
+                  <span>+</span>
+                  <Shortcut letter="S" />
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </DialogTrigger>
+          <DialogContent className="p-10 text-center flex flex-col justify-center items-center gap-6" aria-describedby={undefined}>
+            <DialogTitle>Share you code with friends !</DialogTitle>
+            <p className="text-slate-400">You can share your code which will be valid for one week with people.</p>
+            <Button onClick={onShare} className="w-fit">
+              Share your code
+            </Button>
+            <div className="flex flex-row gap-2 w-full items-center">
+              <div className="h-[1px] bg-border w-full"></div>
+              <p className="text-slate-400 px-2">Or</p>
+              <div className="h-[1px] bg-border w-full"></div>
+            </div>
+            <DialogTitle>Log in to Gists</DialogTitle>
+            <p className="text-slate-400">Log in to save and share your code more easily.</p>
+            <Button onClick={onLogin} className="w-fit">
+              Log in
+            </Button>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   )

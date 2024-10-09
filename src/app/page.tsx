@@ -21,9 +21,9 @@ export const metadata: Metadata = {
     'version control',
     'code storage',
   ],
-  title: 'Gists App',
+  title: 'Gists',
   openGraph: {
-    description: 'Gists App is a platform for sharing code snippets and collaborating on projects',
+    description: 'Gists is a platform for sharing code snippets and collaborating on projects',
     images: [''],
   },
 }

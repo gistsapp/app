@@ -3,7 +3,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/shadcn/avatar'
 import { Button } from '@/components/shadcn/button'
 import { Codearea } from '@/components/shadcn/codearea'
 import { Input } from '@/components/shadcn/input'
-import { Textarea } from '@/components/shadcn/textarea'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/tooltip'
 import MenuButton from '@/components/ui/menu-button'
 import { Modal } from '@/components/ui/modal'
@@ -71,7 +70,7 @@ export default function GistLayout({ avatar, children, username, onMyGistsClick,
                     </div>
                   }
                   footer={
-                    <MenuButton variant="default" size="sm" onClick={handleCreateGistClick} className="">
+                    <MenuButton variant="default" size="sm" onClick={handleCreateGistClick}>
                       Create
                     </MenuButton>
                   }

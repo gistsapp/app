@@ -1,7 +1,5 @@
 import { Team } from '@/types'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../shadcn/accordion'
-import { Button } from '../shadcn/button'
-import MenuButton from './menu-button'
 import { TeamSection } from './team-section'
 import { TeamGistSection } from './team-gist-section'
 
