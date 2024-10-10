@@ -100,6 +100,10 @@
     @apply text-3xl font-semibold;
   }
 
+  h3 {
+    @apply text-2xl font-semibold;
+  }
+
   :-moz-selection {
     /* Code for Firefox */
     color: #2d1eff;

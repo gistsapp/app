@@ -1,21 +1,14 @@
 import { ChevronDown, LogOut, User } from 'lucide-react'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from '../shadcn/dropdown-menu'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from '../shadcn/dropdown-menu'
 import { Button } from '../shadcn/button'
 import Shortcut from './shortcut'
 
 interface ProfileDropdownProps {
   username: string
+  onLogoutClick: () => void
 }
 
-export function ProfileDropdown({ username }: ProfileDropdownProps) {
+export function ProfileDropdown({ username, onLogoutClick }: ProfileDropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -36,7 +29,7 @@ export function ProfileDropdown({ username }: ProfileDropdownProps) {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={onLogoutClick}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
           <DropdownMenuShortcut>
