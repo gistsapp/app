@@ -2,8 +2,9 @@ import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const accessToken = request.cookies.get("gists.access_token")?.value;
+  const publicRoutes = ["/", "/login"]; // Ajoutez ici d'autres routes publiques si nécessaire
 
-  if (!accessToken && !request.nextUrl.pathname.startsWith("/login")) {
+  if (!accessToken && !publicRoutes.includes(request.nextUrl.pathname)) {
     return Response.redirect(new URL("/login", request.url));
   }
 }
