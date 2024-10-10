@@ -97,14 +97,13 @@ export default function LoginFeature() {
 
   const handleDelKeyPress = useCallback(
     (e: KeyboardEvent) => {
-      console.log('Delete key pressed')
       e.preventDefault()
       router.push('/')
     },
     [router]
   )
 
-  useKeyPress('Backspace', handleDelKeyPress)
+  useKeyPress('Escape', handleDelKeyPress)
 
   useEffect(() => {
     if (verified) {

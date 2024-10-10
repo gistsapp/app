@@ -146,7 +146,7 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
                   <span>Share your gist</span>
                   <Shortcut letter="Ctrl" />
                   <span>+</span>
-                  <Shortcut letter="Maj" />
+                  <Shortcut letter="Shft" />
                   <span>+</span>
                   <Shortcut letter="S" />
                 </TooltipContent>

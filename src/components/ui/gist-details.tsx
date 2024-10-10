@@ -87,7 +87,7 @@ export default function GistDetails({ gist, folder, redirect, onDownloadClick, o
                 <span>Share your gist</span>
                 <Shortcut letter="Ctrl" />
                 <span>+</span>
-                <Shortcut letter="Maj" />
+                <Shortcut letter="Shft" />
                 <span>+</span>
                 <Shortcut letter="S" />
               </TooltipContent>
