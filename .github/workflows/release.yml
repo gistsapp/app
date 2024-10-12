@@ -63,11 +63,10 @@ jobs:
           token: "${{ secrets.DEPLOYMENT_TOKEN }}"
       - name: Update values.yaml
         run: |
-          sudo add-apt-repository ppa:rmescandon/yq
-          sudo apt update
-          sudo apt install yq -y
+          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && \
+            chmod +x /usr/bin/yq
           cd projects/gists/gists-front
-          yq eval -i '.tag = env(TAG)' tag.yaml
+          /usr/bin/yq eval -i '.tag = env(TAG)' tag.yaml
           git config --global user.name "GIST Bot"
           git config --global user.email "ci.deployment.gists@users.noreply.github.com"
           git add tag.yaml
