@@ -16,14 +16,12 @@ interface MenuButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
 
 export default function MenuButton({ href, icon, children, letter, className, variant, size, ...props }: MenuButtonProps) {
   const ButtonContent = (
-    <Button variant={variant} size={size} className={cn('flex flex-row justify-between items-center group', className)} {...props}>
-      <div className="flex flex-row gap-2 items-center">
-        {icon &&
-          React.cloneElement(icon, {
-            className: 'h-4 w-4 text-slate-500 group-hover:text-primary-foreground',
-          })}
-        <span className="font-normal text-foreground">{children}</span>
-      </div>
+    <Button variant={variant} size={size} className={cn('flex !gap-2 flex-row justify-between items-center group', className)} {...props}>
+      {icon &&
+        React.cloneElement(icon, {
+          className: 'h-4 w-4 text-slate-500 group-hover:text-primary-foreground',
+        })}
+      <span className="font-normal text-foreground">{children}</span>
       {letter && <Shortcut letter={letter} />}
     </Button>
   )

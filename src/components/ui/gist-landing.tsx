@@ -8,7 +8,7 @@ import { ChevronRightIcon, DownloadIcon, FolderOpen, LogIn, ShareIcon } from 'lu
 import { useRef } from 'react'
 import { Codearea } from '../shadcn/codearea'
 import { getLanguage } from '@/lib/language'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../shadcn/dialog'
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../shadcn/dialog'
 import { Button } from '../shadcn/button'
 
 interface GistLandingProps {
@@ -50,10 +50,10 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
       <div className="py-4 px-6 flex flex-row justify-between items-center">
         <div className="flex flex-row gap-2 justify-center items-center">
           <span>Welcome in Gists.app</span>
-          <ChevronRightIcon className="w-4 h-4" />
-          <span>{gist.name}</span>
+          <ChevronRightIcon className="w-4 h-4 hidden sm:block" />
+          <span className="hidden sm:block">{gist.name}</span>
         </div>
-        <div className="flex flex-row gap-4 justify-center items-center">
+        <div className="flex flex-row gap-0 sm:gap-4 justify-center items-center">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -72,7 +72,7 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <MenuButton onClick={(event) => onDownload(gist.name, gist.code)} icon={<DownloadIcon className="w-4 h-4" />} variant={'header'}>
+                <MenuButton className="hidden sm:flex" onClick={() => onDownload(gist.name, gist.code)} icon={<DownloadIcon className="w-4 h-4" />} variant={'header'}>
                   <span>Download</span>
                 </MenuButton>
               </TooltipTrigger>
@@ -99,7 +99,7 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
             Code
           </Badge>
           <div className="flex flex-row h-full relative">
-            <div className="h-full bg-background w-16 border border-input border-r-0 px-3 py-2 text-sm flex justify-center items-start">1</div>
+            {/* <div className="h-full bg-background w-16 border border-input border-r-0 px-3 py-2 text-sm flex justify-center items-start">1</div> */}
             <Codearea placeholder="Try it, and write your code here" value={gist.code} onChange={handleGistCodeChange} className="rounded-none h-full border-l-0" language={language} />
 
             {showLandingInformations && (
@@ -109,7 +109,7 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
                   <div className="w-[6px] h-[28px] bg-primary animate-blink"></div>
                 </div>
                 <p className="font-mono text-slate-400 my-4">All your data is saved locally in your browser, so just start typing.</p>
-                <div className="flex flex-col gap-4 w-3/4">
+                <div className="flex-col gap-4 w-3/4 hidden sm:flex">
                   <div className="flex flex-row justify-between font-mono text-slate-400">
                     <div className="flex flex-row gap-2 cursor-pointer" onClick={handleOpenFileClick}>
                       <FolderOpen className="w-6 h-6" />
@@ -132,7 +132,22 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
       </div>
       <input type="file" ref={fileInputRef} onChange={onOpenFile} className="hidden" />
       <div className="h-[1px] bg-border"></div>
-      <div className="py-4 px-6 flex flex-row justify-end items-center gap-4">
+      <div className="py-4 px-6 flex flex-row justify-between sm:justify-end items-center gap-4">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <MenuButton className="sm:hidden" onClick={() => onDownload(gist.name, gist.code)} icon={<DownloadIcon className="w-4 h-4" />} variant={'header'}>
+                <span>Download</span>
+              </MenuButton>
+            </TooltipTrigger>
+            <TooltipContent className="flex flex-row gap-2 justify-center items-center">
+              <span>Download your Gist</span>
+              <Shortcut letter="Ctrl" />
+              <span>+</span>
+              <Shortcut letter="D" />
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <Dialog open={isShareDialogOpen} onOpenChange={setIsShareDialogOpen}>
           <DialogTrigger>
             <TooltipProvider>
