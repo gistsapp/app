@@ -5,7 +5,7 @@ import MenuButton from '@/components/ui/menu-button'
 import Shortcut from '@/components/ui/shortcut'
 import { Gist } from '@/types'
 import { ChevronRightIcon, DownloadIcon, FolderOpen, LogIn, ShareIcon } from 'lucide-react'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Codearea } from '../shadcn/codearea'
 import { getLanguage } from '@/lib/language'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../shadcn/dialog'
@@ -56,7 +56,7 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
         <div className="flex flex-row gap-0 sm:gap-4 justify-center items-center">
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <MenuButton onClick={onLogin} icon={<LogIn className="w-4 h-4" />} variant={'header'}>
                   <span>Login</span>
                 </MenuButton>
@@ -71,7 +71,7 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
           </TooltipProvider>
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <MenuButton className="hidden sm:flex" onClick={() => onDownload(gist.name, gist.code)} icon={<DownloadIcon className="w-4 h-4" />} variant={'header'}>
                   <span>Download</span>
                 </MenuButton>
@@ -100,15 +100,15 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
           </Badge>
           <div className="flex flex-row h-full relative">
             {/* <div className="h-full bg-background w-16 border border-input border-r-0 px-3 py-2 text-sm flex justify-center items-start">1</div> */}
-            <Codearea placeholder="Try it, and write your code here" value={gist.code} onChange={handleGistCodeChange} className="rounded-none h-full border-l-0" language={language} />
+            <Codearea placeholder="Try it, and write your code here" value={gist.code} onChange={handleGistCodeChange} className="rounded-none h-full" language={language} />
 
             {showLandingInformations && (
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center items-center">
+              <div className="w-full sm:w-auto px-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center items-center">
                 <div className="flex flex-row gap-2 items-center justify-center w-full">
                   <h3>GISTS</h3>
                   <div className="w-[6px] h-[28px] bg-primary animate-blink"></div>
                 </div>
-                <p className="font-mono text-slate-400 my-4">All your data is saved locally in your browser, so just start typing.</p>
+                <p className="font-mono text-sm sm:text-base text-slate-400 my-4">All your data is saved locally in your browser, so just start typing.</p>
                 <div className="flex-col gap-4 w-3/4 hidden sm:flex">
                   <div className="flex flex-row justify-between font-mono text-slate-400">
                     <div className="flex flex-row gap-2 cursor-pointer" onClick={handleOpenFileClick}>
@@ -135,7 +135,7 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
       <div className="py-4 px-6 flex flex-row justify-between sm:justify-end items-center gap-4">
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <MenuButton className="sm:hidden" onClick={() => onDownload(gist.name, gist.code)} icon={<DownloadIcon className="w-4 h-4" />} variant={'header'}>
                 <span>Download</span>
               </MenuButton>
@@ -149,24 +149,26 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
           </Tooltip>
         </TooltipProvider>
         <Dialog open={isShareDialogOpen} onOpenChange={setIsShareDialogOpen}>
-          <DialogTrigger>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <MenuButton onClick={onShareDialog} icon={<ShareIcon className="w-4 h-4" />} variant={'menu'}>
+          <DialogTrigger asChild>
+            <div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <MenuButton onClick={onShareDialog} icon={<ShareIcon className="w-4 h-4" />} variant={'menu'}>
+                      <span>Share</span>
+                    </MenuButton>
+                  </TooltipTrigger>
+                  <TooltipContent className="flex flex-row gap-2 justify-center items-center">
                     <span>Share</span>
-                  </MenuButton>
-                </TooltipTrigger>
-                <TooltipContent className="flex flex-row gap-2 justify-center items-center">
-                  <span>Share your gist</span>
-                  <Shortcut letter="Ctrl" />
-                  <span>+</span>
-                  <Shortcut letter="Shft" />
-                  <span>+</span>
-                  <Shortcut letter="S" />
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+                    <Shortcut letter="Ctrl" />
+                    <span>+</span>
+                    <Shortcut letter="Shft" />
+                    <span>+</span>
+                    <Shortcut letter="S" />
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
           </DialogTrigger>
           <DialogContent className="p-10 text-center flex flex-col justify-center items-center gap-6" aria-describedby={undefined}>
             <DialogTitle>Share you code with friends !</DialogTitle>

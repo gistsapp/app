@@ -41,7 +41,6 @@ export default function GistDetailsWrapper() {
   }, [])
 
   const handleShare = useCallback(() => {
-    console.log('Share')
   }, [])
 
   const handleLogin = useCallback(() => {

@@ -20,7 +20,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log(getBackendURL());
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={cn(fontSans.className)}>

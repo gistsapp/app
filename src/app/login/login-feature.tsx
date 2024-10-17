@@ -40,7 +40,6 @@ export default function LoginFeature() {
 
   const onSubmit = useCallback(
     (data: FormData) => {
-      console.log(data)
       sendEmail(data.email)
       localStorage.setItem('email', data.email)
       setStep('otpInput')
@@ -57,13 +56,10 @@ export default function LoginFeature() {
   }, [step, isValid, handleSubmit, onSubmit])
 
   const handleGitHubClick = useCallback(() => {
-    console.log('GitHub')
     window.location.href = getBackendURL() + '/auth/github'
   }, [])
 
   const handleGoogleClick = useCallback(() => {
-    console.log('CGoogle')
-
     window.location.href = getBackendURL() + '/auth/google'
   }, [])
 
@@ -72,7 +68,6 @@ export default function LoginFeature() {
   }, [])
 
   const handleContinueClick = useCallback(() => {
-    console.log('OTP:', otpValue)
     const email = localStorage.getItem('email')
     if (!email) {
       console.error('Email not found in local storage.')
@@ -83,7 +78,6 @@ export default function LoginFeature() {
   }, [otpValue, verifyEmail])
 
   const handleTryAgainClick = useCallback(() => {
-    console.log('A new OTP has been sent.')
     toast({
       title: 'A new one time password has been sent.',
       description: 'Please check your email.',
@@ -97,7 +91,6 @@ export default function LoginFeature() {
 
   const handleEscapeKeyPress = useCallback(
     (e: KeyboardEvent) => {
-      console.log('Delete key pressed')
       e.preventDefault()
       router.push('/')
     },
@@ -108,7 +101,6 @@ export default function LoginFeature() {
 
   useEffect(() => {
     if (verified) {
-      console.log('Verified:', verified)
       toast({
         title: 'You have been verified.',
       })
