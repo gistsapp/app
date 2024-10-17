@@ -14,7 +14,7 @@ export default function MyGistsPage({}: MyGistPageProps) {
         <span>My Gists</span>
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <MenuButton icon={<TornadoIcon className="w-4 h-4" />} variant={'menu'}>
                 <span>Sort by</span>
               </MenuButton>

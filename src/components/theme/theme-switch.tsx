@@ -19,7 +19,6 @@ export default function ThemeSwitch() {
         className="h-6 w-6"
         onClick={() => {
           setTheme('light')
-          console.log('light')
         }}
       />
     )
@@ -31,7 +30,6 @@ export default function ThemeSwitch() {
         className="h-6 w-6 text-gray-900"
         onClick={() => {
           setTheme('dark')
-          console.log('dark')
         }}
       />
     )

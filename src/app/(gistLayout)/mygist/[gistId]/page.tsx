@@ -32,20 +32,16 @@ export default function MyGistIdFeaturePage({
 
   const { mutate: updateContent } = usePatchGistContent({
     onSuccess: () => {
-      console.log("Gist content updated");
     },
   });
 
   const onDownloadClick = () => {
-    console.log("Downloading gist");
     toast({
       title: "Gist Downloaded",
       description: "Your gist has been downloaded successfully",
     });
   };
   const onSaveClick = (name: string, code: string) => {
-    console.log("Saving gist with name:", name, "and code:", code);
-
     updateContent({ id: gistId, content: code });
 
     updateName({ id: gistId, name });

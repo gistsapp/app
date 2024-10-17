@@ -29,23 +29,19 @@ export default function GistLayoutFeature({ children }: { children: ReactNode })
   })
 
   const onMyGistsClick = () => {
-    console.log('My Gists clicked')
   }
 
   const onCreateTeamClick = useCallback(
     (name: string) => {
       createTeam(name)
-      console.log('Creating team with name:', name)
     },
     [toast, createTeam]
   )
 
   const onLogoutClick = () => {
-    console.log('/logout')
   }
 
   const onCreateGistClick = (name: string, content: string) => {
-    console.log(`Creating gist with name: ${name} \nand content: ${content}`)
     createGist({
       content,
       name,

@@ -47,41 +47,37 @@ export default function GistLayout({ avatar, children, username, onMyGistsClick,
             <ProfileDropdown username={username} onLogoutClick={onLogoutClick} />
           </div>
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Modal
-                  title="New Gist"
-                  trigger={
-                    <Button className="w-8 h-8 flex-shrink-0" size={'icon'} variant={'icon'}>
-                      <LucidePencil className="w-4 h-4" />
-                    </Button>
-                  }
-                  content={
-                    <div className="flex flex-col gap-3">
-                      <Input className="border-0 bg-background p-0 h-min font-bold" placeholder="Gist name" value={gistName} onChange={(e) => setGistName(e.target.value)} />
-                      <Codearea
-                        className="border-0 bg-background p-0 font-normal"
-                        placeholder="Write content..."
-                        value={gistContent}
-                        language={language}
-                        onChange={(e) => setGistContent(e.target.value)}
-                      />
-                    </div>
-                  }
-                  footer={
-                    <MenuButton variant="default" size="sm" onClick={handleCreateGistClick}>
-                      Create
-                    </MenuButton>
-                  }
-                ></Modal>
-              </TooltipTrigger>
-              <TooltipContent className="flex flex-row gap-2 justify-center items-center">
-                <span>Create a new Gist</span>
-                <Shortcut letter="C" />
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Modal
+            title="New Gist"
+            trigger={
+              <div>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button className="w-8 h-8 flex-shrink-0" size={'icon'} variant={'icon'}>
+                        <LucidePencil className="w-4 h-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent className="flex flex-row gap-2 justify-center items-center">
+                      <span>Create a new Gist</span>
+                      <Shortcut letter="C" />
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            }
+            content={
+              <div className="flex flex-col gap-3">
+                <Input className="border-0 bg-background p-0 h-min font-bold" placeholder="Gist name" value={gistName} onChange={(e) => setGistName(e.target.value)} />
+                <Codearea className="border-0 bg-background p-0 font-normal" placeholder="Write content..." value={gistContent} language={language} onChange={(e) => setGistContent(e.target.value)} />
+              </div>
+            }
+            footer={
+              <MenuButton variant="default" size="sm" onClick={handleCreateGistClick}>
+                Create
+              </MenuButton>
+            }
+          ></Modal>
         </div>
         <div className="flex flex-col gap-2">
           <MenuButton icon={<FileCodeIcon />} variant="menu" size="menu" letter="M" onClick={onMyGistsClick} href="/mygist" className="w-full">

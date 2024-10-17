@@ -55,8 +55,8 @@ export default function GistDetails({ gist, folder, redirect, onDownloadClick, o
             Code
           </Badge>
           <div className="flex flex-row h-full">
-            <div className="h-full bg-background w-16 border border-input border-r-0 px-3 py-2 text-sm flex justify-center items-start">1</div>
-            <Codearea placeholder="Enter your code here" value={gistCode} onChange={(e) => setGistCode(e.target.value)} className="rounded-none h-full border-l-0" language={language} />
+            {/* <div className="h-full bg-background w-16 border border-input border-r-0 px-3 py-2 text-sm flex justify-center items-start">1</div> */}
+            <Codearea placeholder="Enter your code here" value={gistCode} onChange={(e) => setGistCode(e.target.value)} className="rounded-none h-full" language={language} />
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@ export default function GistDetails({ gist, folder, redirect, onDownloadClick, o
       <div className="py-4 px-6 flex flex-row justify-between items-center">
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <MenuButton icon={<Trash2Icon className="w-4 h-4" />} variant={'menu'}>
                 <span>Delete</span>
               </MenuButton>
@@ -78,7 +78,7 @@ export default function GistDetails({ gist, folder, redirect, onDownloadClick, o
         <div className="flex flex-row gap-4">
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <MenuButton icon={<DownloadIcon className="w-4 h-4" />} variant={'menu'}>
                   <span>Share</span>
                 </MenuButton>
@@ -95,7 +95,7 @@ export default function GistDetails({ gist, folder, redirect, onDownloadClick, o
           </TooltipProvider>
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <MenuButton variant={'menu'} onClick={() => onSaveClick(gistName, gistCode)}>
                   <span>Save</span>
                 </MenuButton>
