@@ -1,3 +1,5 @@
+import { Language } from "@/lib/language";
+
 export interface Team {
   id: string;
   name: string;
@@ -6,6 +8,8 @@ export interface Team {
 
 export interface Gist {
   id: string;
+  description: string;
+  language: Language;
   name: string;
   code: string;
 }

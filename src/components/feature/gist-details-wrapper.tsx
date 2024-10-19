@@ -6,6 +6,7 @@ import GistLanding from '@/components/ui/gist-landing'
 import { toast } from '../shadcn/use-toast'
 import { useRouter } from 'next/navigation'
 import { useKeyPress } from '@/lib/hook/use-key-press'
+import { getLanguage } from '@/lib/language'
 
 console.log(`
   _______    ________  ______   _________  ______         ________   ______   ______    
@@ -23,16 +24,34 @@ export default function GistDetailsWrapper() {
   const router = useRouter()
   const [gist, setGist] = useState<Gist>({
     id: 'example',
-    name: 'Gist example',
+    description: '',
+    language: {
+      name: 'plaintext',
+      extension: 'txt',
+    },
+    name: '',
     code: '',
   })
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false)
 
+  const [selectedLanguage, setSelectedLanguage] = useState(gist.language.extension)
+
   useEffect(() => {
-    const storedGistName = localStorage.getItem('gistName') || 'Gist example'
+    setSelectedLanguage(gist.language.extension)
+  }, [gist.language.extension])
+
+  useEffect(() => {
+    const storedGistDescription = localStorage.getItem('gistDescription') || ''
+    const storedGistName = localStorage.getItem('gistName') || ''
     const storedGistCode = localStorage.getItem('gistCode') || ''
+    const storedGistExtension = localStorage.getItem('gistExtension') || ''
     setGist((prevGist) => ({
       ...prevGist,
+      description: storedGistDescription,
+      language: {
+        ...prevGist.language,
+        extension: storedGistExtension,
+      },
       name: storedGistName,
       code: storedGistCode,
     }))
@@ -52,8 +71,7 @@ export default function GistDetailsWrapper() {
     })
   }, [])
 
-  const handleShare = useCallback(() => {
-  }, [])
+  const handleShare = useCallback(() => {}, [])
 
   const handleLogin = useCallback(() => {
     router.push('/login')
@@ -63,13 +81,33 @@ export default function GistDetailsWrapper() {
     setIsShareDialogOpen(true)
   }, [])
 
+  const handleGistExtensionChange = useCallback((newExtension: string) => {
+    setGist((prevGist) => ({
+      ...prevGist,
+      language: {
+        ...prevGist.language,
+        extension: newExtension,
+      },
+    }))
+    localStorage.setItem('gistExtension', newExtension)
+  }, [])
+
   const handleGistNameChange = useCallback((newName: string) => {
+    const detectedLanguage = getLanguage(newName)
+    setSelectedLanguage(detectedLanguage)
+    handleGistExtensionChange(detectedLanguage)
     setGist((prevGist) => ({ ...prevGist, name: newName }))
     localStorage.setItem('gistName', newName)
   }, [])
 
+  const handleGistDescriptionChange = useCallback((newDescription: string) => {
+    setGist((prevGist) => ({ ...prevGist, description: newDescription }))
+    localStorage.setItem('gistDescription', newDescription)
+  }, [])
+
   const handleGistCodeChange = useCallback((newCode: string) => {
     setGist((prevGist) => ({ ...prevGist, code: newCode }))
+
     localStorage.setItem('gistCode', newCode)
   }, [])
 
@@ -120,11 +158,14 @@ export default function GistDetailsWrapper() {
       onLogin={handleLogin}
       onDownload={handleDownload}
       onShare={handleShare}
+      onGistExtensionChange={handleGistExtensionChange}
+      onGistDescriptionChange={handleGistDescriptionChange}
       onGistNameChange={handleGistNameChange}
       onGistCodeChange={handleGistCodeChange}
       onOpenFile={handleOpenFile}
       isShareDialogOpen={isShareDialogOpen}
       setIsShareDialogOpen={setIsShareDialogOpen}
+      selectedLanguage={selectedLanguage}
     />
   )
 }

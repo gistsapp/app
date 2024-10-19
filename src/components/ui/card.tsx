@@ -17,7 +17,7 @@ export default function Card({ gist, href, onDeleteGist }: CardProps) {
       <ContextMenuTrigger className="flex items-center justify-start rounded-md text-sm font-semibold text-slate-400 w-full">
         <Link href={href} passHref className="relative hover:border-primary border-border border group w-full h-full">
           <Badge className="absolute bottom-8 left-8" variant={'title'}>
-            {gist.name}
+            {gist.description}
           </Badge>
         </Link>
       </ContextMenuTrigger>

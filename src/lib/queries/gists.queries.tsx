@@ -8,6 +8,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export interface ApiGist {
   id: string;
+  description: string;
+  language: {
+    name: string;
+    extension: string;
+  }
   name: string;
   content: string;
   owner_id: string;
@@ -38,6 +43,11 @@ const fetchGist = async (gistId: string): Promise<Gist> => {
     .json<ApiGist>();
   return {
     id: json.id,
+    description: json.name,
+    language: {
+      name: json.language.name,
+      extension: json.language.extension,
+    },
     name: json.name,
     code: json.content,
   };
@@ -58,6 +68,11 @@ const fetchCreateGist = async (gist: CreateGistPayload): Promise<Gist> => {
     .json<ApiGist>();
   return {
     id: json.id,
+    description: json.description,
+    language: {
+      name: json.language.name,
+      extension: json.language.extension,
+    },
     name: json.name,
     code: json.content,
   };
@@ -79,6 +94,11 @@ const fetchPatchGistName = async (
     .json<ApiGist>();
   return {
     id: json.id,
+    description: json.description,
+    language: {
+      name: json.language.name,
+      extension: json.language.extension,
+    },
     name: json.name,
     code: json.content,
   };
@@ -101,6 +121,8 @@ const fetchPatchGistContent = async (
 
   return {
     id: json.id,
+    description: json.name,
+    language: json.language,
     name: json.name,
     code: json.content,
   };

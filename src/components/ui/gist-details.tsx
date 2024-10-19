@@ -8,7 +8,8 @@ import { ChevronRightIcon, DownloadIcon, Trash2Icon } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Codearea } from '../shadcn/codearea'
-import { getLanguage } from '@/lib/language'
+import { getLanguage, Language } from '@/lib/language'
+import GistCodeblock from './gist-codeblock'
 
 interface GistDetailsProps {
   gist: Gist
@@ -21,6 +22,16 @@ interface GistDetailsProps {
 export default function GistDetails({ gist, folder, redirect, onDownloadClick, onSaveClick }: GistDetailsProps) {
   const [gistName, setGistName] = useState(gist.name)
   const [gistCode, setGistCode] = useState(gist.code)
+  const [gistDescription, setGistDescription] = useState(gist.description)
+  const [gistLangage, setGistLangage] = useState(gist.language)
+
+  const gistState: Gist = {
+    id: gist.id,
+    name: gistName,
+    code: gistCode,
+    description: gistDescription,
+    language: gistLangage,
+  }
 
   const language = getLanguage(gistName)
 
@@ -36,6 +47,7 @@ export default function GistDetails({ gist, folder, redirect, onDownloadClick, o
             <span>{folder}</span>
           )}
           <ChevronRightIcon className="w-4 h-4" />
+          {/* <span>{gistDescription}</span> */}
           <span>{gistName}</span>
         </div>
         <MenuButton onClick={onDownloadClick} icon={<DownloadIcon className="w-4 h-4" />} variant={'header'}>
@@ -43,7 +55,7 @@ export default function GistDetails({ gist, folder, redirect, onDownloadClick, o
         </MenuButton>
       </div>
       <div className="h-[1px] bg-border"></div>
-      <div className="h-full flex flex-col gap-6 p-6">
+      {/* <div className="h-full flex flex-col gap-6 p-6">
         <div className="flex flex-col gap-6 group">
           <Badge variant="section" className="w-fit">
             File name
@@ -55,11 +67,18 @@ export default function GistDetails({ gist, folder, redirect, onDownloadClick, o
             Code
           </Badge>
           <div className="flex flex-row h-full">
-            {/* <div className="h-full bg-background w-16 border border-input border-r-0 px-3 py-2 text-sm flex justify-center items-start">1</div> */}
             <Codearea placeholder="Enter your code here" value={gistCode} onChange={(e) => setGistCode(e.target.value)} className="rounded-none h-full" language={language} />
           </div>
         </div>
-      </div>
+      </div> */}
+      <GistCodeblock
+        gist={gistState}
+        handleGistLangageChange={() => {}}
+        handleGistDescriptionChange={(e) => setGistDescription(e.target.value)}
+        handleGistNameChange={(e) => setGistName(e.target.value)}
+        handleGistCodeChange={(e) => setGistCode(e.target.value)}
+        handleOpenFileClick={() => {}}
+      />
       <div className="h-[1px] bg-border"></div>
       <div className="py-4 px-6 flex flex-row justify-between items-center">
         <TooltipProvider>

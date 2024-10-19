@@ -1,9 +1,9 @@
-interface Language {
+export interface Language {
   name: string;
   extension: string;
 }
 
-const languages: Language[] = [
+export const languages: Language[] = [
   { name: "abap", extension: "abap" },
   { name: "aes", extension: "aes" },
   { name: "apex", extension: "cls" },
