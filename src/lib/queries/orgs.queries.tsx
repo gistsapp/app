@@ -24,6 +24,10 @@ const fetchOrgs = async () => {
     })
     .json<AllApiOrg[]>();
 
+  if (!json) {
+    return [];
+  }
+
   for (let org of json) {
     let team: Team = {
       id: org.id,
