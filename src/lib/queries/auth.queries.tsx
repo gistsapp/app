@@ -30,6 +30,15 @@ const fetchLocalAuthVerify = async ({
   return json;
 };
 
+export const renewToken = async () => {
+  const json = await ky
+    .post(`${getBackendURL()}/auth/identity/renew`, {
+      credentials: "include",
+    })
+    .json();
+  return json;
+};
+
 /**
  * Start the local authentication process by sending an email to the user
  * @param email, the user email
