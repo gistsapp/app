@@ -26,7 +26,7 @@ export default function GistLayoutFeature({
   const { mutate: createOrg } = useCreateOrg({
     onSuccess: () => {
       toast({
-        title: "Org Created",
+        title: "Organization Created",
         description: "Your org has been created successfully",
       });
     },
