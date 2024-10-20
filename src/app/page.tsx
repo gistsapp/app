@@ -2,7 +2,12 @@ import { Metadata } from 'next'
 import GistDetailsWrapper from '@/components/feature/gist-details-wrapper'
 
 export const metadata: Metadata = {
+  title: 'Create and share secure code snippets - Gists',
+  description: 'Gists lets developers create, share, and collaborate on secure code snippets.',
   metadataBase: new URL('https://gists.app'),
+  icons: {
+    icon: '/favicon.png',
+  },
   keywords: [
     'gists',
     'app',
@@ -27,12 +32,14 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://gists.app',
     siteName: 'Gists',
-    images: [{
-      url: 'https://gists.app/og-card.png',
-      width: 1200,
-      height: 630,
-      alt: 'Preview image for Gists.app',
-    }],
+    images: [
+      {
+        url: 'https://gists.app/og-card.png',
+        width: 1200,
+        height: 630,
+        alt: 'Preview image for Gists.app',
+      },
+    ],
   },
 }
 
