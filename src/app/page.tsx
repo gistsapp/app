@@ -21,10 +21,18 @@ export const metadata: Metadata = {
     'version control',
     'code storage',
   ],
-  title: 'Gists',
   openGraph: {
-    description: 'Gists is a platform for sharing code snippets and collaborating on projects',
-    images: [''],
+    title: 'Create and share secure code snippets - Gists',
+    description: 'Gists lets developers create, share, and collaborate on secure code snippets.',
+    type: 'website',
+    url: 'https://gists.app',
+    siteName: 'Gists',
+    images: [{
+      url: 'https://gists.app/og-card.png',
+      width: 1200,
+      height: 630,
+      alt: 'Preview image for Gists.app',
+    }],
   },
 }
 
