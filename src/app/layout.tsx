@@ -1,27 +1,28 @@
-import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
-import "./globals.css";
-import { cn, getBackendURL } from "@/lib/utils";
-import BlurBackground from "@/components/ui/blur-background";
-import ThemeWrapper from "@/components/theme/theme-wrapper";
-import { Toaster } from "@/components/shadcn/toaster";
-import { Providers } from "@/components/theme/theme-provider";
-import QueryProvider from "@/components/api/api-provider";
+import type { Metadata } from 'next'
+import { Inter as FontSans } from 'next/font/google'
+import './globals.css'
+import { cn, getBackendURL } from '@/lib/utils'
+import BlurBackground from '@/components/ui/blur-background'
+import ThemeWrapper from '@/components/theme/theme-wrapper'
+import { Toaster } from '@/components/shadcn/toaster'
+import { Providers } from '@/components/theme/theme-provider'
+import QueryProvider from '@/components/api/api-provider'
 
-const fontSans = FontSans({ subsets: ["latin"] });
+const fontSans = FontSans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Gists",
-  description: "Create and share code snippets.",
-};
+  title: 'Gists',
+  description: 'Create and share code snippets.',
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
+      <script defer src="https://cloud.umami.is/script.js" data-website-id="0e9bcd71-c239-4666-9b8e-a7c9e99ae235"></script>
       <body className={cn(fontSans.className)}>
         <QueryProvider>
           <Providers>
@@ -34,5 +35,5 @@ export default function RootLayout({
         </QueryProvider>
       </body>
     </html>
-  );
+  )
 }
