@@ -21,7 +21,7 @@
       "@/*": ["./src/*"],
       "@/types": ["./src/types"],
       "@components/shadcn": ["./src/components/shadcn"],
-      "@components/feature": ["./src/components/feature"],
+      "@components/logic": ["src/components/logic"],
       "@components/ui": ["./src/components/ui"],
       "@components/theme": ["./src/components/theme"]
     }

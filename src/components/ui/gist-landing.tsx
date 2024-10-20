@@ -5,16 +5,16 @@ import MenuButton from '@/components/ui/menu-button'
 import Shortcut from '@/components/ui/shortcut'
 import { Gist } from '@/types'
 import { ChevronRightIcon, DownloadIcon, FolderOpen, LogIn, ShareIcon } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Codearea } from '../shadcn/codearea'
 import { getLanguage } from '@/lib/language'
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../shadcn/dialog'
 import { Button } from '../shadcn/button'
+import Link from 'next/link'
 
 interface GistLandingProps {
   gist: Gist
   onDownload: (name: string, code: string) => void
-  onLogin: () => void
   onShare: () => void
   onShareDialog: () => void
   onGistNameChange: (name: string) => void
@@ -24,18 +24,10 @@ interface GistLandingProps {
   setIsShareDialogOpen: (isOpen: boolean) => void
 }
 
-export default function GistLanding({ gist, onDownload, onLogin, onShare, onShareDialog, onGistNameChange, onGistCodeChange, onOpenFile, isShareDialogOpen, setIsShareDialogOpen }: GistLandingProps) {
-  const fileInputRef = useRef<HTMLInputElement | null>(null)
-
+export default function GistLanding({ gist, onDownload, onShare, onShareDialog, onGistNameChange, onGistCodeChange, onOpenFile, isShareDialogOpen, setIsShareDialogOpen }: GistLandingProps) {
   const language = getLanguage(gist.name)
 
-  const handleGistNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onGistNameChange(e.target.value)
-  }
-
-  const handleGistCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    onGistCodeChange(e.target.value)
-  }
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   const handleOpenFileClick = () => {
     if (fileInputRef.current) {
@@ -57,7 +49,7 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <MenuButton onClick={onLogin} icon={<LogIn className="w-4 h-4" />} variant={'header'}>
+                <MenuButton href="/login" icon={<LogIn className="w-4 h-4" />} variant={'header'}>
                   <h2 className="text-sm font-normal">Login</h2>
                 </MenuButton>
               </TooltipTrigger>
@@ -92,7 +84,7 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
           <Badge variant="section" className="w-fit">
             File name
           </Badge>
-          <Input placeholder="Enter your gist name here" value={gist.name} onChange={handleGistNameChange} className="rounded-none" />
+          <Input placeholder="Enter your gist name here" value={gist.name} onChange={(e) => onGistNameChange(e.target.value)} className="rounded-none" />
         </div>
         <div className="h-full flex flex-col gap-6 group">
           <Badge variant="section" className="w-min">
@@ -100,7 +92,7 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
           </Badge>
           <div className="flex flex-row h-full relative">
             {/* <div className="h-full bg-background w-16 border border-input border-r-0 px-3 py-2 text-sm flex justify-center items-start">1</div> */}
-            <Codearea placeholder="Try it, and write your code here" value={gist.code} onChange={handleGistCodeChange} className="rounded-none h-full" language={language} />
+            <Codearea placeholder="Try it, and write your code here" value={gist.code} onChange={(e) => onGistCodeChange(e.target.value)} className="rounded-none h-full" language={language} />
 
             {showLandingInformations && (
               <div className="w-full sm:w-auto px-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center items-center">
@@ -118,10 +110,10 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
                     <p>Ctrl + O</p>
                   </div>
                   <div className="flex flex-row justify-between font-mono text-slate-400">
-                    <div className="flex flex-row gap-2 cursor-pointer" onClick={onLogin}>
+                    <Link href="/login" className="flex flex-row gap-2 cursor-pointer">
                       <LogIn className="w-6 h-6" />
                       <p>Log In</p>
-                    </div>
+                    </Link>
                     <p>Ctrl + L</p>
                   </div>
                 </div>
@@ -183,9 +175,9 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
             </div>
             <DialogTitle>Log in to Gists</DialogTitle>
             <p className="text-slate-400">Log in to save and share your code more easily.</p>
-            <Button onClick={onLogin} className="w-fit">
-              Log in
-            </Button>
+            <Link href="/login" className="w-fit">
+              <Button>Log in</Button>
+            </Link>
           </DialogContent>
         </Dialog>
       </div>

@@ -1,4 +1,4 @@
-import { MyGistListFeature } from '@/components/feature/mygist-list-feature'
+import { MyGistListFeature } from '@/components/logic/mygist-list-logic'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/tooltip'
 import MenuButton from '@/components/ui/menu-button'
 import { PaginationComponent } from '@/components/ui/pagination'

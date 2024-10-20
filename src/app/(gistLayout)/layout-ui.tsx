@@ -1,4 +1,4 @@
-import { TeamListFeature } from '@/components/feature/team-list-feature'
+import { TeamListFeature } from '@/components/logic/team-list-logic'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/shadcn/avatar'
 import { Button } from '@/components/shadcn/button'
 import { Codearea } from '@/components/shadcn/codearea'
