@@ -49,7 +49,7 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
     <div className="flex flex-col flex-grow border-border rounded-lg border">
       <div className="py-4 px-6 flex flex-row justify-between items-center">
         <div className="flex flex-row gap-2 justify-center items-center">
-          <span>Welcome in Gists.app</span>
+          <h1 className="text-base font-normal">Gists</h1>
           <ChevronRightIcon className="w-4 h-4 hidden sm:block" />
           <span className="hidden sm:block">{gist.name}</span>
         </div>
@@ -58,7 +58,7 @@ export default function GistLanding({ gist, onDownload, onLogin, onShare, onShar
             <Tooltip>
               <TooltipTrigger asChild>
                 <MenuButton onClick={onLogin} icon={<LogIn className="w-4 h-4" />} variant={'header'}>
-                  <span>Login</span>
+                  <h2 className="text-sm font-normal">Login</h2>
                 </MenuButton>
               </TooltipTrigger>
               <TooltipContent className="flex flex-row gap-2 justify-center items-center">
