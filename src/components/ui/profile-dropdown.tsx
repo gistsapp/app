@@ -5,10 +5,10 @@ import Shortcut from './shortcut'
 
 interface ProfileDropdownProps {
   username: string
-  onLogoutClick: () => void
+  onLogout: () => void
 }
 
-export function ProfileDropdown({ username, onLogoutClick }: ProfileDropdownProps) {
+export function ProfileDropdown({ username, onLogout }: ProfileDropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -28,8 +28,7 @@ export function ProfileDropdown({ username, onLogoutClick }: ProfileDropdownProp
           </DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-
-        <DropdownMenuItem onClick={onLogoutClick}>
+        <DropdownMenuItem onClick={onLogout}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
           <DropdownMenuShortcut>

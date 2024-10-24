@@ -1,8 +1,7 @@
 import { MyGistListFeature } from '@/components/logic/mygist-list-logic'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/tooltip'
 import MenuButton from '@/components/ui/menu-button'
 import { PaginationComponent } from '@/components/ui/pagination'
-import Shortcut from '@/components/ui/shortcut'
+import TooltipShortcut, { TooltipShortcutTrigger } from '@/components/ui/tooltip-shortcut'
 import { TornadoIcon } from 'lucide-react'
 
 interface MyGistPageProps {}
@@ -12,19 +11,13 @@ export default function MyGistsPage({}: MyGistPageProps) {
     <div className="flex flex-col flex-grow border-border rounded-lg border">
       <div className="py-4 px-6 flex flex-row justify-between items-center">
         <span>My Gists</span>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <MenuButton icon={<TornadoIcon className="w-4 h-4" />} variant={'menu'}>
-                <span>Sort by</span>
-              </MenuButton>
-            </TooltipTrigger>
-            <TooltipContent className="flex flex-row gap-2 justify-center items-center">
-              <span>Sort your gists</span>
-              <Shortcut letter="S" />
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <TooltipShortcut tooltip="Sort your gists" shortcuts={['S']}>
+          <TooltipShortcutTrigger>
+            <MenuButton icon={<TornadoIcon className="w-4 h-4" />} variant={'menu'}>
+              <span>Sort by</span>
+            </MenuButton>
+          </TooltipShortcutTrigger>
+        </TooltipShortcut>
       </div>
       <div className="h-[1px] bg-border"></div>
       <MyGistListFeature />

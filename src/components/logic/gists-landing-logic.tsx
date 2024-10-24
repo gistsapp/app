@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { Gist } from '@/types'
 import GistLanding from '@/components/ui/gist-landing'
 import { toast } from '../shadcn/use-toast'
@@ -26,6 +26,7 @@ export default function GistsLandingLogic() {
     name: 'Welcome to Gists.app',
     code: '',
   })
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false)
 
   useEffect(() => {

@@ -1,13 +1,13 @@
-import { TeamListFeature } from '@/components/logic/team-list-logic'
+import { OrgListFeature } from '@/components/logic/org-list-logic'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/shadcn/avatar'
 import { Button } from '@/components/shadcn/button'
 import { Codearea } from '@/components/shadcn/codearea'
 import { Input } from '@/components/shadcn/input'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/tooltip'
 import MenuButton from '@/components/ui/menu-button'
 import { Modal } from '@/components/ui/modal'
 import { ProfileDropdown } from '@/components/ui/profile-dropdown'
 import Shortcut from '@/components/ui/shortcut'
+import TooltipShortcut, { TooltipShortcutTrigger } from '@/components/ui/tooltip-shortcut'
 import { getLanguage } from '@/lib/language'
 import { FileCodeIcon, LucidePencil, Menu, PlusIcon } from 'lucide-react'
 import { useState } from 'react'
@@ -16,21 +16,21 @@ interface GistLayoutProps {
   username: string
   avatar: string
   children: React.ReactNode
-  onMyGistsClick: () => void
-  onCreateTeamClick: (name: string) => void
-  onCreateGistClick: (name: string, content: string) => void
-  onLogoutClick: () => void
+  onMyGists: () => void
+  onCreateOrg: (name: string) => void
+  onCreateGist: (name: string, content: string) => void
+  onLogout: () => void
 }
 
-export default function GistLayout({ avatar, children, username, onMyGistsClick, onCreateTeamClick, onCreateGistClick, onLogoutClick }: GistLayoutProps) {
+export default function GistLayout({ avatar, children, username, onMyGists, onCreateOrg, onCreateGist, onLogout }: GistLayoutProps) {
   const [gistName, setGistName] = useState('')
   const [gistContent, setGistContent] = useState('')
-  const [teamName, setTeamName] = useState('')
+  const [orgName, setOrgName] = useState('')
 
   const language = getLanguage(gistName)
 
   const handleCreateGistClick = () => {
-    onCreateGistClick(gistName, gistContent)
+    onCreateGist(gistName, gistContent)
     setGistName('')
     setGistContent('')
   }
@@ -44,26 +44,20 @@ export default function GistLayout({ avatar, children, username, onMyGistsClick,
               <AvatarImage src={avatar} />
               <AvatarFallback className="bg-muted-foreground">{username.charAt(0).toUpperCase()}</AvatarFallback>
             </Avatar>
-            <ProfileDropdown username={username} onLogoutClick={onLogoutClick} />
+            <ProfileDropdown username={username} onLogout={onLogout} />
           </div>
 
           <Modal
             title="New Gist"
             trigger={
               <div>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button className="w-8 h-8 flex-shrink-0" size={'icon'} variant={'icon'}>
-                        <LucidePencil className="w-4 h-4" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent className="flex flex-row gap-2 justify-center items-center">
-                      <span>Create a new Gist</span>
-                      <Shortcut letter="C" />
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <TooltipShortcut tooltip="Create a new Gist" shortcuts={['C']}>
+                  <TooltipShortcutTrigger>
+                    <Button className="w-8 h-8 flex-shrink-0" size={'icon'} variant={'icon'}>
+                      <LucidePencil className="w-4 h-4" />
+                    </Button>
+                  </TooltipShortcutTrigger>
+                </TooltipShortcut>
               </div>
             }
             content={
@@ -80,29 +74,29 @@ export default function GistLayout({ avatar, children, username, onMyGistsClick,
           ></Modal>
         </div>
         <div className="flex flex-col gap-2">
-          <MenuButton icon={<FileCodeIcon />} variant="menu" size="menu" letter="M" onClick={onMyGistsClick} href="/mygist" className="w-full">
+          <MenuButton icon={<FileCodeIcon />} variant="menu" size="menu" letter="M" onClick={onMyGists} href="/mygist" className="w-full">
             My Gists
           </MenuButton>
           <Modal
             trigger={
               <MenuButton icon={<PlusIcon />} variant="menu" size="menu" letter="T" className="w-full">
-                Create team
+                Create org
               </MenuButton>
             }
-            title="Create Team"
+            title="Create Org"
             content={
               <div className="flex flex-col gap-3">
-                <Input className="border-0 bg-background p-0 h-min font-bold" placeholder="Team name" value={teamName} onChange={(e) => setTeamName(e.target.value)} />
+                <Input className="border-0 bg-background p-0 h-min font-bold" placeholder="Org name" value={orgName} onChange={(e) => setOrgName(e.target.value)} />
               </div>
             }
             footer={
-              <MenuButton variant="default" size="sm" onClick={() => onCreateTeamClick(teamName)} className="">
+              <MenuButton variant="default" size="sm" onClick={() => onCreateOrg(orgName)} className="">
                 Create
               </MenuButton>
             }
           ></Modal>
         </div>
-        <TeamListFeature />
+        <OrgListFeature />
       </div>
       {children}
     </div>

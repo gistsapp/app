@@ -23,27 +23,27 @@ export default function GistLayoutFeature({
     },
   });
 
-  const { mutate: createTeam } = useCreateOrg({
+  const { mutate: createOrg } = useCreateOrg({
     onSuccess: () => {
       toast({
-        title: "Team Created",
-        description: "Your team has been created successfully",
+        title: "Org Created",
+        description: "Your org has been created successfully",
       });
     },
   });
 
-  const onMyGistsClick = () => {};
+  const onMyGists = () => {};
 
-  const onCreateTeamClick = useCallback(
+  const onCreateOrg = useCallback(
     (name: string) => {
-      createTeam(name);
+      createOrg(name);
     },
-    [toast, createTeam],
+    [toast, createOrg],
   );
 
-  const onLogoutClick = () => {};
+  const onLogout = () => {};
 
-  const onCreateGistClick = (name: string, content: string) => {
+  const onCreateGist = (name: string, content: string) => {
     createGist({
       content,
       name,
@@ -52,12 +52,12 @@ export default function GistLayoutFeature({
 
   return (
     <GistLayout
-      onLogoutClick={onLogoutClick}
+      onLogout={onLogout}
       username={data?.name ?? ""}
       avatar={data?.picture ?? ""}
-      onCreateTeamClick={onCreateTeamClick}
-      onMyGistsClick={onMyGistsClick}
-      onCreateGistClick={onCreateGistClick}
+      onCreateOrg={onCreateOrg}
+      onMyGists={onMyGists}
+      onCreateGist={onCreateGist}
     >
       {children}
     </GistLayout>

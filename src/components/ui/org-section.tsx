@@ -6,14 +6,14 @@ import { Input } from '../shadcn/input'
 import MenuButton from './menu-button'
 import { useState } from 'react'
 
-interface TeamSectionProps {
+interface OrgSectionProps {
   title: string
   onDeleteTeam: () => void
   onUpdateTeamClick: (name: string) => void
 }
 
-export function TeamSection({ title, onDeleteTeam, onUpdateTeamClick }: TeamSectionProps) {
-  const [teamName, setTeamName] = useState('')
+export function OrgSection({ title, onDeleteTeam, onUpdateTeamClick }: OrgSectionProps) {
+  const [orgName, setOrgName] = useState('')
 
   return (
     <ContextMenu>
@@ -35,11 +35,11 @@ export function TeamSection({ title, onDeleteTeam, onUpdateTeamClick }: TeamSect
             title="Create Team"
             content={
               <div className="flex flex-col gap-3">
-                <Input className="border-0 bg-background p-0 h-min font-bold" placeholder="Team name" value={teamName} onChange={(e) => setTeamName(e.target.value)} />
+                <Input className="border-0 bg-background p-0 h-min font-bold" placeholder="Team name" value={orgName} onChange={(e) => setOrgName(e.target.value)} />
               </div>
             }
             footer={
-              <MenuButton variant="default" size="sm" onClick={() => onUpdateTeamClick(teamName)} className="">
+              <MenuButton variant="default" size="sm" onClick={() => onUpdateTeamClick(orgName)} className="">
                 Create
               </MenuButton>
             }
