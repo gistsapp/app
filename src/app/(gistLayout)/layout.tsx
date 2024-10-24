@@ -38,7 +38,7 @@ export default function GistLayoutFeature({
     (name: string) => {
       createOrg(name);
     },
-    [toast, createOrg],
+    [createOrg],
   );
 
   const onLogout = () => {};
