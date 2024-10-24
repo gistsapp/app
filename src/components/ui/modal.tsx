@@ -1,18 +1,18 @@
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../shadcn/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../shadcn/dialog'
 
 interface ModalProps {
   trigger: React.ReactNode
   content: React.ReactNode
   footer: React.ReactNode
   title: string
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
-export function Modal({ trigger, title, content, footer }: ModalProps) {
+export function Modal({ trigger, title, content, footer, open, onOpenChange }: ModalProps) {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        {trigger}
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="gap-0" aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle className="text-sm p-3">{title}</DialogTitle>

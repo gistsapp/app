@@ -26,6 +26,7 @@ export default function GistLayout({ avatar, children, username, onMyGists, onCr
   const [gistName, setGistName] = useState('')
   const [gistContent, setGistContent] = useState('')
   const [orgName, setOrgName] = useState('')
+  const [isOrgModalOpen, setIsOrgModalOpen] = useState(false)
 
   const language = getLanguage(gistName)
 
@@ -78,6 +79,8 @@ export default function GistLayout({ avatar, children, username, onMyGists, onCr
             My Gists
           </MenuButton>
           <Modal
+            open={isOrgModalOpen}
+            onOpenChange={setIsOrgModalOpen}
             trigger={
               <MenuButton icon={<PlusIcon />} variant="menu" size="menu" letter="T" className="w-full">
                 Create org
@@ -90,11 +93,19 @@ export default function GistLayout({ avatar, children, username, onMyGists, onCr
               </div>
             }
             footer={
-              <MenuButton variant="default" size="sm" onClick={() => onCreateOrg(orgName)} className="">
+              <MenuButton
+                variant="default"
+                size="sm"
+                onClick={() => {
+                  onCreateOrg(orgName)
+                  setOrgName('')
+                  setIsOrgModalOpen(false)
+                }}
+              >
                 Create
               </MenuButton>
             }
-          ></Modal>
+          />
         </div>
         <OrgListFeature />
       </div>
