@@ -1,26 +1,27 @@
 'use client'
-import React from 'react'
-import MyGistIdPage from './page-ui'
-import { useGist, usePatchGistContent, usePatchGistName } from '@/lib/queries/gists.queries'
 import { useToast } from '@/components/shadcn/use-toast'
-import { useKeyPress } from '@/lib/hook/use-key-press'
+import GistDetails from '@/components/ui/gist-details'
+import { useGist, usePatchGistContent, usePatchGistName } from '@/lib/queries/gists.queries'
+import { useOrg } from '@/lib/queries/orgs.queries'
+import React from 'react'
 
-interface MyGistIdFeaturePageProps {
+interface MyOrgGistIdFeaturePageProps {
   params: {
+    orgId: string
     gistId: string
   }
 }
 
-export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps) {
-  const { gistId } = params
-  const { data } = useGist(gistId)
+export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePageProps) {
+  const { orgId, gistId } = params
+  const { data: orgData } = useOrg(orgId)
+  const { data: gistData } = useGist(gistId)
   const { toast } = useToast()
-
   const { mutate: updateName } = usePatchGistName({
     onSuccess: () => {
       toast({
         title: 'Gist Saved',
-        description: 'Your gist has been saved successfully',
+        description: 'Your gist has been saved successfully a ',
       })
     },
   })
@@ -35,6 +36,7 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
       description: 'Your gist has been downloaded successfully',
     })
   }
+
   const onSave = (name: string, code: string) => {
     updateContent({ id: gistId, content: code })
     updateName({ id: gistId, name })
@@ -44,16 +46,17 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
     })
   }
 
-  const onDelete = (id: string) => {
-    console.log(`Deleting gist with ID: ${id}`)
-  }
-
   const onShare = () => {
     console.log('Share')
   }
 
-  if (!data) {
+  const onDelete = (id: string) => {
+    console.log(`Deleting gist with ID: ${id}`)
+  }
+
+  if (!gistData) {
     return null
   }
-  return <MyGistIdPage gist={data} onDownload={onDownload} onSave={onSave} onDelete={onDelete} onShare={onShare} />
+
+  return <GistDetails orgName={orgData ? orgData.name : 'My Gists'} gist={gistData} onDownload={onDownload} onSave={onSave} onShare={onShare} onDelete={onDelete} />
 }

@@ -1,7 +1,4 @@
-import { Button } from '../shadcn/button'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../shadcn/dialog'
-import { Input } from '../shadcn/input'
-import { Label } from '../shadcn/label'
 
 interface ModalProps {
   trigger: React.ReactNode

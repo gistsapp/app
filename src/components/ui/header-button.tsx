@@ -1,16 +1,13 @@
 import React from 'react'
+import { Button, buttonVariants } from '../shadcn/button'
 import { cn } from '@/lib/utils'
-import { Button } from '../shadcn/button'
-import Shortcut from './shortcut'
-import Link from 'next/link'
+import { VariantProps } from 'class-variance-authority'
 
-interface HeaderButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface HeaderButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   icon?: React.ReactElement
   children: React.ReactNode
   className?: string
   onClick?: () => void
-  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link' | 'icon' | 'menu' | 'header'
-  size?: 'default' | 'no-padding' | 'sm' | 'lg' | 'menu' | 'icon'
 }
 
 export default function HeaderButton({ icon, children, className, onClick, variant, size, ...props }: HeaderButtonProps) {
