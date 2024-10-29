@@ -1,27 +1,23 @@
-"use client";
+'use client'
 
-import { ReactNode, useCallback } from "react";
-import GistLayout from "./layout-ui";
-import { useMe } from "@/lib/queries/user.queries";
-import { useToast } from "@/components/shadcn/use-toast";
-import { useCreateGist } from "@/lib/queries/gists.queries";
-import { useCreateOrg } from "@/lib/queries/orgs.queries";
+import { ReactNode, useCallback } from 'react'
+import GistLayout from './layout-ui'
+import { useMe } from '@/lib/queries/user.queries'
+import { useToast } from '@/components/shadcn/use-toast'
+import { useCreateGist } from '@/lib/queries/gists.queries'
+import { useCreateOrg } from '@/lib/queries/orgs.queries'
 
-export default function GistLayoutFeature({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  const { data, error } = useMe();
-  const { toast } = useToast();
+export default function GistLayoutFeature({ children }: { children: ReactNode }) {
+  const { data, error } = useMe()
+  const { toast } = useToast()
   const { mutate: createGist } = useCreateGist({
     onSuccess: () => {
       toast({
-        title: "Gist Created",
-        description: "Your gist has been created successfully",
-      });
+        title: 'Gist Created',
+        description: 'Your gist has been created successfully',
+      })
     },
-  });
+  })
 
   const { mutate: createOrg } = useCreateOrg({
     onSuccess: () => {
@@ -30,25 +26,25 @@ export default function GistLayoutFeature({
         description: "Your org has been created successfully",
       });
     },
-  });
+  })
 
   const onMyGists = () => {};
 
   const onCreateOrg = useCallback(
     (name: string) => {
-      createOrg(name);
+      createOrg(name)
     },
     [createOrg],
   );
 
-  const onLogout = () => {};
+  const onLogout = () => {}
 
   const onCreateGist = (name: string, content: string) => {
     createGist({
       content,
       name,
-    });
-  };
+    })
+  }
 
   return (
     <GistLayout
@@ -61,5 +57,5 @@ export default function GistLayoutFeature({
     >
       {children}
     </GistLayout>
-  );
+  )
 }
