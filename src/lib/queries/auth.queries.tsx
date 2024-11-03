@@ -1,7 +1,7 @@
 "use client";
 import ky from "ky";
 import { getBackendURL } from "../utils";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import getQueryClient from "./queries";
 
 const fetchLocalAuth = async ({ email }: { email: string }) => {
@@ -24,6 +24,15 @@ const fetchLocalAuthVerify = async ({
   const json = await ky
     .post(`${getBackendURL()}/auth/local/verify`, {
       json: { email, token },
+      credentials: "include",
+    })
+    .json();
+  return json;
+};
+
+const fetchLogout = async () => {
+  const json = await ky
+    .post(`${getBackendURL()}/auth/logout`, {
       credentials: "include",
     })
     .json();
@@ -60,4 +69,18 @@ export const useLocalAuthVerify = () => {
     },
   });
   return { mutate, error, isPending, data };
+};
+
+export const useLogout = ({ onSuccess }: { onSuccess?: () => void } = {}) => {
+  const queryClient = useQueryClient();
+  const { mutate, error, isPending } = useMutation({
+    mutationFn: () => {
+      return fetchLogout();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+      onSuccess && onSuccess();
+    },
+  });
+  return { mutate, error, isPending };
 };
