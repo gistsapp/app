@@ -130,7 +130,7 @@ export const useGist = (gistId: string) => {
   return { data, error, isPending }
 }
 
-export const useCreateGist = ({ onSuccess }: { onSuccess: () => void }) => {
+export const useCreateGist = () => {
   const queryClient = useQueryClient() // Access the Query Client
 
   const { mutate, error, data, isPending } = useMutation({
@@ -142,11 +142,6 @@ export const useCreateGist = ({ onSuccess }: { onSuccess: () => void }) => {
         // Assuming oldData is an array, you might need to adjust this based on your actual data structure
         return [...(oldData || []), newGist]
       })
-
-      // Call the onSuccess callback if provided
-      if (onSuccess) {
-        onSuccess()
-      }
     },
   })
   return { mutate, error, data, isPending }
