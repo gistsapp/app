@@ -37,7 +37,8 @@
     "react-hook-form": "^7.53.0",
     "react-redux": "^9.1.2",
     "tailwind-merge": "^2.5.3",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "useismobile": "^1.0.4"
   },
   "devDependencies": {
     "@codedependant/semantic-release-docker": "^5.0.3",

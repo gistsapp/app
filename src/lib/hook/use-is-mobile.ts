@@ -26,7 +26,7 @@ export const useIsMobile = (mobileScreenSize = 768) => {
         mediaListener.removeListener(checkIsMobile)
       }
     }
-  }, [mobileScreenSize])
+  }, [checkIsMobile, mobileScreenSize])
 
   return isMobile
 }
