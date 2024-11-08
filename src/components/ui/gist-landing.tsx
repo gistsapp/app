@@ -21,7 +21,7 @@ interface GistLandingProps {
 
 export default function GistLanding({ gist, onDownload, onShare, onShareDialog, onGistNameChange, onGistCodeChange, onOpenFile, isShareDialogOpen, setIsShareDialogOpen }: GistLandingProps) {
   return (
-    <div className="flex flex-col flex-grow border-border rounded-lg border">
+    <div className="flex flex-col w-full h-full border-border rounded-lg border">
       <Header gist={gist} onDownload={onDownload} />
       <div className="h-[1px] bg-border"></div>
       <CodeBlock gist={gist} onGistNameChange={onGistNameChange} onGistCodeChange={onGistCodeChange}>

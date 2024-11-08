@@ -13,7 +13,7 @@ export function Modal({ trigger, title, content, footer, open, onOpenChange }: M
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="gap-0" aria-describedby={undefined}>
+      <DialogContent className="gap-0 max-w-5xl" aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle className="text-sm p-3">{title}</DialogTitle>
         </DialogHeader>
