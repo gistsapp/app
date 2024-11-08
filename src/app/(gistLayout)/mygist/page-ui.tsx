@@ -32,7 +32,7 @@ export default function MyGistsPage({}: MyGistPageProps) {
       </div>
 
       <div className="h-[1px] bg-border"></div>
-      <PaginationProvider>
+      <PaginationProvider fromUrl>
         <MyGistListFeature />
         <div className="h-[1px] bg-border"></div>
         <div className="p-4">

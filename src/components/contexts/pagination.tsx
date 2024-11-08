@@ -1,5 +1,12 @@
 "use client";
-import { createContext, ReactNode, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 interface PaginationContextContent {
   offset: number;
@@ -23,16 +30,53 @@ export const PaginationContext = createContext<PaginationContextContent>(
   PaginationInitialState,
 );
 
-export function PaginationProvider({ children }: { children: ReactNode }) {
+export function PaginationProvider({
+  children,
+  fromUrl,
+}: {
+  children: ReactNode;
+  fromUrl: boolean;
+}) {
   const [offset, setOffset] = useState(PaginationInitialState.offset);
   const [limit, setLimit] = useState(PaginationInitialState.limit);
   const [nb_pages, setNbPages] = useState(PaginationInitialState.nb_pages);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const setOffsetHandler = (offset: number) => {
-    if (offset >= 0 && offset <= nb_pages * limit) {
+  const checkOffset = useCallback(
+    (offset: number) => {
+      if (offset >= 0 && offset <= nb_pages * limit) {
+        return true;
+      }
+      return false;
+    },
+    [nb_pages, limit],
+  );
+
+  const setOffsetHandler = useCallback(
+    (offset: number) => {
+      if (checkOffset(offset)) {
+        if (fromUrl) {
+          const page = Math.floor(offset / limit) + 1;
+          router.push(`${pathname}?page=${page}`);
+        }
+        setOffset(offset);
+      }
+    },
+    [checkOffset, fromUrl, limit, pathname, router],
+  );
+
+  useEffect(() => {
+    if (!fromUrl) return;
+    if (searchParams.has("page")) {
+      const page = parseInt(searchParams.get("page") as string);
+      const offset = (page - 1) * limit;
+      console.log("offset", offset);
+      if (!checkOffset(offset)) return;
       setOffset(offset);
     }
-  };
+  }, [searchParams, fromUrl, setOffset, limit, setOffsetHandler, checkOffset]);
 
   return (
     <PaginationContext.Provider
