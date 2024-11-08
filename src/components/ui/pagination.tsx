@@ -23,6 +23,10 @@ export function PaginationComponent() {
     setOffset(offset - limit);
   };
 
+  const goToPage = (page: number) => {
+    setOffset((page - 1) * limit);
+  };
+
   const previousDisabled = useCallback(() => offset === 0, [offset]);
   const nextDisabled = useCallback(() => {
     if (nb_pages) {
@@ -49,22 +53,23 @@ export function PaginationComponent() {
             disabled={previousDisabled()}
           />
         </PaginationItem>
-        {nb_pages && nb_pages > 0 && (
-          <PaginationItem>
-            <PaginationLink href="#">{current_page}</PaginationLink>
+        {current_page > 1 && (
+          <PaginationItem onClick={() => goToPage(1)}>
+            <PaginationLink href="#">1</PaginationLink>
           </PaginationItem>
         )}
-        {/* <PaginationItem> */}
-        {/*   <PaginationLink href="#" isActive> */}
-        {/*     2 */}
-        {/*   </PaginationLink> */}
-        {/* </PaginationItem> */}
-        {/* <PaginationItem> */}
-        {/*   <PaginationLink href="#">3</PaginationLink> */}
-        {/* </PaginationItem> */}
-        {/* <PaginationItem> */}
-        {/*   <PaginationEllipsis /> */}
-        {/* </PaginationItem> */}
+        {nb_pages && nb_pages > 0 && (
+          <PaginationItem>
+            <PaginationLink href="#" isActive>
+              {current_page}
+            </PaginationLink>
+          </PaginationItem>
+        )}
+        {current_page < nb_pages && (
+          <PaginationItem onClick={() => goToPage(nb_pages)}>
+            <PaginationLink href="#">{nb_pages}</PaginationLink>
+          </PaginationItem>
+        )}
         <PaginationItem>
           <PaginationNext
             href="#"
