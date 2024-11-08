@@ -11,8 +11,14 @@ import { useLogout } from '@/lib/queries/auth.queries'
 export default function GistLayoutFeature({ children }: { children: ReactNode }) {
   const { data, error } = useMe()
   const { toast } = useToast()
-  const { mutate } = useCreateGist()
-
+  const { mutate: createGist } = useCreateGist({
+    onSuccess: () => {
+      toast({
+        title: 'Gist Created',
+        description: 'Your gist has been created successfully',
+      })
+    },
+  })
   const { mutate: createOrg } = useCreateOrg({
     onSuccess: () => {
       toast({
@@ -45,21 +51,11 @@ export default function GistLayoutFeature({ children }: { children: ReactNode })
     logout()
   }
 
-  const onCreateGist = (name: string) => {
-    mutate(
-      {
-        content: '',
-        name,
-      },
-      {
-        onSuccess: () => {
-          toast({
-            title: 'Gist Created',
-            description: 'Your gist has been created successfully',
-          })
-        },
-      }
-    )
+  const onCreateGist = (name: string, content: string) => {
+    createGist({
+      content,
+      name,
+    })
   }
 
   return (

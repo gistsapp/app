@@ -1,12 +1,14 @@
 import { OrgListFeature } from '@/components/logic/org-list-logic'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/shadcn/avatar'
 import { Button } from '@/components/shadcn/button'
+import { Codearea } from '@/components/shadcn/codearea'
 import { Input } from '@/components/shadcn/input'
 import { Sidebar, SidebarContent, SidebarHeader, SidebarProvider } from '@/components/shadcn/sidebar'
 import MenuButton from '@/components/ui/menu-button'
 import { Modal } from '@/components/ui/modal'
 import { ProfileDropdown } from '@/components/ui/profile-dropdown'
 import TooltipShortcut, { TooltipShortcutTrigger } from '@/components/ui/tooltip-shortcut'
+import { getLanguage } from '@/lib/language'
 import { FileCodeIcon, LucidePencil, PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 
@@ -16,15 +18,18 @@ interface GistLayoutProps {
   children: React.ReactNode
   onMyGists: () => void
   onCreateOrg: (name: string) => void
-  onCreateGist: (name: string) => void
+  onCreateGist: (name: string, content: string) => void
   onLogout: () => void
 }
 
 export default function GistLayout({ avatar, children, username, onMyGists, onCreateOrg, onCreateGist, onLogout }: GistLayoutProps) {
   const [gistName, setGistName] = useState('')
+  const [gistContent, setGistContent] = useState('')
   const [isGistModalOpen, setIsGistModalOpen] = useState(false)
   const [orgName, setOrgName] = useState('')
   const [isOrgModalOpen, setIsOrgModalOpen] = useState(false)
+
+  const language = getLanguage(gistName)
 
   return (
     <SidebarProvider>
@@ -44,6 +49,9 @@ export default function GistLayout({ avatar, children, username, onMyGists, onCr
           setIsOrgModalOpen={setIsOrgModalOpen}
           onCreateOrg={onCreateOrg}
           onMyGists={onMyGists}
+          gistContent={gistContent}
+          setGistContent={setGistContent}
+          language={language}
         />
         {children}
       </div>
@@ -58,7 +66,7 @@ interface AppSidebarProps {
   setGistName: (name: string) => void
   isGistModalOpen: boolean
   setIsGistModalOpen: (open: boolean) => void
-  onCreateGist: (name: string) => void
+  onCreateGist: (name: string, content: string) => void
   onLogout: () => void
   orgName: string
   setOrgName: (name: string) => void
@@ -66,6 +74,9 @@ interface AppSidebarProps {
   setIsOrgModalOpen: (open: boolean) => void
   onCreateOrg: (name: string) => void
   onMyGists: () => void
+  gistContent: string
+  setGistContent: (content: string) => void
+  language: string
 }
 
 function AppSidebar({
@@ -83,6 +94,9 @@ function AppSidebar({
   setIsOrgModalOpen,
   onCreateOrg,
   onMyGists,
+  gistContent,
+  setGistContent,
+  language,
 }: AppSidebarProps) {
   return (
     <Sidebar variant="floating">
@@ -96,7 +110,16 @@ function AppSidebar({
               </Avatar>
               <ProfileDropdown username={username} onLogout={onLogout} />
             </div>
-            <CreateGistModal gistName={gistName} setGistName={setGistName} isGistModalOpen={isGistModalOpen} setIsGistModalOpen={setIsGistModalOpen} onCreateGist={onCreateGist} />
+            <CreateGistModal
+              gistName={gistName}
+              setGistName={setGistName}
+              isGistModalOpen={isGistModalOpen}
+              setIsGistModalOpen={setIsGistModalOpen}
+              onCreateGist={onCreateGist}
+              gistContent={gistContent}
+              language={language}
+              setGistContent={setGistContent}
+            />
           </div>
         </SidebarHeader>
         <SidebarContent>
@@ -118,10 +141,13 @@ interface CreateGistModalProps {
   setGistName: (name: string) => void
   isGistModalOpen: boolean
   setIsGistModalOpen: (open: boolean) => void
-  onCreateGist: (name: string) => void
+  onCreateGist: (name: string, content: string) => void
+  gistContent: string
+  setGistContent: (content: string) => void
+  language: string
 }
 
-function CreateGistModal({ gistName, setGistName, isGistModalOpen, setIsGistModalOpen, onCreateGist }: CreateGistModalProps) {
+function CreateGistModal({ gistName, setGistName, isGistModalOpen, setIsGistModalOpen, onCreateGist, gistContent, setGistContent, language }: CreateGistModalProps) {
   return (
     <Modal
       open={isGistModalOpen}
@@ -141,6 +167,9 @@ function CreateGistModal({ gistName, setGistName, isGistModalOpen, setIsGistModa
       content={
         <div className="flex flex-col gap-3">
           <Input className="border-0 bg-background p-0 h-min font-bold" placeholder="Gist name" value={gistName} onChange={(e) => setGistName(e.target.value)} />
+          <div className="max-h-80 overflow-y-auto">
+            <Codearea className="border-0 bg-background p-0 font-normal" placeholder="Write content..." value={gistContent} language={language} onChange={(e) => setGistContent(e.target.value)} />
+          </div>
         </div>
       }
       footer={
@@ -148,7 +177,7 @@ function CreateGistModal({ gistName, setGistName, isGistModalOpen, setIsGistModa
           variant="default"
           size="sm"
           onClick={() => {
-            onCreateGist(gistName)
+            onCreateGist(gistName, gistContent)
             setGistName('')
             setIsGistModalOpen(false)
           }}
