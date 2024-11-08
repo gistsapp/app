@@ -65,9 +65,9 @@ export function PaginationComponent() {
             </PaginationLink>
           </PaginationItem>
         )}
-        {current_page < nb_pages && (
-          <PaginationItem onClick={() => goToPage(nb_pages)}>
-            <PaginationLink href="#">{nb_pages}</PaginationLink>
+        {current_page <= nb_pages && (
+          <PaginationItem onClick={() => goToPage(nb_pages + 1)}>
+            <PaginationLink href="#">{nb_pages + 1}</PaginationLink>
           </PaginationItem>
         )}
         <PaginationItem>
