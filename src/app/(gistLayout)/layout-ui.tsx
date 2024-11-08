@@ -1,14 +1,13 @@
 import { OrgListFeature } from '@/components/logic/org-list-logic'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/shadcn/avatar'
 import { Button } from '@/components/shadcn/button'
-import { Codearea } from '@/components/shadcn/codearea'
 import { Input } from '@/components/shadcn/input'
+import { Sidebar, SidebarContent, SidebarHeader, SidebarProvider } from '@/components/shadcn/sidebar'
 import MenuButton from '@/components/ui/menu-button'
 import { Modal } from '@/components/ui/modal'
 import { ProfileDropdown } from '@/components/ui/profile-dropdown'
 import TooltipShortcut, { TooltipShortcutTrigger } from '@/components/ui/tooltip-shortcut'
-import { getLanguage } from '@/lib/language'
-import { FileCodeIcon, LucidePencil, Menu, PlusIcon } from 'lucide-react'
+import { FileCodeIcon, LucidePencil, PlusIcon } from 'lucide-react'
 import { useState } from 'react'
 
 interface GistLayoutProps {
@@ -28,10 +27,68 @@ export default function GistLayout({ avatar, children, username, onMyGists, onCr
   const [isOrgModalOpen, setIsOrgModalOpen] = useState(false)
 
   return (
-    <div className="w-full min-h-screen flex flex-row p-2">
-      <div className="sticky top-2 h-screen">
-        <div className="w-min flex flex-col gap-8 flex-shrink-0 pr-2">
-          <div className="flex flex-row gap-10 items-center">
+    <SidebarProvider>
+      <div className="w-full min-h-screen flex flex-row">
+        <AppSidebar
+          avatar={avatar}
+          username={username}
+          gistName={gistName}
+          setGistName={setGistName}
+          isGistModalOpen={isGistModalOpen}
+          setIsGistModalOpen={setIsGistModalOpen}
+          onCreateGist={onCreateGist}
+          onLogout={onLogout}
+          orgName={orgName}
+          setOrgName={setOrgName}
+          isOrgModalOpen={isOrgModalOpen}
+          setIsOrgModalOpen={setIsOrgModalOpen}
+          onCreateOrg={onCreateOrg}
+          onMyGists={onMyGists}
+        />
+        {children}
+      </div>
+    </SidebarProvider>
+  )
+}
+
+interface AppSidebarProps {
+  avatar: string
+  username: string
+  gistName: string
+  setGistName: (name: string) => void
+  isGistModalOpen: boolean
+  setIsGistModalOpen: (open: boolean) => void
+  onCreateGist: (name: string) => void
+  onLogout: () => void
+  orgName: string
+  setOrgName: (name: string) => void
+  isOrgModalOpen: boolean
+  setIsOrgModalOpen: (open: boolean) => void
+  onCreateOrg: (name: string) => void
+  onMyGists: () => void
+}
+
+function AppSidebar({
+  avatar,
+  username,
+  gistName,
+  setGistName,
+  isGistModalOpen,
+  setIsGistModalOpen,
+  onCreateGist,
+  onLogout,
+  orgName,
+  setOrgName,
+  isOrgModalOpen,
+  setIsOrgModalOpen,
+  onCreateOrg,
+  onMyGists,
+}: AppSidebarProps) {
+  return (
+    <Sidebar variant="floating">
+      <div className="w-min flex flex-col gap-8 flex-shrink-0 p-2">
+        <SidebarHeader>
+          <div className="flex flex-row gap-2 justify-between items-center">
             <div className="flex flex-row justify-start items-center gap-2">
               <Avatar className="h-8 w-8 flex-shrink-0">
                 <AvatarImage src={avatar} />
@@ -41,6 +98,8 @@ export default function GistLayout({ avatar, children, username, onMyGists, onCr
             </div>
             <CreateGistModal gistName={gistName} setGistName={setGistName} isGistModalOpen={isGistModalOpen} setIsGistModalOpen={setIsGistModalOpen} onCreateGist={onCreateGist} />
           </div>
+        </SidebarHeader>
+        <SidebarContent>
           <div className="flex flex-col gap-2">
             <MenuButton icon={<FileCodeIcon />} variant="menu" size="menu" letter="M" onClick={onMyGists} href="/mygist" className="w-full">
               My Gists
@@ -48,10 +107,9 @@ export default function GistLayout({ avatar, children, username, onMyGists, onCr
             <CreateOrgModal orgName={orgName} setOrgName={setOrgName} isOrgModalOpen={isOrgModalOpen} setIsOrgModalOpen={setIsOrgModalOpen} onCreateOrg={onCreateOrg} />
           </div>
           <OrgListFeature />
-        </div>
+        </SidebarContent>
       </div>
-      {children}
-    </div>
+    </Sidebar>
   )
 }
 
