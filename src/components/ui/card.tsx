@@ -1,9 +1,17 @@
-import Link from 'next/link'
-import { Badge } from '../shadcn/badge'
-import { ContextMenuContent, ContextMenuItem, ContextMenuShortcut, ContextMenuSeparator, ContextMenuLabel, ContextMenu, ContextMenuTrigger } from '../shadcn/context-menu'
-import { Trash2 } from 'lucide-react'
-import Shortcut from './shortcut'
-import { Gist } from '@/types'
+import Link from "next/link"
+import { Badge } from "../shadcn/badge"
+import {
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuShortcut,
+  ContextMenuSeparator,
+  ContextMenuLabel,
+  ContextMenu,
+  ContextMenuTrigger,
+} from "../shadcn/context-menu"
+import { Trash2 } from "lucide-react"
+import Shortcut from "./shortcut"
+import { Gist } from "@/types"
 
 interface CardProps {
   gist: Gist
@@ -16,7 +24,7 @@ export default function Card({ gist, href, onDeleteGist }: CardProps) {
     <ContextMenu>
       <ContextMenuTrigger className="flex items-center justify-start rounded-md text-sm font-semibold text-slate-400 w-full">
         <Link href={href} passHref className="relative hover:border-primary border-border border group w-full h-full">
-          <Badge className="absolute bottom-8 left-8" variant={'title'}>
+          <Badge className="absolute bottom-8 left-8" variant={"title"}>
             {gist.name}
           </Badge>
         </Link>

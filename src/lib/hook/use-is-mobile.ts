@@ -1,8 +1,8 @@
-import * as React from 'react'
+import * as React from "react"
 
 export const useIsMobile = (mobileScreenSize = 768) => {
-  if (typeof window.matchMedia !== 'function') {
-    throw Error('matchMedia not supported by browser!')
+  if (typeof window.matchMedia !== "function") {
+    throw Error("matchMedia not supported by browser!")
   }
   const [isMobile, setIsMobile] = React.useState(window.matchMedia(`(max-width: ${mobileScreenSize}px)`).matches)
 
@@ -14,14 +14,14 @@ export const useIsMobile = (mobileScreenSize = 768) => {
     const mediaListener = window.matchMedia(`(max-width: ${mobileScreenSize}px)`)
     // try catch used to fallback for browser compatibility
     try {
-      mediaListener.addEventListener('change', checkIsMobile)
+      mediaListener.addEventListener("change", checkIsMobile)
     } catch {
       mediaListener.addListener(checkIsMobile)
     }
 
     return () => {
       try {
-        mediaListener.removeEventListener('change', checkIsMobile)
+        mediaListener.removeEventListener("change", checkIsMobile)
       } catch {
         mediaListener.removeListener(checkIsMobile)
       }

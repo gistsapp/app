@@ -1,28 +1,19 @@
-import React, { ReactNode } from 'react';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../shadcn/tooltip";
-import Shortcut from './shortcut';
+import React, { ReactNode } from "react"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../shadcn/tooltip"
+import Shortcut from "./shortcut"
 
 interface TooltipShortcutProps {
-  children: ReactNode;
-  tooltip: string;
-  shortcuts: string[];
+  children: ReactNode
+  tooltip: string
+  shortcuts: string[]
 }
 
 interface TooltipShortcutTriggerProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export function TooltipShortcutTrigger({ children }: TooltipShortcutTriggerProps) {
-  return (
-    <TooltipTrigger asChild>
-      {children}
-    </TooltipTrigger>
-  );
+  return <TooltipTrigger asChild>{children}</TooltipTrigger>
 }
 
 export default function TooltipShortcut({ children, tooltip, shortcuts }: TooltipShortcutProps) {
@@ -43,5 +34,5 @@ export default function TooltipShortcut({ children, tooltip, shortcuts }: Toolti
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-  );
+  )
 }

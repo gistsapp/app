@@ -1,6 +1,6 @@
-"use client";
-import { useCallback, useContext } from "react";
-import { PaginationContext } from "../contexts/pagination";
+"use client"
+import { useCallback, useContext } from "react"
+import { PaginationContext } from "../contexts/pagination"
 import {
   Pagination,
   PaginationContent,
@@ -8,50 +8,46 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "../shadcn/pagination";
+} from "../shadcn/pagination"
 
 export function PaginationComponent() {
-  const { offset, setOffset, limit, nb_pages } = useContext(PaginationContext);
+  const { offset, setOffset, limit, nb_pages } = useContext(PaginationContext)
 
-  const current_page = Math.floor(offset / limit) + 1;
+  const current_page = Math.floor(offset / limit) + 1
 
   const handleNext = () => {
-    setOffset(offset + limit);
-  };
+    setOffset(offset + limit)
+  }
 
   const handlePrevious = () => {
-    setOffset(offset - limit);
-  };
+    setOffset(offset - limit)
+  }
 
   const goToPage = (page: number) => {
-    setOffset((page - 1) * limit);
-  };
+    setOffset((page - 1) * limit)
+  }
 
-  const previousDisabled = useCallback(() => offset === 0, [offset]);
+  const previousDisabled = useCallback(() => offset === 0, [offset])
   const nextDisabled = useCallback(() => {
     if (nb_pages) {
-      return offset + limit > nb_pages * limit;
+      return offset + limit > nb_pages * limit
     }
-    return false;
-  }, [offset, nb_pages, limit]);
+    return false
+  }, [offset, nb_pages, limit])
 
   if (!nb_pages) {
-    return <></>;
+    return <></>
   }
 
   if (nb_pages === 0) {
-    return <></>;
+    return <></>
   }
 
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious
-            href="#"
-            onClick={handlePrevious}
-            disabled={previousDisabled()}
-          />
+          <PaginationPrevious href="#" onClick={handlePrevious} disabled={previousDisabled()} />
         </PaginationItem>
         {current_page > 1 && (
           <PaginationItem onClick={() => goToPage(1)}>
@@ -71,14 +67,10 @@ export function PaginationComponent() {
           </PaginationItem>
         )}
         <PaginationItem>
-          <PaginationNext
-            href="#"
-            onClick={handleNext}
-            disabled={nextDisabled()}
-          />
+          <PaginationNext href="#" onClick={handleNext} disabled={nextDisabled()} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
-  );
+  )
 }
-export { Pagination };
+export { Pagination }

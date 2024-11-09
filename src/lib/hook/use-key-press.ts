@@ -1,8 +1,13 @@
-import { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef } from "react"
 
 type KeyHandler = (event: KeyboardEvent) => void
 
-export const useKeyPress = (targetKey: string, callback: KeyHandler, modifiers: Array<'ctrlKey' | 'shiftKey' | 'altKey' | 'metaKey'> = [], node: HTMLElement | Document | null = null) => {
+export const useKeyPress = (
+  targetKey: string,
+  callback: KeyHandler,
+  modifiers: Array<"ctrlKey" | "shiftKey" | "altKey" | "metaKey"> = [],
+  node: HTMLElement | Document | null = null
+) => {
   const callbackRef = useRef(callback)
 
   useLayoutEffect(() => {
@@ -23,7 +28,7 @@ export const useKeyPress = (targetKey: string, callback: KeyHandler, modifiers: 
 
   useEffect(() => {
     const targetNode = node ?? document
-    targetNode.addEventListener('keydown', handleKeyPress as EventListener)
-    return () => targetNode.removeEventListener('keydown', handleKeyPress as EventListener)
+    targetNode.addEventListener("keydown", handleKeyPress as EventListener)
+    return () => targetNode.removeEventListener("keydown", handleKeyPress as EventListener)
   }, [handleKeyPress, node])
 }

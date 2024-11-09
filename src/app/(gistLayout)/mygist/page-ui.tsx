@@ -1,12 +1,10 @@
-import { PaginationProvider } from "@/components/contexts/pagination";
-import { MyGistListFeature } from "@/components/logic/mygist-list-logic";
-import { SidebarTrigger } from "@/components/shadcn/sidebar";
-import MenuButton from "@/components/ui/menu-button";
-import { PaginationComponent } from "@/components/ui/pagination";
-import TooltipShortcut, {
-  TooltipShortcutTrigger,
-} from "@/components/ui/tooltip-shortcut";
-import { TornadoIcon } from "lucide-react";
+import { PaginationProvider } from "@/components/contexts/pagination"
+import { MyGistListFeature } from "@/components/logic/mygist-list-logic"
+import { SidebarTrigger } from "@/components/shadcn/sidebar"
+import MenuButton from "@/components/ui/menu-button"
+import { PaginationComponent } from "@/components/ui/pagination"
+import TooltipShortcut, { TooltipShortcutTrigger } from "@/components/ui/tooltip-shortcut"
+import { TornadoIcon } from "lucide-react"
 
 interface MyGistPageProps {}
 
@@ -21,10 +19,7 @@ export default function MyGistsPage({}: MyGistPageProps) {
         </div>
         <TooltipShortcut tooltip="Sort your gists" shortcuts={["S"]}>
           <TooltipShortcutTrigger>
-            <MenuButton
-              icon={<TornadoIcon className="w-4 h-4" />}
-              variant={"menu"}
-            >
+            <MenuButton icon={<TornadoIcon className="w-4 h-4" />} variant={"menu"}>
               <span>Sort by</span>
             </MenuButton>
           </TooltipShortcutTrigger>
@@ -40,5 +35,5 @@ export default function MyGistsPage({}: MyGistPageProps) {
         </div>
       </PaginationProvider>
     </div>
-  );
+  )
 }

@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "npx eslint .",
+    "prettier": "prettier --check .",
+    "prettier:format": "prettier --write .",
     "prepare": "husky"
   },
   "dependencies": {
@@ -47,6 +49,8 @@
     "@types/node": "^22.9.0",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.13.0",
+    "@typescript-eslint/parser": "^8.13.0",
     "eslint": "^9.14.0",
     "eslint-config-next": "14.2.5",
     "eslint-config-prettier": "^9.1.0",

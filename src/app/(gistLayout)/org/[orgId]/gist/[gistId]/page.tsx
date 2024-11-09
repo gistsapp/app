@@ -1,9 +1,9 @@
-'use client'
-import { useToast } from '@/components/shadcn/use-toast'
-import GistDetails from '@/components/ui/gist-details'
-import { useGist, usePatchGistContent, usePatchGistName } from '@/lib/queries/gists.queries'
-import { useOrg } from '@/lib/queries/orgs.queries'
-import React from 'react'
+"use client"
+import { useToast } from "@/components/shadcn/use-toast"
+import GistDetails from "@/components/ui/gist-details"
+import { useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
+import { useOrg } from "@/lib/queries/orgs.queries"
+import React from "react"
 
 interface MyOrgGistIdFeaturePageProps {
   params: {
@@ -20,8 +20,8 @@ export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePag
   const { mutate: updateName } = usePatchGistName({
     onSuccess: () => {
       toast({
-        title: 'Gist Saved',
-        description: 'Your gist has been saved successfully a ',
+        title: "Gist Saved",
+        description: "Your gist has been saved successfully a ",
       })
     },
   })
@@ -32,8 +32,8 @@ export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePag
 
   const onDownload = () => {
     toast({
-      title: 'Gist Downloaded',
-      description: 'Your gist has been downloaded successfully',
+      title: "Gist Downloaded",
+      description: "Your gist has been downloaded successfully",
     })
   }
 
@@ -41,13 +41,13 @@ export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePag
     updateContent({ id: gistId, content: code })
     updateName({ id: gistId, name })
     toast({
-      title: 'Gist Saved',
-      description: 'Your gist has been saved successfully',
+      title: "Gist Saved",
+      description: "Your gist has been saved successfully",
     })
   }
 
   const onShare = () => {
-    console.log('Share')
+    console.log("Share")
   }
 
   const onDelete = (id: string) => {
@@ -58,5 +58,14 @@ export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePag
     return null
   }
 
-  return <GistDetails orgName={orgData ? orgData.name : 'My Gists'} gist={gistData} onDownload={onDownload} onSave={onSave} onShare={onShare} onDelete={onDelete} />
+  return (
+    <GistDetails
+      orgName={orgData ? orgData.name : "My Gists"}
+      gist={gistData}
+      onDownload={onDownload}
+      onSave={onSave}
+      onShare={onShare}
+      onDelete={onDelete}
+    />
+  )
 }

@@ -1,14 +1,35 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import tseslint from "typescript-eslint";
-import pluginReact from "eslint-plugin-react";
+import eslintConfigPrettier from "eslint-config-prettier"
+import nextPlugin from "@next/eslint-plugin-next"
+import tsPlugin from "@typescript-eslint/eslint-plugin"
+import tsParser from "@typescript-eslint/parser"
 
-
-/** @type {import('eslint').Linter.Config[]} */
 export default [
-  {files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"]},
-  {languageOptions: { globals: globals.browser }},
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
-];
+  {
+    ignores: ["node_modules/**", "dist/**", ".next/**", "out/**"],
+  },
+  {
+    files: ["**/*.{ts,tsx}"],
+    plugins: {
+      "@typescript-eslint": tsPlugin,
+      "@next/next": nextPlugin,
+    },
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+      },
+    },
+    rules: {
+      // Avertissement pour les 'any'
+      "@typescript-eslint/no-explicit-any": "warn",
+
+      // Avertissement pour les imports/variables non utilisés
+      "@typescript-eslint/no-unused-vars": "warn",
+
+      // Avertissement pour les types implicites qui pourraient être 'any'
+      "@typescript-eslint/no-inferrable-types": "warn",
+    },
+  },
+  eslintConfigPrettier,
+]

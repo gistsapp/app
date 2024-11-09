@@ -1,5 +1,5 @@
-import GistDetails from '@/components/ui/gist-details'
-import { Gist } from '@/types'
+import GistDetails from "@/components/ui/gist-details"
+import { Gist } from "@/types"
 
 interface MyGistIdPageProps {
   gist: Gist
@@ -10,5 +10,15 @@ interface MyGistIdPageProps {
 }
 
 export default function MyGistIdPage({ gist, onDownload, onSave, onDelete, onShare }: MyGistIdPageProps) {
-  return <GistDetails orgName={'My Gists'} gist={gist} redirect={true} onDownload={onDownload} onSave={onSave} onDelete={onDelete} onShare={onShare} />
+  return (
+    <GistDetails
+      orgName={"My Gists"}
+      gist={gist}
+      redirect={true}
+      onDownload={onDownload}
+      onSave={onSave}
+      onDelete={onDelete}
+      onShare={onShare}
+    />
+  )
 }
