@@ -9,7 +9,7 @@ import { useCreateOrg } from "@/lib/queries/orgs.queries"
 import { useLogout } from "@/lib/queries/auth.queries"
 
 export default function GistLayoutFeature({ children }: { children: ReactNode }) {
-  const { data, error } = useMe()
+  const { data } = useMe()
   const { toast } = useToast()
   const { mutate: createGist } = useCreateGist({
     onSuccess: () => {

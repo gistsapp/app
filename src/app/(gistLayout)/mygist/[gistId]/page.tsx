@@ -3,7 +3,6 @@ import React from "react"
 import MyGistIdPage from "./page-ui"
 import { useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
 import { useToast } from "@/components/shadcn/use-toast"
-import { useKeyPress } from "@/lib/hook/use-key-press"
 
 interface MyGistIdFeaturePageProps {
   params: {
