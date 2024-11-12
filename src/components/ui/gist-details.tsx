@@ -2,7 +2,15 @@ import { Badge } from "@/components/shadcn/badge"
 import { Input } from "@/components/shadcn/input"
 import MenuButton from "@/components/ui/menu-button"
 import { Gist } from "@/types"
-import { ChevronRightIcon, DownloadIcon, ExternalLinkIcon, ShareIcon, Trash2Icon } from "lucide-react"
+import {
+  ChevronRightIcon,
+  CopyIcon,
+  DownloadIcon,
+  ExternalLinkIcon,
+  ShareIcon,
+  SquareCodeIcon,
+  Trash2Icon,
+} from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 import { Codearea } from "../shadcn/codearea"
@@ -10,6 +18,7 @@ import { getLanguage } from "@/lib/language"
 import TooltipShortcut, { TooltipShortcutTrigger } from "./tooltip-shortcut"
 import { getBackendURL } from "@/lib/utils"
 import { SidebarTrigger } from "../shadcn/sidebar"
+import { Button } from "../shadcn/button"
 
 interface GistDetailsProps {
   gist: Gist
@@ -18,6 +27,8 @@ interface GistDetailsProps {
   onDownload: (name: string, code: string) => void
   onShare: () => void
   onDelete: (id: string) => void
+  onCopy: (code: string) => void
+  onCopyCurl: () => void
   onSave: (name: string, code: string) => void
 }
 
@@ -28,6 +39,8 @@ export default function GistDetails({
   onDownload,
   onShare,
   onDelete,
+  onCopy,
+  onCopyCurl,
   onSave,
 }: GistDetailsProps) {
   const [gistId] = useState(gist.id)
@@ -59,6 +72,8 @@ export default function GistDetails({
         redirect={redirect}
         onDownload={() => onDownload(gistName, gistCode)}
         onOpenPlainText={onOpenPlainText}
+        onCopy={onCopy}
+        onCopyCurl={onCopyCurl}
       />
       <div className="h-[1px] bg-border"></div>
       <div className="h-full flex flex-col gap-6 p-6 border-border border-r border-l">
@@ -123,10 +138,12 @@ interface HeaderProps {
   orgName: string
   redirect?: boolean
   onDownload: (name: string, code: string) => void
+  onCopy: (code: string) => void
+  onCopyCurl: () => void
   onOpenPlainText?: (gistID: string) => void
 }
 
-function Header({ gist, orgName, redirect, onDownload, onOpenPlainText }: HeaderProps) {
+function Header({ gist, orgName, redirect, onDownload, onCopy, onCopyCurl, onOpenPlainText }: HeaderProps) {
   return (
     <div className="py-4 px-6 flex flex-row justify-between items-center rounded-t-lg border-border border-l border-t border-r">
       <div className="flex flex-row gap-6 items-center h-full">
@@ -145,31 +162,55 @@ function Header({ gist, orgName, redirect, onDownload, onOpenPlainText }: Header
         </div>
       </div>
 
-      <div className="flex flex-row">
+      <div className="flex flex-row items-center gap-4">
+        <TooltipShortcut tooltip="Copy Gist" shortcuts={["Ctrl", "C"]}>
+          <TooltipShortcutTrigger>
+            <Button
+              className="w-8 h-8 flex-shrink-0 group transition-all"
+              size={"icon"}
+              variant={"icon-ghost"}
+              onClick={() => onCopy(gist.code)}
+            >
+              <CopyIcon className="w-4 h-4 text-slate-500 group-hover:text-white transition-all" />
+            </Button>
+          </TooltipShortcutTrigger>
+        </TooltipShortcut>
+        <TooltipShortcut tooltip="Copy curl Gist" shortcuts={["Ctrl", "Shft", "C"]}>
+          <TooltipShortcutTrigger>
+            <Button
+              className="w-8 h-8 flex-shrink-0 group transition-all"
+              size={"icon"}
+              variant={"icon-ghost"}
+              onClick={() => onCopyCurl()}
+            >
+              <SquareCodeIcon className="w-4 h-4 text-slate-500 group-hover:text-white transition-all" />
+            </Button>
+          </TooltipShortcutTrigger>
+        </TooltipShortcut>
         {onOpenPlainText && (
-          <TooltipShortcut tooltip="Open as plain text" shortcuts={["Ctrl", "P"]}>
+          <TooltipShortcut tooltip="Open raw Gist" shortcuts={["Ctrl", "Alt", "R"]}>
             <TooltipShortcutTrigger>
-              <MenuButton
-                className="flex"
+              <Button
+                className="w-8 h-8 flex-shrink-0 group transition-all"
+                size={"icon"}
+                variant={"icon-ghost"}
                 onClick={() => onOpenPlainText(gist.id)}
-                icon={<ExternalLinkIcon className="w-4 h-4" />}
-                variant={"header"}
               >
-                <span>Raw</span>
-              </MenuButton>
+                <ExternalLinkIcon className="w-4 h-4 text-slate-500 group-hover:text-white transition-all" />
+              </Button>
             </TooltipShortcutTrigger>
           </TooltipShortcut>
         )}
-        <TooltipShortcut tooltip="Download" shortcuts={["Ctrl", "D"]}>
+        <TooltipShortcut tooltip="Download Gist" shortcuts={["Ctrl", "D"]}>
           <TooltipShortcutTrigger>
-            <MenuButton
-              className="flex"
+            <Button
+              className="w-8 h-8 flex-shrink-0 group transition-all"
+              size={"icon"}
+              variant={"icon-ghost"}
               onClick={() => onDownload(gist.name, gist.code)}
-              icon={<DownloadIcon className="w-4 h-4" />}
-              variant={"header"}
             >
-              <span>Download</span>
-            </MenuButton>
+              <DownloadIcon className="w-4 h-4 text-slate-500 group-hover:text-white transition-all" />
+            </Button>
           </TooltipShortcutTrigger>
         </TooltipShortcut>
       </div>
