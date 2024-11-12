@@ -1,12 +1,12 @@
-import ky from "ky";
-import { getBackendURL } from "../utils";
-import { useQuery } from "@tanstack/react-query";
+import ky from "ky"
+import { getBackendURL } from "../utils"
+import { useQuery } from "@tanstack/react-query"
 
 interface ApiUser {
-  id: string;
-  name: string;
-  email: string;
-  picture: string;
+  id: string
+  name: string
+  email: string
+  picture: string
 }
 
 const fetchMe = async () => {
@@ -14,15 +14,15 @@ const fetchMe = async () => {
     .get(`${getBackendURL()}/user/me`, {
       credentials: "include",
     })
-    .json<ApiUser>();
+    .json<ApiUser>()
 
-  return json;
-};
+  return json
+}
 
 export const useMe = () => {
   const { data, error, isPending } = useQuery({
     queryKey: ["me"],
     queryFn: fetchMe,
-  });
-  return { data, error, isPending };
-};
+  })
+  return { data, error, isPending }
+}

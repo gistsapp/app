@@ -1,5 +1,5 @@
-import { Gist } from '@/types'
-import Card from './card'
+import { Gist } from "@/types"
+import Card from "./card"
 
 interface MyGistListProps {
   gists: Gist[]

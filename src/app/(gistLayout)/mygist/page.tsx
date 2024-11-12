@@ -1,4 +1,4 @@
-import MyGistsPage from './page-ui'
+import MyGistsPage from "./page-ui"
 
 interface MyGistPageProps {}
 

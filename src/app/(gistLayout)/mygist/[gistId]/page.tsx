@@ -1,9 +1,9 @@
-'use client'
-import React from 'react'
-import MyGistIdPage from './page-ui'
-import { useGist, usePatchGistContent, usePatchGistName } from '@/lib/queries/gists.queries'
-import { useToast } from '@/components/shadcn/use-toast'
-import { useKeyPress } from '@/lib/hook/use-key-press'
+"use client"
+import React from "react"
+import MyGistIdPage from "./page-ui"
+import { useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
+import { useToast } from "@/components/shadcn/use-toast"
+import { useKeyPress } from "@/lib/hook/use-key-press"
 
 interface MyGistIdFeaturePageProps {
   params: {
@@ -19,8 +19,8 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
   const { mutate: updateName } = usePatchGistName({
     onSuccess: () => {
       toast({
-        title: 'Gist Saved',
-        description: 'Your gist has been saved successfully',
+        title: "Gist Saved",
+        description: "Your gist has been saved successfully",
       })
     },
   })
@@ -31,16 +31,16 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
 
   const onDownload = () => {
     toast({
-      title: 'Gist Downloaded',
-      description: 'Your gist has been downloaded successfully',
+      title: "Gist Downloaded",
+      description: "Your gist has been downloaded successfully",
     })
   }
   const onSave = (name: string, code: string) => {
     updateContent({ id: gistId, content: code })
     updateName({ id: gistId, name })
     toast({
-      title: 'Gist Saved',
-      description: 'Your gist has been saved successfully',
+      title: "Gist Saved",
+      description: "Your gist has been saved successfully",
     })
   }
 
@@ -49,7 +49,7 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
   }
 
   const onShare = () => {
-    console.log('Share')
+    console.log("Share")
   }
 
   if (!data) {

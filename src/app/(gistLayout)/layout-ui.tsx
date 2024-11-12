@@ -1,16 +1,16 @@
-import { OrgListFeature } from '@/components/logic/org-list-logic'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/shadcn/avatar'
-import { Button } from '@/components/shadcn/button'
-import { Codearea } from '@/components/shadcn/codearea'
-import { Input } from '@/components/shadcn/input'
-import { Sidebar, SidebarContent, SidebarHeader, SidebarProvider } from '@/components/shadcn/sidebar'
-import MenuButton from '@/components/ui/menu-button'
-import { Modal } from '@/components/ui/modal'
-import { ProfileDropdown } from '@/components/ui/profile-dropdown'
-import TooltipShortcut, { TooltipShortcutTrigger } from '@/components/ui/tooltip-shortcut'
-import { getLanguage } from '@/lib/language'
-import { FileCodeIcon, LucidePencil, PlusIcon } from 'lucide-react'
-import { useState } from 'react'
+import { OrgListFeature } from "@/components/logic/org-list-logic"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/avatar"
+import { Button } from "@/components/shadcn/button"
+import { Codearea } from "@/components/shadcn/codearea"
+import { Input } from "@/components/shadcn/input"
+import { Sidebar, SidebarContent, SidebarHeader, SidebarProvider } from "@/components/shadcn/sidebar"
+import MenuButton from "@/components/ui/menu-button"
+import { Modal } from "@/components/ui/modal"
+import { ProfileDropdown } from "@/components/ui/profile-dropdown"
+import TooltipShortcut, { TooltipShortcutTrigger } from "@/components/ui/tooltip-shortcut"
+import { getLanguage } from "@/lib/language"
+import { FileCodeIcon, LucidePencil, PlusIcon } from "lucide-react"
+import { useState } from "react"
 
 interface GistLayoutProps {
   username: string
@@ -22,11 +22,19 @@ interface GistLayoutProps {
   onLogout: () => void
 }
 
-export default function GistLayout({ avatar, children, username, onMyGists, onCreateOrg, onCreateGist, onLogout }: GistLayoutProps) {
-  const [gistName, setGistName] = useState('')
-  const [gistContent, setGistContent] = useState('')
+export default function GistLayout({
+  avatar,
+  children,
+  username,
+  onMyGists,
+  onCreateOrg,
+  onCreateGist,
+  onLogout,
+}: GistLayoutProps) {
+  const [gistName, setGistName] = useState("")
+  const [gistContent, setGistContent] = useState("")
   const [isGistModalOpen, setIsGistModalOpen] = useState(false)
-  const [orgName, setOrgName] = useState('')
+  const [orgName, setOrgName] = useState("")
   const [isOrgModalOpen, setIsOrgModalOpen] = useState(false)
 
   const language = getLanguage(gistName)
@@ -124,10 +132,24 @@ function AppSidebar({
         </SidebarHeader>
         <SidebarContent>
           <div className="flex flex-col gap-2">
-            <MenuButton icon={<FileCodeIcon />} variant="menu" size="menu" letter="M" onClick={onMyGists} href="/mygist" className="w-full">
+            <MenuButton
+              icon={<FileCodeIcon />}
+              variant="menu"
+              size="menu"
+              letter="M"
+              onClick={onMyGists}
+              href="/mygist"
+              className="w-full"
+            >
               My Gists
             </MenuButton>
-            <CreateOrgModal orgName={orgName} setOrgName={setOrgName} isOrgModalOpen={isOrgModalOpen} setIsOrgModalOpen={setIsOrgModalOpen} onCreateOrg={onCreateOrg} />
+            <CreateOrgModal
+              orgName={orgName}
+              setOrgName={setOrgName}
+              isOrgModalOpen={isOrgModalOpen}
+              setIsOrgModalOpen={setIsOrgModalOpen}
+              onCreateOrg={onCreateOrg}
+            />
           </div>
           <OrgListFeature />
         </SidebarContent>
@@ -147,7 +169,16 @@ interface CreateGistModalProps {
   language: string
 }
 
-function CreateGistModal({ gistName, setGistName, isGistModalOpen, setIsGistModalOpen, onCreateGist, gistContent, setGistContent, language }: CreateGistModalProps) {
+function CreateGistModal({
+  gistName,
+  setGistName,
+  isGistModalOpen,
+  setIsGistModalOpen,
+  onCreateGist,
+  gistContent,
+  setGistContent,
+  language,
+}: CreateGistModalProps) {
   return (
     <Modal
       open={isGistModalOpen}
@@ -155,9 +186,9 @@ function CreateGistModal({ gistName, setGistName, isGistModalOpen, setIsGistModa
       title="New Gist"
       trigger={
         <div>
-          <TooltipShortcut tooltip="Create a new Gist" shortcuts={['C']}>
+          <TooltipShortcut tooltip="Create a new Gist" shortcuts={["C"]}>
             <TooltipShortcutTrigger>
-              <Button className="w-8 h-8 flex-shrink-0" size={'icon'} variant={'icon'}>
+              <Button className="w-8 h-8 flex-shrink-0" size={"icon"} variant={"icon"}>
                 <LucidePencil className="w-4 h-4" />
               </Button>
             </TooltipShortcutTrigger>
@@ -166,9 +197,20 @@ function CreateGistModal({ gistName, setGistName, isGistModalOpen, setIsGistModa
       }
       content={
         <div className="flex flex-col gap-3">
-          <Input className="border-0 bg-background p-0 h-min font-bold" placeholder="Gist name" value={gistName} onChange={(e) => setGistName(e.target.value)} />
+          <Input
+            className="border-0 bg-background p-0 h-min font-bold"
+            placeholder="Gist name"
+            value={gistName}
+            onChange={(e) => setGistName(e.target.value)}
+          />
           <div className="max-h-80 overflow-y-auto">
-            <Codearea className="border-0 bg-background p-0 font-normal" placeholder="Write content..." value={gistContent} language={language} onChange={(e) => setGistContent(e.target.value)} />
+            <Codearea
+              className="border-0 bg-background p-0 font-normal"
+              placeholder="Write content..."
+              value={gistContent}
+              language={language}
+              onChange={(e) => setGistContent(e.target.value)}
+            />
           </div>
         </div>
       }
@@ -178,7 +220,7 @@ function CreateGistModal({ gistName, setGistName, isGistModalOpen, setIsGistModa
           size="sm"
           onClick={() => {
             onCreateGist(gistName, gistContent)
-            setGistName('')
+            setGistName("")
             setIsGistModalOpen(false)
           }}
         >
@@ -210,7 +252,12 @@ function CreateOrgModal({ orgName, setOrgName, setIsOrgModalOpen, onCreateOrg, i
       title="Create Org"
       content={
         <div className="flex flex-col gap-3">
-          <Input className="border-0 bg-background p-0 h-min font-bold" placeholder="Org name" value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+          <Input
+            className="border-0 bg-background p-0 h-min font-bold"
+            placeholder="Org name"
+            value={orgName}
+            onChange={(e) => setOrgName(e.target.value)}
+          />
         </div>
       }
       footer={
@@ -219,7 +266,7 @@ function CreateOrgModal({ orgName, setOrgName, setIsOrgModalOpen, onCreateOrg, i
           size="sm"
           onClick={() => {
             onCreateOrg(orgName)
-            setOrgName('')
+            setOrgName("")
             setIsOrgModalOpen(false)
           }}
         >

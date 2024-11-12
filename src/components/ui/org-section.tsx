@@ -1,10 +1,18 @@
-import { Pen, Plus, Trash2, Users } from 'lucide-react'
-import { ContextMenuContent, ContextMenuItem, ContextMenuShortcut, ContextMenuSeparator, ContextMenuLabel, ContextMenu, ContextMenuTrigger } from '../shadcn/context-menu'
-import Shortcut from './shortcut'
-import { Modal } from './modal'
-import { Input } from '../shadcn/input'
-import MenuButton from './menu-button'
-import { useState } from 'react'
+import { Pen, Plus, Trash2, Users } from "lucide-react"
+import {
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuShortcut,
+  ContextMenuSeparator,
+  ContextMenuLabel,
+  ContextMenu,
+  ContextMenuTrigger,
+} from "../shadcn/context-menu"
+import Shortcut from "./shortcut"
+import { Modal } from "./modal"
+import { Input } from "../shadcn/input"
+import MenuButton from "./menu-button"
+import { useState } from "react"
 
 interface OrgSectionProps {
   title: string
@@ -13,11 +21,13 @@ interface OrgSectionProps {
 }
 
 export function OrgSection({ title, onDeleteTeam, onUpdateTeamClick }: OrgSectionProps) {
-  const [orgName, setOrgName] = useState('')
+  const [orgName, setOrgName] = useState("")
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger className="py-4 px-3 flex items-center justify-start rounded-md text-sm font-semibold text-slate-400 w-full">{title}</ContextMenuTrigger>
+      <ContextMenuTrigger className="py-4 px-3 flex items-center justify-start rounded-md text-sm font-semibold text-slate-400 w-full">
+        {title}
+      </ContextMenuTrigger>
       <ContextMenuContent className="w-64">
         <ContextMenuLabel className="font-semibold">{title}</ContextMenuLabel>
         <ContextMenuSeparator />
@@ -35,7 +45,12 @@ export function OrgSection({ title, onDeleteTeam, onUpdateTeamClick }: OrgSectio
             title="Create Team"
             content={
               <div className="flex flex-col gap-3">
-                <Input className="border-0 bg-background p-0 h-min font-bold" placeholder="Team name" value={orgName} onChange={(e) => setOrgName(e.target.value)} />
+                <Input
+                  className="border-0 bg-background p-0 h-min font-bold"
+                  placeholder="Team name"
+                  value={orgName}
+                  onChange={(e) => setOrgName(e.target.value)}
+                />
               </div>
             }
             footer={

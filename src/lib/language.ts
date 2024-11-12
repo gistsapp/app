@@ -1,6 +1,6 @@
 interface Language {
-  name: string;
-  extension: string;
+  name: string
+  extension: string
 }
 
 const languages: Language[] = [
@@ -97,22 +97,20 @@ const languages: Language[] = [
   { name: "verilog", extension: "v" },
   { name: "vue", extension: "vue" },
   { name: "xml", extension: "xml" },
-];
+]
 
 function isDocker(file_name: string) {
-  return file_name === "Dockerfile";
+  return file_name === "Dockerfile"
 }
 
 function defaultStrategy(file_name: string) {
-  const extension = file_name.split(".").pop();
-  return (
-    languages.find((lang) => lang.extension === extension)?.name || "plaintext"
-  );
+  const extension = file_name.split(".").pop()
+  return languages.find((lang) => lang.extension === extension)?.name || "plaintext"
 }
 
 export function getLanguage(file_name: string) {
   if (isDocker(file_name)) {
-    return "dockerfile";
+    return "dockerfile"
   }
-  return defaultStrategy(file_name);
+  return defaultStrategy(file_name)
 }

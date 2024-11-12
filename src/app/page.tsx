@@ -1,4 +1,4 @@
-import GistsLandingLogic from '@/components/logic/gists-landing-logic'
+import GistsLandingLogic from "@/components/logic/gists-landing-logic"
 
 export default function HomePage() {
   return (

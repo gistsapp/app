@@ -1,9 +1,9 @@
-import { Badge } from '../shadcn/badge'
-import { Codearea } from '../shadcn/codearea'
-import { Input } from '../shadcn/input'
-import { Gist } from '@/types'
-import { getLanguage } from '@/lib/language'
-import { ReactNode } from 'react'
+import { Badge } from "../shadcn/badge"
+import { Codearea } from "../shadcn/codearea"
+import { Input } from "../shadcn/input"
+import { Gist } from "@/types"
+import { getLanguage } from "@/lib/language"
+import { ReactNode } from "react"
 
 interface CodeBlockProps {
   gist: Gist
@@ -27,7 +27,12 @@ export default function CodeBlock({ gist, onGistNameChange, onGistCodeChange, ch
         <Badge variant="section" className="w-fit">
           File name
         </Badge>
-        <Input placeholder="Enter your gist name here" value={gist.name} onChange={(e) => onGistNameChange(e.target.value)} className="rounded-none" />
+        <Input
+          placeholder="Enter your gist name here"
+          value={gist.name}
+          onChange={(e) => onGistNameChange(e.target.value)}
+          className="rounded-none"
+        />
       </div>
       <div className="h-full flex flex-col gap-6 group">
         <Badge variant="section" className="w-min">
