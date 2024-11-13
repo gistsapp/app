@@ -8,6 +8,8 @@ interface MyOrgGistIdPageProps {
   onSave: () => void
   onDelete: (id: string) => void
   onShare: () => void
+  onCopy: (code: string) => void
+  onCopyCurl: () => void
 }
 
 export default function MyOrgGistIdPage({
@@ -16,6 +18,8 @@ export default function MyOrgGistIdPage({
   onDownload,
   onSave,
   onDelete,
+  onCopy,
+  onCopyCurl,
   onShare,
 }: MyOrgGistIdPageProps) {
   return (
@@ -26,6 +30,8 @@ export default function MyOrgGistIdPage({
       onSave={onSave}
       onDelete={onDelete}
       onShare={onShare}
+      onCopy={onCopy}
+      onCopyCurl={onCopyCurl}
     />
   )
 }

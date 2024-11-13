@@ -3,6 +3,7 @@ import { useToast } from "@/components/shadcn/use-toast"
 import GistDetails from "@/components/ui/gist-details"
 import { useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
 import { useOrg } from "@/lib/queries/orgs.queries"
+import { getRawGistURL } from "@/lib/utils"
 import React from "react"
 
 interface MyOrgGistIdFeaturePageProps {
@@ -48,10 +49,42 @@ export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePag
 
   const onShare = () => {
     console.log("Share")
+    toast({
+      title: "Gist Shared",
+      description: "Your gist has been shared successfully",
+    })
   }
 
   const onDelete = (id: string) => {
     console.log(`Deleting gist with ID: ${id}`)
+    toast({
+      title: "Gist Deleted",
+      description: "Your gist has been deleted successfully",
+    })
+  }
+
+  const onCopy = (code: string) => {
+    navigator.clipboard
+      .writeText(code)
+      .then(() => {
+        console.log("Copy")
+        toast({
+          title: "Gist Copied",
+          description: "Your gist has been copied successfully",
+        })
+      })
+      .catch((error) => {
+        console.error("Failed to copy text: ", error)
+      })
+  }
+
+  const onCopyCurl = () => {
+    const curlCommand = `curl ${getRawGistURL(gistId)} -o- | /bin/bash`
+    toast({
+      title: "Gist Copied",
+      description: "Your curl command has been copied successfully",
+    })
+    navigator.clipboard.writeText(curlCommand)
   }
 
   if (!gistData) {
@@ -66,6 +99,8 @@ export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePag
       onSave={onSave}
       onShare={onShare}
       onDelete={onDelete}
+      onCopy={onCopy}
+      onCopyCurl={onCopyCurl}
     />
   )
 }

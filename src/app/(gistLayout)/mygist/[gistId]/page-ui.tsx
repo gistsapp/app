@@ -7,9 +7,19 @@ interface MyGistIdPageProps {
   onSave: (name: string, code: string) => void
   onDelete: (id: string) => void
   onShare: () => void
+  onCopy: (code: string) => void
+  onCopyCurl: () => void
 }
 
-export default function MyGistIdPage({ gist, onDownload, onSave, onDelete, onShare }: MyGistIdPageProps) {
+export default function MyGistIdPage({
+  gist,
+  onDownload,
+  onSave,
+  onDelete,
+  onShare,
+  onCopy,
+  onCopyCurl,
+}: MyGistIdPageProps) {
   return (
     <GistDetails
       orgName={"My Gists"}
@@ -19,6 +29,8 @@ export default function MyGistIdPage({ gist, onDownload, onSave, onDelete, onSha
       onSave={onSave}
       onDelete={onDelete}
       onShare={onShare}
+      onCopy={onCopy}
+      onCopyCurl={onCopyCurl}
     />
   )
 }

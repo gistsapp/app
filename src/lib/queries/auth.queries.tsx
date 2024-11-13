@@ -2,7 +2,6 @@
 import ky from "ky"
 import { getBackendURL } from "../utils"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import getQueryClient from "./queries"
 
 const fetchLocalAuth = async ({ email }: { email: string }) => {
   const json = await ky

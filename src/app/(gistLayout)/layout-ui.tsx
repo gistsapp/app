@@ -186,9 +186,9 @@ function CreateGistModal({
       title="New Gist"
       trigger={
         <div>
-          <TooltipShortcut tooltip="Create a new Gist" shortcuts={["C"]}>
+          <TooltipShortcut tooltip="Create new Gist" shortcuts={["C"]}>
             <TooltipShortcutTrigger>
-              <Button className="w-8 h-8 flex-shrink-0" size={"icon"} variant={"icon"}>
+              <Button className="w-8 h-8 flex-shrink-0 transition-all" size={"icon"} variant={"icon"}>
                 <LucidePencil className="w-4 h-4" />
               </Button>
             </TooltipShortcutTrigger>

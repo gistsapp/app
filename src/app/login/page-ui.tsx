@@ -5,7 +5,6 @@ import { Input } from "@/components/shadcn/input"
 import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "@/components/shadcn/input-otp"
 import { UseFormRegisterReturn } from "react-hook-form"
 import { Icon } from "@iconify/react"
-import { useKeyPress } from "@/lib/hook/use-key-press"
 
 interface LoginProps {
   step: "initial" | "emailInput" | "otpInput"
