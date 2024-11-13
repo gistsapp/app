@@ -58,7 +58,6 @@ export function PaginationProvider({ children, fromUrl }: { children: ReactNode;
     if (searchParams.has("page")) {
       const page = parseInt(searchParams.get("page") as string)
       const offset = (page - 1) * limit
-      console.log("offset", offset)
       if (!checkOffset(offset)) return
       setOffset(offset)
     }

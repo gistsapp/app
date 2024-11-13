@@ -1,9 +1,10 @@
 "use client"
 import React from "react"
 import MyGistIdPage from "./page-ui"
-import { useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
+import { useEditGist, useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
 import { useToast } from "@/components/shadcn/use-toast"
 import { getRawGistURL } from "@/lib/utils"
+import { useMe } from "@/lib/queries/user.queries"
 
 interface MyGistIdFeaturePageProps {
   params: {
@@ -15,6 +16,7 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
   const { gistId } = params
   const { data } = useGist(gistId)
   const { toast } = useToast()
+  const { data: me } = useMe()
 
   const { mutate: updateName } = usePatchGistName({
     onSuccess: () => {
@@ -29,6 +31,14 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
     onSuccess: () => {},
   })
 
+  const { mutate: edit } = useEditGist({
+    onSuccess: () => {
+      toast({
+        title: "Gist Saved",
+        description: "Your gist has been saved successfully",
+      })
+    },
+  })
   const onDownload = () => {
     toast({
       title: "Gist Downloaded",
@@ -36,11 +46,16 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
     })
   }
   const onSave = (name: string, code: string) => {
-    updateContent({ id: gistId, content: code })
-    updateName({ id: gistId, name })
-    toast({
-      title: "Gist Saved",
-      description: "Your gist has been saved successfully",
+    console.log("save")
+    edit({
+      id: gistId,
+      name,
+      content: code,
+      description: "",
+      visibility: "public",
+      org_id: null,
+      language: "plaintext",
+      owner_id: me?.id || "",
     })
   }
 

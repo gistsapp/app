@@ -12,11 +12,11 @@ import {
   Trash2Icon,
 } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Codearea } from "../shadcn/codearea"
 import { getLanguage } from "@/lib/language"
 import TooltipShortcut, { TooltipShortcutTrigger } from "./tooltip-shortcut"
-import { getBackendURL, getRawGistURL } from "@/lib/utils"
+import { getRawGistURL } from "@/lib/utils"
 import { SidebarTrigger } from "../shadcn/sidebar"
 import { Button } from "../shadcn/button"
 
@@ -46,6 +46,15 @@ export default function GistDetails({
   const [gistId] = useState(gist.id)
   const [gistName, setGistName] = useState(gist.name)
   const [gistCode, setGistCode] = useState(gist.code)
+  const [needSync, setNeedSync] = useState(false)
+
+  useEffect(() => {
+    if (gist.name !== gistName || gist.code !== gistCode) {
+      setNeedSync(true)
+    } else {
+      setNeedSync(false)
+    }
+  }, [gistName, gistCode])
 
   const gistState: Gist = {
     id: gistId,
@@ -54,7 +63,6 @@ export default function GistDetails({
   }
 
   const onOpenPlainText = (gistID: string) => {
-    // if production go to https://raw.gists.app/{gistID}
     console.log(process.env.NODE_ENV)
     window.open(getRawGistURL(gistID), "_blank")
   }
@@ -117,7 +125,7 @@ export default function GistDetails({
           </TooltipShortcut>
           <TooltipShortcut tooltip="Save" shortcuts={["Ctrl", "S"]}>
             <TooltipShortcutTrigger>
-              <MenuButton onClick={() => onSave(gistName, gistCode)} variant={"menu"}>
+              <MenuButton onClick={() => onSave(gistName, gistCode)} variant={"menu"} disabled={!needSync}>
                 <span>Save</span>
               </MenuButton>
             </TooltipShortcutTrigger>

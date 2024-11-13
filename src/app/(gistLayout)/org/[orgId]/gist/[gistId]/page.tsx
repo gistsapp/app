@@ -1,7 +1,7 @@
 "use client"
 import { useToast } from "@/components/shadcn/use-toast"
 import GistDetails from "@/components/ui/gist-details"
-import { useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
+import { useEditGist, useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
 import { useOrg } from "@/lib/queries/orgs.queries"
 import { getRawGistURL } from "@/lib/utils"
 import React from "react"
@@ -31,6 +31,15 @@ export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePag
     onSuccess: () => {},
   })
 
+  const { mutate: edit } = useEditGist({
+    onSuccess: () => {
+      toast({
+        title: "Gist Saved",
+        description: "Your gist has been saved successfully",
+      })
+    },
+  })
+
   const onDownload = () => {
     toast({
       title: "Gist Downloaded",
@@ -56,7 +65,6 @@ export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePag
   }
 
   const onDelete = (id: string) => {
-    console.log(`Deleting gist with ID: ${id}`)
     toast({
       title: "Gist Deleted",
       description: "Your gist has been deleted successfully",
