@@ -16,7 +16,7 @@ import { useState } from "react"
 import { Codearea } from "../shadcn/codearea"
 import { getLanguage } from "@/lib/language"
 import TooltipShortcut, { TooltipShortcutTrigger } from "./tooltip-shortcut"
-import { getBackendURL } from "@/lib/utils"
+import { getBackendURL, getRawGistURL } from "@/lib/utils"
 import { SidebarTrigger } from "../shadcn/sidebar"
 import { Button } from "../shadcn/button"
 
@@ -56,12 +56,7 @@ export default function GistDetails({
   const onOpenPlainText = (gistID: string) => {
     // if production go to https://raw.gists.app/{gistID}
     console.log(process.env.NODE_ENV)
-    if (process.env.NODE_ENV === "production") {
-      const raw_url = getBackendURL().replace("api", "raw") + "/" + gistID
-      window.open(raw_url, "_blank")
-      return
-    }
-    window.open(getBackendURL() + "/gists/raw/" + gistID, "_blank")
+    window.open(getRawGistURL(gistID), "_blank")
   }
 
   return (

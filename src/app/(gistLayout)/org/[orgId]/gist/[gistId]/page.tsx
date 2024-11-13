@@ -3,6 +3,7 @@ import { useToast } from "@/components/shadcn/use-toast"
 import GistDetails from "@/components/ui/gist-details"
 import { useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
 import { useOrg } from "@/lib/queries/orgs.queries"
+import { getRawGistURL } from "@/lib/utils"
 import React from "react"
 
 interface MyOrgGistIdFeaturePageProps {
@@ -78,7 +79,7 @@ export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePag
   }
 
   const onCopyCurl = () => {
-    const curlCommand = `curl https://raw.gists.app/${gistId} | /bin/bash`
+    const curlCommand = `curl ${getRawGistURL(gistId)} -o- | /bin/bash`
     toast({
       title: "Gist Copied",
       description: "Your curl command has been copied successfully",
