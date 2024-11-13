@@ -9,17 +9,17 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 tranition-all",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 tranition-all",
-        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground tranition-all",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 tranition-all",
-        ghost: "hover:bg-light-background hover:text-foreground tranition-all",
-        disabled: "hover:bg-light-background hover:text-foreground opacity-50 cursor-not-allowed tranition-all",
-        link: "text-primary text-base underline-offset-4 hover:underline tranition-all",
-        icon: "text-foreground bg-icon hover:bg-icon/80 tranition-all",
-        "icon-ghost": "hover:bg-icon hover:text-foreground tranition-all",
-        menu: "text-primary-foreground hover:bg-primary hover:text-primary-foreground tranition-all",
-        header: "hover:bg-primary hover:text-foreground tranition-all",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90 transition-all",
+        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-all",
+        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-all",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-all",
+        ghost: "hover:bg-light-background hover:text-foreground transition-all",
+        disabled: "hover:bg-light-background hover:text-foreground opacity-50 cursor-not-allowed transition-all",
+        link: "text-primary text-base underline-offset-4 hover:underline transition-all",
+        icon: "text-foreground bg-icon hover:bg-icon/80 transition-all",
+        "icon-ghost": "hover:bg-icon hover:text-foreground transition-all",
+        menu: "text-primary-foreground hover:bg-primary hover:text-primary-foreground transition-all",
+        header: "hover:bg-primary hover:text-foreground transition-all",
       },
       size: {
         default: "h-10 px-6 py-3",
