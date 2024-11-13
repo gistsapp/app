@@ -20,13 +20,13 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
         ref={ref}
         variant={variant}
         size={size}
-        className={cn("flex !gap-2 flex-row justify-between items-center group", className)}
+        className={cn("flex !gap-2 flex-row justify-between items-center group/button", className)}
         {...props}
       >
         <div className="flex flex-row gap-2 items-center">
           {icon &&
             React.cloneElement(icon, {
-              className: "h-4 w-4 text-slate-500 group-hover:text-primary-foreground tranition-all",
+              className: "h-4 w-4 text-slate-500 group-hover/button:text-primary-foreground transition-all",
             })}
           <span className="font-normal text-foreground">{children}</span>
         </div>
