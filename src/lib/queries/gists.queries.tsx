@@ -36,7 +36,7 @@ const fetchGists = async ({
   nb_pages: number
 }> => {
   const json = await ky
-    .get(`${getBackendURL()}/gists?offset=${offset}&limit=${limit}`, {
+    .get(`${getBackendURL()}/gists?offset=${offset}&limit=${limit}&short=true`, {
       credentials: "include",
     })
     .json<GistsWithPaginate>()
