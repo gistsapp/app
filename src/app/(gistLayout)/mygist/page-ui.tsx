@@ -30,7 +30,7 @@ export default function MyGistsPage({}: MyGistPageProps) {
       <PaginationProvider fromUrl>
         <MyGistListFeature />
         <div className="h-[1px] bg-border"></div>
-        <div className="p-4">
+        <div className="py-4 px-6 flex flex-row justify-between items-center rounded-b-lg border-border border-l border-b border-r">
           <PaginationComponent />
         </div>
       </PaginationProvider>

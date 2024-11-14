@@ -12,6 +12,8 @@ import {
 import { Trash2 } from "lucide-react"
 import Shortcut from "./shortcut"
 import { Gist } from "@/types"
+import { Codearea } from "../shadcn/codearea"
+import { getLanguage } from "@/lib/language"
 
 interface CardProps {
   gist: Gist
@@ -20,13 +22,32 @@ interface CardProps {
 }
 
 export default function Card({ gist, href, onDeleteGist }: CardProps) {
+  const language = getLanguage(gist.name)
+
   return (
     <ContextMenu>
-      <ContextMenuTrigger className="flex items-center justify-start rounded-md text-sm font-semibold text-slate-400 w-full">
-        <Link href={href} passHref className="relative hover:border-primary border-border border group w-full h-full">
+      <ContextMenuTrigger>
+        <Link
+          href={href}
+          passHref
+          className="relative flex items-center justify-start hover:border-primary transition-all group/card border-border border group w-full h-full overflow-hidden"
+        >
           <Badge className="absolute bottom-8 left-8" variant={"title"}>
             {gist.name}
           </Badge>
+          <div className={`${gist.code === "" ? "flex w-full items-center justify-center" : "absolute inset-0 -z-10"}`}>
+            {gist.code !== "" ? (
+              <Codearea
+                className="w-full h-full rounded-none opacity-50 group-hover/card:opacity-100 transition-all duration-200 border-none p-4"
+                value={gist.code}
+                language={language}
+              />
+            ) : (
+              <div className="text-[10px] opacity-50 group-hover/card:opacity-100 transition-all duration-200 p-4 text-gray-500">
+                Gist empty
+              </div>
+            )}
+          </div>
         </Link>
       </ContextMenuTrigger>
       <ContextMenuContent className="w-64">
