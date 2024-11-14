@@ -108,7 +108,7 @@ function AppSidebar({
 }: AppSidebarProps) {
   return (
     <Sidebar variant="floating">
-      <div className="w-min flex flex-col gap-8 flex-shrink-0 p-2">
+      <div className="w-min flex flex-col gap-8 flex-shrink-0 p-2 h-full">
         <SidebarHeader>
           <div className="flex flex-row gap-2 justify-between items-center">
             <div className="flex flex-row justify-start items-center gap-2">
