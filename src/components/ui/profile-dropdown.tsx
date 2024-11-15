@@ -21,7 +21,7 @@ export function ProfileDropdown({ username, onLogout }: ProfileDropdownProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant={"ghost"} className="font-medium truncate max-w-[200px]">
-          <span className="truncate">{username}</span>
+          <span className="max-w-[100px] truncate">{username}</span>
           <ChevronDown className="w-3 h-3 ml-2 flex-shrink-0" />
         </Button>
       </DropdownMenuTrigger>

@@ -13,7 +13,7 @@ interface OrgListProps {
 
 export function OrgList({ orgs, onGistOrg, onDeleteOrg, onDeleteGist, onUpdateOrg }: OrgListProps) {
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion type="single" collapsible className="w-full h-full overflow-scroll no-scrollbar">
       {orgs.map((org) => (
         <AccordionItem key={org.name} value={org.name} className="border-none">
           <AccordionTrigger>
