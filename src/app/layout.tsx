@@ -64,7 +64,7 @@ export default function RootLayout({
         defer
         src="https://cloud.umami.is/script.js"
         data-website-id="0e9bcd71-c239-4666-9b8e-a7c9e99ae235"
-        data-domains="gits.app"
+        data-domains="gists.app"
       />
       <body className={cn(fontSans.className)}>
         <QueryProvider>
