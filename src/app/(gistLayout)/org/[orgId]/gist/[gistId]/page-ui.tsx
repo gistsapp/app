@@ -3,6 +3,7 @@ import { Gist } from "@/types"
 
 interface MyOrgGistIdPageProps {
   gist: Gist
+  username: string
   orgName: string
   onDownload: () => void
   onSave: () => void
@@ -14,6 +15,7 @@ interface MyOrgGistIdPageProps {
 
 export default function MyOrgGistIdPage({
   orgName,
+  username,
   gist,
   onDownload,
   onSave,
@@ -24,6 +26,7 @@ export default function MyOrgGistIdPage({
 }: MyOrgGistIdPageProps) {
   return (
     <GistDetails
+      username={username}
       orgName={orgName}
       gist={gist}
       onDownload={onDownload}

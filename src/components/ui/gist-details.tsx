@@ -22,6 +22,7 @@ import { Button } from "../shadcn/button"
 
 interface GistDetailsProps {
   gist: Gist
+  username: string
   orgName: string
   redirect?: boolean
   onDownload: (name: string, code: string) => void
@@ -34,6 +35,7 @@ interface GistDetailsProps {
 
 export default function GistDetails({
   gist,
+  username,
   orgName,
   redirect,
   onDownload,
@@ -71,6 +73,7 @@ export default function GistDetails({
     <div className="flex flex-col w-full h-full p-2">
       <Header
         gist={gistState}
+        username={username}
         orgName={orgName}
         redirect={redirect}
         onDownload={() => onDownload(gistName, gistCode)}
@@ -138,6 +141,7 @@ export default function GistDetails({
 
 interface HeaderProps {
   gist: Gist
+  username?: string
   orgName: string
   redirect?: boolean
   onDownload: (name: string, code: string) => void
@@ -146,7 +150,7 @@ interface HeaderProps {
   onOpenPlainText?: (gistID: string) => void
 }
 
-function Header({ gist, orgName, redirect, onDownload, onCopy, onCopyCurl, onOpenPlainText }: HeaderProps) {
+function Header({ gist, username, orgName, redirect, onDownload, onCopy, onCopyCurl, onOpenPlainText }: HeaderProps) {
   return (
     <div className="py-4 px-6 flex flex-row justify-between items-center rounded-t-lg border-border border-l border-t border-r">
       <div className="flex flex-row gap-6 items-center h-full">
@@ -154,7 +158,7 @@ function Header({ gist, orgName, redirect, onDownload, onCopy, onCopyCurl, onOpe
         <div className="w-[1px] h-2/3 bg-border"></div>
         <div className="flex flex-row gap-2 justify-center items-center">
           {redirect ? (
-            <Link href="/mygist" className="hover:underline">
+            <Link href={`/${username}`} className="hover:underline">
               {orgName}
             </Link>
           ) : (

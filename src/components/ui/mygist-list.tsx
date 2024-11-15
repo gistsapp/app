@@ -4,9 +4,10 @@ import Card from "./card"
 interface MyGistListProps {
   gists: Gist[]
   onDeleteGist: (id: string) => void
+  username?: string
 }
 
-export default function MyGistList({ gists, onDeleteGist }: MyGistListProps) {
+export default function MyGistList({ gists, onDeleteGist, username }: MyGistListProps) {
   if (gists.length === 0) {
     return (
       <div className="p-4 h-full flex items-center justify-center border-border border-r border-l">
@@ -18,7 +19,7 @@ export default function MyGistList({ gists, onDeleteGist }: MyGistListProps) {
   return (
     <div className="p-4 h-full grid grid-cols-3 grid-rows-3 gap-4 border-border border-r border-l">
       {gists.map((gist) => (
-        <Card key={gist.id} gist={gist} href={`/mygist/${gist.id}`} onDeleteGist={() => onDeleteGist(gist.id)} />
+        <Card key={gist.id} gist={gist} href={`/${username}/${gist.id}`} onDeleteGist={() => onDeleteGist(gist.id)} />
       ))}
     </div>
   )

@@ -3,6 +3,7 @@ import { useToast } from "@/components/shadcn/use-toast"
 import GistDetails from "@/components/ui/gist-details"
 import { useEditGist, useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
 import { useOrg } from "@/lib/queries/orgs.queries"
+import { useMe } from "@/lib/queries/user.queries"
 import { getRawGistURL } from "@/lib/utils"
 import React from "react"
 
@@ -15,6 +16,7 @@ interface MyOrgGistIdFeaturePageProps {
 
 export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePageProps) {
   const { orgId, gistId } = params
+  const { data: user } = useMe()
   const { data: orgData } = useOrg(orgId)
   const { data: gistData } = useGist(gistId)
   const { toast } = useToast()
@@ -101,6 +103,7 @@ export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePag
 
   return (
     <GistDetails
+      username={user?.name || ""}
       orgName={orgData ? orgData.name : "My Gists"}
       gist={gistData}
       onDownload={onDownload}

@@ -4,8 +4,10 @@ import { useContext, useEffect } from "react"
 import MyGistList from "../ui/mygist-list"
 import { useDeleteGist, useGists } from "@/lib/queries/gists.queries"
 import { PaginationContext } from "../contexts/pagination"
+import { useMe } from "@/lib/queries/user.queries"
 
 export function MyGistListFeature() {
+  const { data: user } = useMe()
   const { offset, limit, setNbPages } = useContext(PaginationContext)
   const { data, nb_pages } = useGists({
     limit,
@@ -26,5 +28,5 @@ export function MyGistListFeature() {
     deleteGist(id)
   }
 
-  return <MyGistList gists={data || []} onDeleteGist={handleDeleteGist} />
+  return <MyGistList gists={data || []} username={user?.name} onDeleteGist={handleDeleteGist} />
 }
