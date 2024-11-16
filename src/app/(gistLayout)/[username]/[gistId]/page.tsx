@@ -16,7 +16,7 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
   const { gistId } = params
   const { data } = useGist(gistId)
   const { toast } = useToast()
-  const { data: me } = useMe()
+  const { data: user } = useMe()
 
   const { mutate: updateName } = usePatchGistName({
     onSuccess: () => {
@@ -55,7 +55,7 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
       visibility: "public",
       org_id: null,
       language: "plaintext",
-      owner_id: me?.id || "",
+      owner_id: user?.id || "",
     })
   }
 
@@ -96,6 +96,7 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
   }
   return (
     <MyGistIdPage
+      username={user?.name}
       gist={data}
       onDownload={onDownload}
       onSave={onSave}

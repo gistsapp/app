@@ -8,6 +8,7 @@ import { useLocalAuth, useLocalAuthVerify } from "@/lib/queries/auth.queries"
 import Login from "./page-ui"
 import { redirect, useRouter } from "next/navigation"
 import { useKeyPress } from "@/lib/hook/use-key-press"
+import { useMe } from "@/lib/queries/user.queries"
 
 interface FormData {
   email: string
@@ -18,6 +19,7 @@ export default function LoginFeature() {
   const [otpValue, setOtpValue] = useState("")
   const { toast } = useToast()
   const router = useRouter()
+  const { data: user } = useMe()
 
   const { mutate: sendEmail } = useLocalAuth()
   const { mutate: verifyEmail, data: verified } = useLocalAuthVerify()
@@ -105,7 +107,7 @@ export default function LoginFeature() {
         title: "You have been verified.",
       })
 
-      redirect("/mygist")
+      redirect(`/${user?.name}`)
     }
   }, [verified, toast])
 

@@ -101,7 +101,6 @@ function AppSidebar({
   isOrgModalOpen,
   setIsOrgModalOpen,
   onCreateOrg,
-  onMyGists,
   gistContent,
   setGistContent,
   language,
@@ -137,8 +136,7 @@ function AppSidebar({
               variant="menu"
               size="menu"
               letter="M"
-              onClick={onMyGists}
-              href="/mygist"
+              href={`/${username}`}
               className="w-full"
             >
               My Gists
