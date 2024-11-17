@@ -1,10 +1,11 @@
 "use client"
 import React from "react"
 import MyGistIdPage from "./page-ui"
-import { useEditGist, useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
+import { useDeleteGist, useEditGist, useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
 import { useToast } from "@/components/shadcn/use-toast"
 import { getRawGistURL } from "@/lib/utils"
 import { useMe } from "@/lib/queries/user.queries"
+import { redirect, useRouter } from "next/navigation"
 
 interface MyGistIdFeaturePageProps {
   params: {
@@ -15,6 +16,7 @@ interface MyGistIdFeaturePageProps {
 export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps) {
   const { gistId } = params
   const { data } = useGist(gistId)
+  const router = useRouter()
   const { toast } = useToast()
   const { data: user } = useMe()
 
@@ -46,7 +48,6 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
     })
   }
   const onSave = (name: string, code: string) => {
-    console.log("save")
     edit({
       id: gistId,
       name,
@@ -59,8 +60,18 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
     })
   }
 
-  const onDelete = (id: string) => {
-    console.log(`Deleting gist with ID: ${id}`)
+  const { mutate: deleteGist } = useDeleteGist({
+    onSuccess: () => {
+      toast({
+        title: "Gist Deleted",
+        description: "Your gist has been deleted successfully",
+      })
+      router.push(`/${user?.name}`)
+    },
+  })
+
+  const handleDeleteGist = (id: string) => {
+    deleteGist(id)
   }
 
   const onShare = () => {
@@ -100,7 +111,7 @@ export default function MyGistIdFeaturePage({ params }: MyGistIdFeaturePageProps
       gist={data}
       onDownload={onDownload}
       onSave={onSave}
-      onDelete={onDelete}
+      onDelete={handleDeleteGist}
       onShare={onShare}
       onCopy={onCopy}
       onCopyCurl={onCopyCurl}

@@ -1,7 +1,7 @@
 "use client"
 import { useToast } from "@/components/shadcn/use-toast"
 import GistDetails from "@/components/ui/gist-details"
-import { useEditGist, useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
+import { useDeleteGist, useEditGist, useGist, usePatchGistContent, usePatchGistName } from "@/lib/queries/gists.queries"
 import { useOrg } from "@/lib/queries/orgs.queries"
 import { useMe } from "@/lib/queries/user.queries"
 import { getRawGistURL } from "@/lib/utils"
@@ -66,11 +66,17 @@ export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePag
     })
   }
 
-  const onDelete = (id: string) => {
-    toast({
-      title: "Gist Deleted",
-      description: "Your gist has been deleted successfully",
-    })
+  const { mutate: deleteGist } = useDeleteGist({
+    onSuccess: () => {
+      toast({
+        title: "Gist Deleted",
+        description: "Your gist has been deleted successfully",
+      })
+    },
+  })
+
+  const handleDeleteGist = (id: string) => {
+    deleteGist(id)
   }
 
   const onCopy = (code: string) => {
@@ -109,7 +115,7 @@ export default function MyOrgGistIdFeaturePage({ params }: MyOrgGistIdFeaturePag
       onDownload={onDownload}
       onSave={onSave}
       onShare={onShare}
-      onDelete={onDelete}
+      onDelete={handleDeleteGist}
       onCopy={onCopy}
       onCopyCurl={onCopyCurl}
     />

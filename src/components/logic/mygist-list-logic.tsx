@@ -5,6 +5,7 @@ import MyGistList from "../ui/mygist-list"
 import { useDeleteGist, useGists } from "@/lib/queries/gists.queries"
 import { PaginationContext } from "../contexts/pagination"
 import { useMe } from "@/lib/queries/user.queries"
+import { toast } from "../shadcn/use-toast"
 
 export function MyGistListFeature() {
   const { data: user } = useMe()
@@ -19,8 +20,11 @@ export function MyGistListFeature() {
   }, [nb_pages, setNbPages])
 
   const { mutate: deleteGist } = useDeleteGist({
-    onSuccess: (id) => {
-      console.log(`Deleting gist with ID: ${id}`)
+    onSuccess: () => {
+      toast({
+        title: "Gist Deleted",
+        description: "Your gist has been deleted successfully",
+      })
     },
   })
 

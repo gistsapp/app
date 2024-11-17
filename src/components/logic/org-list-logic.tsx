@@ -1,20 +1,38 @@
+import { useDeleteGist } from "@/lib/queries/gists.queries"
 import { OrgList } from "../ui/org-list"
 import { useDeleteOrgs, useOrgs } from "@/lib/queries/orgs.queries"
+import { toast } from "../shadcn/use-toast"
 
 export function OrgListFeature() {
   const { data } = useOrgs()
-  const { mutate } = useDeleteOrgs({ onSuccess: () => console.log("Deleted") })
+  const { mutate: deleteOrg } = useDeleteOrgs({
+    onSuccess: () => {
+      toast({
+        title: "Orgnization Deleted",
+        description: "Your organization has been deleted successfully",
+      })
+    },
+  })
 
-  const onDeleteTeam = (id: string) => {
-    mutate(id)
+  const handleDeleteOrg = (id: string) => {
+    deleteOrg(id)
   }
 
   const onGistOrg = () => {
     console.log("Gist Org Clicked")
   }
 
-  const onDeleteGist = (id: string) => {
-    console.log(`Deleting gist with ID: ${id}`)
+  const { mutate: deleteGist } = useDeleteGist({
+    onSuccess: () => {
+      toast({
+        title: "Gist Deleted",
+        description: "Your gist has been deleted successfully",
+      })
+    },
+  })
+
+  const handleDeleteGist = (id: string) => {
+    deleteGist(id)
   }
 
   const onUpdateOrg = (id: string, name: string) => {
@@ -25,8 +43,8 @@ export function OrgListFeature() {
     <OrgList
       orgs={data || []}
       onGistOrg={onGistOrg}
-      onDeleteOrg={onDeleteTeam}
-      onDeleteGist={onDeleteGist}
+      onDeleteOrg={handleDeleteOrg}
+      onDeleteGist={handleDeleteGist}
       onUpdateOrg={onUpdateOrg}
     />
   )
