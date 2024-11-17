@@ -219,6 +219,7 @@ function CreateGistModal({
           onClick={() => {
             onCreateGist(gistName, gistContent)
             setGistName("")
+            setGistContent("")
             setIsGistModalOpen(false)
           }}
         >
